@@ -69,4 +69,5 @@ dkms.conf
 # cangjie
 target/
 .cache/
+.vscode/
 .DS_Store
