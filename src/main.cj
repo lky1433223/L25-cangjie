@@ -2,7 +2,7 @@ package L25
 import std.io.*
 
 
-foreign func getAst() : CPointer<CAstNode>
+
 
 main(): Int64 {
     let a = Symbol.ident("id")
@@ -10,8 +10,11 @@ main(): Int64 {
         case Symbol.ident(String) => println(String)
         case _ => print("none")
     }
+    let proot:CPointer<CASTNode> = unsafe{create_node(20)}
+    let root:CASTNode =  unsafe{proot.read()}
+    println(root.node_type)
+    println(root.child_count)
 
-    let sizeofPoint3D: UIntNative = 24
 
     return 0
 }
