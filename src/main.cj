@@ -1,17 +1,21 @@
 package L25
 import std.io.*
 
-foreign func buildPoint(): Point3D
+
+foreign func malloc(size: UIntNative): CPointer<Unit>
+foreign func free(ptr: CPointer<Unit>): Unit
+foreign func buildPoint(): CPointer<Point3D>
 
 main(): Int64 {
     let a = Symbol.ident("id")
-    // let b = Symbol.ident("id")
     match(a){
-        // case Symbol.nul => print(1)
         case Symbol.ident(String) => println(String)
         case _ => print("none")
     }
-    var b:Point3D = unsafe{buildPoint()}
-    println(b.x)
+
+    let sizeofPoint3D: UIntNative = 24
+    var pb = unsafe{buildPoint()}
+
+    unsafe{free}
     return 0
 }

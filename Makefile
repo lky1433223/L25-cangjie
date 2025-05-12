@@ -7,7 +7,7 @@ LDFLAGS := -dynamiclib
 SRC_DIR := ./c
 SRCS := $(wildcard $(SRC_DIR)/*.c)
 OBJS := $(SRCS:.c=.o)
-TARGET := cstruct.dylib
+TARGET := libcstruct.dylib
 
 # 构建目标
 all: $(TARGET) cjpm_build
