@@ -1,0 +1,10 @@
+[33mwarning[0m: unreachable pattern
+  [36m==>[0m /Users/shiinarikka/VScode/L25/src/main.cj:12:14:
+   [36m| [0m
+[36m12[0m [36m| [0m        case _ => print("none")[0m
+   [36m| [0m             [33m^ [0m
+   [36m| [0m
+   [36m#[0m [0mnote[0m: this warning can be suppressed by setting the compiler option `-Woff unused`
+
+1 warning generated, 1 warning printed.
+ld64.lld: warning: /Users/shiinarikka/VScode/L25/libcstruct.dylib has version 15.0.0, which is newer than target minimum of 12.0.0
