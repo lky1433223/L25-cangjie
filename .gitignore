@@ -69,3 +69,4 @@ dkms.conf
 # cangjie
 target/
 .cache/
+.DS_Store
