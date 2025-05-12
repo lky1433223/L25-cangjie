@@ -1,7 +1,7 @@
 # 编译器设置
 CC := clang
-CFLAGS := -fPIC -I./c  # 添加头文件目录需要的话
-LDFLAGS := -dynamiclib
+CFLAGS := -fPIC -I./c  -mmacosx-version-min=12.0 # 添加头文件目录
+LDFLAGS := -dynamiclib -mmacosx-version-min=12.0 # 指定最低版本12.0 避免版本不一致的warning
 
 # 文件路径设置
 SRC_DIR := ./c
@@ -24,7 +24,8 @@ $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 # 执行仓颉构建命令
 cjpm_build:
 	@echo "\033[34mRunning cjpm build...\033[0m"
-	cjpm build
+	cjpm build -V 
+	cjpm run
 
 # 清理生成文件
 clean:

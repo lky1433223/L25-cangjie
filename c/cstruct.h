@@ -4,7 +4,7 @@ typedef struct {
     long long x;
     long long y;
     long long z;
-    // char c;
+    char c;
     
 } Point3D;
 

@@ -7,6 +7,6 @@ Point3D* buildPoint()
     a->x = 10;
     a->y = 2;
     a->z = 3;
-    // a->c = 'a';
+    a->c = 'A';
     return a;
 }

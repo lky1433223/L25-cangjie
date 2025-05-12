@@ -15,7 +15,9 @@ main(): Int64 {
 
     let sizeofPoint3D: UIntNative = 24
     var pb = unsafe{buildPoint()}
-
+    var b = unsafe{pb.read()}
+    println(b.x)
+    println(Rune(b.s))
     unsafe{free}
     return 0
 }
