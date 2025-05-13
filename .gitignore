@@ -76,5 +76,7 @@ libcstruct.dylib
 target/
 .cache/
 .vscode/
+
+#mac
 .DS_Store
 
