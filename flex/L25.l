@@ -26,7 +26,7 @@ ident {letter}({letter}|[0-9])*
 "return"    { return RETURN; }
 
 {digit}     { return NUMBER; }
-{ident}    { return IDENT; }
+{ident}     { yylval.str = strdup(yytext);return IDENT; }
 
 "+"         { return PLUS; }
 "-"         { return MINUS; }

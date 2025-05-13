@@ -8,11 +8,13 @@ void yyerror(char *msg);
 int yylex(void);
 struct ASTNode* root;
 __attribute__((visibility("default"))) 
+//获取AST根节点指针
 ASTNode* getAST();
 %}
 
 %union {
     int num;
+    char* str;
     struct ASTNode* node;
 };
 
@@ -25,7 +27,7 @@ ASTNode* getAST();
 
 
 %token NUMBER
-%token IDENT
+%token <str> IDENT
 
 %type <node> program 
 %type <node> func_def 
@@ -54,17 +56,20 @@ program:
     /* test */
     PROGRAM
     { 
-        $$=create_node(100);
+        $$=build_program(NULL,NULL,NULL);
+        root = $$;
+    }
+    | PROGRAM ident LBRACE MAIN LBRACE stmt_list RBRACE RBRACE 
+    { 
+        $$=build_program($2, NULL, $6);
         root = $$;
     }
     | PROGRAM ident LBRACE func_def  MAIN LBRACE stmt_list RBRACE RBRACE 
     { 
-        $$=create_node(NODE_PROGRAM);
+        $$=build_program($2, $4, $7);
         root = $$;
     }
     ;
-
-
 func_def:
     /* empty */
     {
@@ -178,9 +183,9 @@ factor:
     ;
 
 ident:
-    /* empty */
+    IDENT
     {
-        $$ = NULL;
+        $$ = build_ident($1);
     }
     ;
 

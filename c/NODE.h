@@ -15,4 +15,5 @@
 #define NODE_NUMBER         11
 #define NODE_STRING_LIT     12
 #define NODE_BOOL_EXPR      13
+#define NODE_FUNC_DEF_LIST  14
 #endif
