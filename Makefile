@@ -56,6 +56,7 @@ clean:
 	rm -f $(TARGET)
 	rm -f $(SRC_DIR)/*.o
 	rm -f $(LEX_GEN) $(YACC_GEN_C) $(YACC_GEN_H)
+	cjpm clean
 	@echo "\033[33mCleaned: All build files removed\033[0m"
 
 .PHONY: all cjpm_build clean

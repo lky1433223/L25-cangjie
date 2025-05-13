@@ -1,6 +1,25 @@
 //这里主要负责实现C类型Ast到Cangjie类型Ast的转译，这个中间层可以保证后续操作的安全
 package L25
-func translateAST(Croot: CASTNode ): AST
+foreign func yyparse():Unit
+func translateAST(): AST
 {
-    return Program()
+    unsafe{yyparse()}
+    let CASTproot:CPointer<CASTNode> = unsafe{getAST()} //获取C语言语法树指针
+    let ASTroot:AST = Program() //创建cangjie语法树指针
+    if(CASTproot.isNull()) //判断指针是否为空。这里如果访问RE会导致程序无法结束。
+    {
+        throw ParseException("无法获取语法树根节点。请检查语法错误。")
+    }
+    let root:CASTNode =  unsafe{CASTproot.read()} //解析指针，解析到CASTNode类型
+    //TODO:递归解析
+    println(root.node_type)
+    for(child_id in 0..root.child_count)
+    {
+        print(child_id)
+        print(" ")
+        let child = unsafe{root.children[Int64(child_id)].read()}
+        println(child.node_type)
+    }
+    unsafe{free_AST(CASTproot)}
+    return ASTroot
 }

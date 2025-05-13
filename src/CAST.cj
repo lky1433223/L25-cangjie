@@ -10,3 +10,5 @@ struct CASTNode{
 
 foreign func getAST() : CPointer<CASTNode>
 foreign func create_node(node_type:Int32) :  CPointer<CASTNode>
+foreign func free_AST(root: CPointer<CASTNode>):Unit
+

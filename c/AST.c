@@ -18,14 +18,14 @@ ASTNode* create_node(int node_type) {
 }
 
 
-void free_ast(struct ASTNode* node) {
+void free_AST(struct ASTNode* node) {
     if (node == NULL) {
         return;
     }
 
     // 1. 先递归释放所有子节点
     for (int i = 0; i < node->child_count; ++i) {
-        free_ast(node->children[i]);
+        free_AST(node->children[i]);
     }
 
     // 2. 释放当前节点的 data 数据（根据你的实际使用情况调整）
@@ -37,6 +37,7 @@ void free_ast(struct ASTNode* node) {
     // 3. 最后释放当前节点自身
     free(node);
 }
+
 void insert_child(ASTNode* father, ASTNode* child)
 {
     assert(father->child_count < CHILDREN_CAP);

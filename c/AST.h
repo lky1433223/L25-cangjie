@@ -20,7 +20,7 @@ ASTNode* create_node(int node_type);
 
 __attribute__((visibility("default")))
 //递归释放整个AST
-void free_ast(struct ASTNode* node);
+void free_AST(struct ASTNode* node);
 
 
 __attribute__((visibility("default"))) 
