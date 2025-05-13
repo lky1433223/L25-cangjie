@@ -2,5 +2,5 @@
 package L25
 func translateAST(Croot: CASTNode ): AST
 {
-    return AST()
+    return Program()
 }

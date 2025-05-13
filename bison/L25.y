@@ -2,59 +2,217 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <AST.h>
-void yyerror(char * );
-
+#include "AST.h"
+#include "NODE.h"
+void yyerror(char *msg);
 int yylex(void);
-
+struct ASTNode* root;
+__attribute__((visibility("default"))) 
+ASTNode* getAST();
 %}
 
 %union {
-    int bval;
-    int val;   
-    struct {
-        int value; // 小数部分的值（如二进制 "11" 对应 3）
-        int len;   // 小数部分的位数（如 "11" 对应 len=2）
-    } sval;
+    int num;
+    struct ASTNode* node;
 };
 
-%token <val> B 
-%token Dot
-%type <val> N 
-%type <sval> S
+%token PROGRAM FUNC MAIN LET IF ELSE WHILE INPUT OUTPUT RETURN
+%token PLUS MINUS STAR DIVIDE EQ NEQ LT LE GT GE ASSIGN ANDSIGN
+%token LPAREN RPAREN 
+%token LBRACE RBRACE 
+%token LBRACKET RBRACKET
+%token COLON SEMICOLON COMMA
+
+
+%token NUMBER
+%token IDENT
+
+%type <node> program 
+%type <node> func_def 
+%type <node> param_list 
+%type <node> stmt_list
+%type <node> stmt
+%type <node> declare_stmt
+%type <node> assign_stmt
+%type <node> if_stmt
+%type <node> while_stmt
+%type <node> func_call
+%type <node> arg_list
+%type <node> input_stmt
+%type <node> output_stmt
+%type <node> bool_expr
+%type <node> expr
+%type <node> term
+%type <node> factor
+%type <node> ident
+%type <node> number
+%type <node> letter
+%type <node> digit
+
+%%
+program:
+    /* test */
+    PROGRAM
+    { 
+        $$=create_node(100);
+        root = $$;
+    }
+    | PROGRAM ident LBRACE func_def  MAIN LBRACE stmt_list RBRACE RBRACE 
+    { 
+        $$=create_node(NODE_PROGRAM);
+        root = $$;
+    }
+    ;
+
+
+func_def:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+param_list:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+stmt_list:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+stmt:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+declare_stmt:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+assign_stmt:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+if_stmt:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+while_stmt:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+func_call:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+arg_list:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+input_stmt:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+output_stmt:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+bool_expr:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+expr:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+term:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+factor:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+ident:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+number:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+letter:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
+digit:
+    /* empty */
+    {
+        $$ = NULL;
+    }
+    ;
+
 
 %%
 
-N: N expr '\n'
 
-     | expr '\n'
-
-     ;
-
-expr:  S Dot S {printf("%f \n", $1.value + $3.value / pow(2,$3.len));}
-
-     | S {printf("%d \n", $1.value);}    
-
-     ;
-
-S:  S B {$$.value=$1.value*2+$2; $$.len += 1;}
-
-     | B {$$.value=$1;$$.len = 1;} 
-
-%%
-
-int main()
-
-{
-
-yyparse();
-
-return 0;
-
+ASTNode* getAST(){
+    return root;
 }
 
 void yyerror(char* msg ) {
-
         printf("%s\n",msg);
-
 }

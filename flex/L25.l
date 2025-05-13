@@ -1,36 +1,64 @@
 %{
 
-#include "stdio.h"
-
-#include<stdlib.h>
-
 #include "parser.tab.h"
+#include "AST.h"
 
 void yyerror(char *);
-
 int yywrap(void);
 
 %}
 
+letter [a-zA-Z]
+digit [0-9]+
+ident {letter}({letter}|[0-9])*
+
 %%
 
-0 {yylval.bval=0;return B;}
+"program"   { return PROGRAM; } 
+"func"      { return FUNC; }
+"main"      { return MAIN; }
+"let"       { return LET; }
+"if"        { return IF; }
+"else"      { return ELSE; }
+"while"     { return WHILE; }
+"input"     { return INPUT; }
+"output"    { return OUTPUT; }
+"return"    { return RETURN; }
 
-1 {yylval.bval=1;return B;}
+{digit}     { return NUMBER; }
+{ident}    { return IDENT; }
 
-"." {return Dot;}
+"+"         { return PLUS; }
+"-"         { return MINUS; }
+"*"         { return STAR; }
+"/"         { return DIVIDE; }
+"=="        { return EQ; }
+"!="        { return NEQ; }
+"<"         { return LT; }
+"<="        { return LE; }
+">"         { return GT; }
+">="        { return GE; }
+"="         { return ASSIGN; }
+"&"         { return ANDSIGN; }
 
-\n  {return *yytext;}
+"("         { return LPAREN; }
+")"         { return RPAREN; }
+"{"         { return LBRACE; }
+"}"         { return RBRACE; }
+"["         { return LBRACKET; }
+"]"         { return RBRACKET; }
+":"         { return COLON; }
+";"         { return SEMICOLON; }
+","         { return COMMA; }
 
-.       {yyerror("Unknown character!");}
+[ \t\n]     {}
+"//".*      {} /* 仅支持单行注释 */
 
+.           { return yytext[0]; }
 %%
 
 int yywrap(void)
-
 {
-
   return 1;
-
 }
 

@@ -50,7 +50,6 @@ $(LEX_GEN): $(LEX_SRC)
 cjpm_build:
 	@echo "\033[34mRunning cjpm build...\033[0m"
 	cjpm build -V 
-	cjpm run
 
 # 清理生成文件
 clean:

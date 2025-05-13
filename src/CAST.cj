@@ -8,5 +8,5 @@ struct CASTNode{
     var child_count: Int32 = 0
 }
 
-foreign func getAst() : CPointer<CASTNode>
+foreign func getAST() : CPointer<CASTNode>
 foreign func create_node(node_type:Int32) :  CPointer<CASTNode>
