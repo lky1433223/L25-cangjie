@@ -67,9 +67,9 @@ Mkfile.old
 dkms.conf
 
 #flex bison
-./c/lex.yy.c
-./c/parser.tab.c
-./c/parser.tab.h
+lex.yy.c
+parser.tab.c
+parser.tab.h
 
 # cangjie
 libcstruct.dylib
