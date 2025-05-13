@@ -66,8 +66,15 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+#flex bison
+./c/lex.yy.c
+./c/parser.tab.c
+./c/parser.tab.h
+
 # cangjie
+libcstruct.dylib
 target/
 .cache/
 .vscode/
 .DS_Store
+
