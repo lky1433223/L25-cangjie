@@ -10,10 +10,16 @@ main(): Int64 {
         case Symbol.ident(String) => println(String)
         case _ => print("none")
     }
-    let proot:CPointer<CASTNode> = unsafe{create_node(20)}
+    let proot:CPointer<CASTNode> = unsafe{getAst()}
     let root:CASTNode =  unsafe{proot.read()}
-    println(root.node_type)
     println(root.child_count)
+    for(child_id in 0..root.child_count)
+    {
+        print(child_id)
+        print(" ")
+        let child = unsafe{root.children[Int64(child_id)].read()}
+        println(child.node_type)
+    }
 
 
     return 0

@@ -4,9 +4,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-AstNode* create_node(int node_type) {
+ASTNode* create_node(int node_type) {
     // 分配节点内存
-    AstNode* node = malloc(sizeof(AstNode));
+    ASTNode* node = malloc(sizeof(ASTNode));
     if (!node) return NULL;
 
     // 初始化基础字段
@@ -16,7 +16,9 @@ AstNode* create_node(int node_type) {
     return node;
 }
 
-AstNode* getAst(){
-    AstNode* root = create_node(NODE_PROGRAM);
+ASTNode* getAst(){
+    ASTNode* root = create_node(NODE_PROGRAM);
+    root->children[root->child_count++] = (struct ASTNode*)create_node(NODE_BOOL_EXPR);
+    root->children[root->child_count++] = (struct ASTNode*)create_node(NODE_NUMBER);
     return root;
-}   
+}

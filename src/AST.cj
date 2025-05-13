@@ -1,4 +1,5 @@
 package L25
-class AST{
+interface AST{
+    
     
 }
