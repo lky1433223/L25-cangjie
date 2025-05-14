@@ -24,9 +24,30 @@ func buildIdent(croot:CASTNode):Ident
         tmp_strarray.append(Rune(cdata.name[i]))
     }   
     res.setName(String(tmp_strarray))
-    println("buildIdent" + res.name)
+    println("build Ident " + res.name)
     return res
 }
+func buildStmtList(croot:CASTNode):StmtList
+{
+    var res = StmtList()
+    println("build StmtList")
+    return res
+}
+
+func buildStmt(croot:CASTNode):Stmt
+{
+    var res = Stmt()
+    println("build Stmt")
+    return res
+}
+
+func buildDeclareStmt(croot:CASTNode):DeclareStmt
+{
+    var res = DeclareStmt()
+    println("build DeclareStmt")
+    return res
+}
+
 func dfsCAST(cproot:CPointer<CASTNode>):AST
 {
     //判断C语言指针是否为空
@@ -39,6 +60,9 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
     match (node_symbol){
         case Symbol.program => root = buildProgram(croot)
         case Symbol.ident(String) => root = buildIdent(croot)
+        case Symbol.stmt_list => root = buildStmtList(croot)
+        case Symbol.stmt => root = buildStmt(croot)
+        case Symbol.declare_stmt => root = buildDeclareStmt(croot)
         case _ => throw UnkonwSymbol("未知的节点类型")
     }
     //处理儿子节点

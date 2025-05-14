@@ -1,4 +1,5 @@
 program Myapp {
     main {
+        let x;
     }
 }

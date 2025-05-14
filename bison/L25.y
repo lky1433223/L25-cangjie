@@ -30,6 +30,7 @@ ASTNode* getAST();
 %token <str> IDENT
 
 %type <node> program 
+%type <node> func_def_list
 %type <node> func_def 
 %type <node> param_list 
 %type <node> stmt_list
@@ -64,12 +65,24 @@ program:
         $$=build_program($2, NULL, $6);
         root = $$;
     }
-    | PROGRAM ident LBRACE func_def  MAIN LBRACE stmt_list RBRACE RBRACE 
+    | PROGRAM ident LBRACE func_def_list  MAIN LBRACE stmt_list RBRACE RBRACE 
     { 
         $$=build_program($2, $4, $7);
         root = $$;
     }
     ;
+
+func_def_list:
+    func_def
+    {
+        $$ = NULL;
+    }
+    | func_def_list func_def
+    {
+        $$ = NULL;
+    }
+    ;
+
 func_def:
     /* empty */
     {
@@ -85,23 +98,27 @@ param_list:
     ;
 
 stmt_list:
-    /* empty */
+    stmt SEMICOLON
     {
-        $$ = NULL;
+        $$ = build_stmt_list(NULL, $1);
+    }
+    | stmt_list stmt SEMICOLON
+    {
+
     }
     ;
 
 stmt:
-    /* empty */
+    declare_stmt
     {
-        $$ = NULL;
+        $$ = build_stmt($1);
     }
     ;
 
 declare_stmt:
-    /* empty */
+    LET ident
     {
-        $$ = NULL;
+        $$ = build_declare_stmt($2, NULL);
     }
     ;
 

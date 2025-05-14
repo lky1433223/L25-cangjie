@@ -36,7 +36,22 @@ ASTNode* create_node(int node_type);
 void insert_child(ASTNode* father, ASTNode* child);
 
 //创建program节点
-ASTNode* build_program(ASTNode* ident, ASTNode* func_defs, ASTNode* main_block);
+ASTNode* build_program(ASTNode* ident, ASTNode* func_def_list, ASTNode* main_block);
+
+
+//创建func_def_list节点
+ASTNode* build_func_def_list(ASTNode* fun_def_list, ASTNode* func_def);
+
+//创建stmt_list节点
+ASTNode* build_stmt_list(ASTNode* stmt_list, ASTNode* stmt);
+
+//创建stmt节点
+ASTNode* build_stmt(ASTNode* next_node);
+
+//创建declare_stmt节点
+ASTNode* build_declare_stmt(ASTNode* ident, ASTNode* expr);
+
+
 
 /**
  * 创建一个表示标识符（IDENT）的 AST 节点

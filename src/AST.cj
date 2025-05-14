@@ -37,6 +37,25 @@ public class Ident <: AST{
     }
 }
 
+public class StmtList <: AST{
+    init(){
+        symbol = Symbol.stmt_list
+    }
+}
+
+
+public class Stmt <: AST{
+    init(){
+        symbol = Symbol.stmt
+    }
+}
+
+public class DeclareStmt <: AST{
+    init(){
+        symbol = Symbol.declare_stmt
+    }
+}
+
 public class Number <: AST{
 
 }

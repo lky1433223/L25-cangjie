@@ -15,6 +15,7 @@ enum Symbol{
     bool_expr |
     ident(String) |
     number(Int64) |
+    stmt |
     empty
 }
 
@@ -35,6 +36,7 @@ func getSymbol(node_type: Int32): Symbol {
         case 12 => return Symbol.string_list // NODE_STRING_LIST
         case 13 => return Symbol.bool_expr
         case 14 => return Symbol.fun_def_list
+        case 15 => return Symbol.stmt
         case _ => throw UnkonwSymbol("未知的节点类型: ${node_type}")
     }
 }
@@ -56,6 +58,7 @@ func toString(symbol: Symbol): String {
         case Symbol.fun_def_list => return "fun_def_list"
         case Symbol.ident(name) => return "ident ${name}"
         case Symbol.number(value) => return "number ${value}"
+        case Symbol.stmt => return "stmt"
         case Symbol.empty => return "empty"
         case _ => return "unknown"
     }

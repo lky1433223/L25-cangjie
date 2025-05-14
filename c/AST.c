@@ -48,15 +48,41 @@ void insert_child(ASTNode* father, ASTNode* child)
 }
 
 
-ASTNode* build_program(ASTNode* ident, ASTNode* func_defs, ASTNode* main_block)
+ASTNode* build_program(ASTNode* ident, ASTNode* func_def_list, ASTNode* main_block)
 {
     ASTNode* node = create_node(NODE_PROGRAM);
     if (ident) insert_child(node, ident);
-    if (func_defs) insert_child(node, func_defs); // 可以是一个 func_def 列表
+    if (func_def_list) insert_child(node, func_def_list); // 可以是一个 func_def 列表
     if (main_block) insert_child(node, main_block);
     return node;
 }
 
+ASTNode* build_func_def_list(ASTNode* fun_def_list, ASTNode* func_def)
+{
+    ASTNode* node = create_node(NODE_FUNC_DEF_LIST);
+    return node;
+}
+
+
+ASTNode* build_stmt_list(ASTNode* stmt_list, ASTNode* stmt){
+    ASTNode* node = create_node(NODE_STMT_LIST);
+    if(stmt_list) insert_child(node, stmt_list);
+    if(stmt) insert_child(node, stmt);
+    return node;
+}
+
+ASTNode* build_stmt(ASTNode* next_node){
+    ASTNode* node = create_node(NODE_STMT);
+    if(next_node) insert_child(node, next_node);
+    return node;
+}
+
+ASTNode* build_declare_stmt(ASTNode* ident, ASTNode* expr){
+    ASTNode* node = create_node(NODE_DECLARE_STMT);
+    if(ident) insert_child(node, ident);
+    if(expr) insert_child(node, expr);
+    return node;
+}
 
 ASTNode* build_ident(const char* name) {
     // 分配 AST 节点内存
