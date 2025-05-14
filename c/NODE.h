@@ -13,7 +13,7 @@
 #define NODE_EXPR           9
 #define NODE_IDENT          10
 #define NODE_NUMBER         11
-#define NODE_STRING_LIT     12
+#define NODE_STRING_LIST    12
 #define NODE_BOOL_EXPR      13
 #define NODE_FUNC_DEF_LIST  14
 #endif

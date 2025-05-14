@@ -75,9 +75,8 @@ ASTNode* build_ident(const char* name) {
     }
 
     // 复制标识符名称到结构体中
-    strncpy(id_data->name, name, MAX_IDNET_LEN - 1);
-    id_data->name[MAX_IDNET_LEN - 1] = '\0';  // 确保字符串结尾
-    printf("%p", id_data->name);
+    strcpy(id_data->name, name);
+    id_data->name_len = strlen(id_data->name);
     // 将数据绑定到 AST 节点
     node->data = id_data;
 

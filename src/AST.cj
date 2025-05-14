@@ -1,8 +1,21 @@
 package L25
-interface AST{
+
+
+public interface AST{
+
+}
+
+public class Program <: AST{
     
 }
 
-class Program <: AST{
-    
+public class Ident <: AST{
+    var name:String
+    init() {
+        name = String()
+    }
+}
+
+public class Number <: AST{
+
 }

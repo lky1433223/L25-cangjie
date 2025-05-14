@@ -1,5 +1,6 @@
 %{
 
+#include <string.h>
 #include "parser.tab.h"
 #include "AST.h"
 
@@ -25,7 +26,7 @@ ident {letter}({letter}|[0-9])*
 "output"    { return OUTPUT; }
 "return"    { return RETURN; }
 
-{digit}     { return NUMBER; }
+{digit}     { yylval.num = atoi(yytext);  return NUMBER; }
 {ident}     { yylval.str = strdup(yytext);return IDENT; }
 
 "+"         { return PLUS; }

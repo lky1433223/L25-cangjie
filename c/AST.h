@@ -15,6 +15,7 @@ struct ASTNode{
 
 struct identData{
     char name[MAX_IDNET_LEN];
+    int name_len;
 };
 
 struct numData{

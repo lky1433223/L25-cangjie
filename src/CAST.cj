@@ -10,7 +10,8 @@ struct CASTNode{
 
 @C
 struct CIdentData {
-    var name: VArray<UInt8, $200> = VArray<UInt8, $200>(item:0)
+    var name: VArray<UInt8, $100> = VArray<UInt8, $100>(item:0)
+    var name_len : Int32 = 0
 }
 
 @C

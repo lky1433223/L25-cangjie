@@ -10,3 +10,15 @@ open class ParseException <: Exception{
         "ParseException"
     }
 }
+
+class UnkonwSymbol <: Exception{
+    public init(){
+        super("UnkonwSymbol");
+    }
+    public init(message: String) {
+        super(message)
+    }
+    public open override func getClassName(): String {
+        "UnkonwSymbol"
+    }
+}
