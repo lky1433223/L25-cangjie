@@ -1,6 +1,7 @@
 //这里主要负责实现C类型Ast到Cangjie类型Ast的转译，这个中间层可以保证后续操作的安全
 package L25
 import std.collection.*
+
 foreign func yyparse():Unit
 
 func buildProgram(croot:CASTNode):Program
@@ -22,7 +23,7 @@ func buildIdent(croot:CASTNode):Ident
     {
         tmp_strarray.append(Rune(cdata.name[i]))
     }   
-    res.name = String(tmp_strarray)
+    res.setName(String(tmp_strarray))
     println("buildIdent" + res.name)
     return res
 }
@@ -47,11 +48,22 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         let cpchild = croot.children[Int64(child_id)]
         if(cpchild.isNull()) {continue}
         let child = dfsCAST(cpchild)
+        root.insertChild(child)
     }
     return root
     
 
 }
+
+func printAST(root:AST):Unit
+{
+    println(toString(root.symbol))
+    for(child in root.children)
+    {
+        printAST(child)
+    }
+}
+
 func translateAST(): AST
 {
     unsafe{yyparse()}
@@ -62,6 +74,9 @@ func translateAST(): AST
         throw ParseException("无法获取语法树根节点。请检查语法错误。")
     }
     let ASTroot:AST = dfsCAST(CASTproot) //递归解析CAST，创建cangjie类型AST
+
+    printAST(ASTroot)
+
     unsafe{free_AST(CASTproot)}
     return ASTroot
 }
