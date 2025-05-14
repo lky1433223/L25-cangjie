@@ -30,7 +30,7 @@ public class UnkonwOpr <: Unkonw{
     public init(message: String) {
         super(message)
     }
-    public open override func getClassName(): String {
+    public override func getClassName(): String {
         "UnkonwOpr"
     }
 }
@@ -42,7 +42,7 @@ public class UnkonwSymbol <: Unkonw{
     public init(message: String) {
         super(message)
     }
-    public open override func getClassName(): String {
+    public override func getClassName(): String {
         "UnkonwSymbol"
     }
 }
