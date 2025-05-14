@@ -1,5 +1,6 @@
 //这里主要负责实现C类型Ast到Cangjie类型Ast的转译，这个中间层可以保证后续操作的安全
 package L25
+import L25.L25Exception.*
 import std.collection.*
 
 foreign func yyparse():Unit
@@ -16,7 +17,7 @@ func buildIdent(croot:CASTNode):Ident
     let cpdata: CPointer<CIdentData> = unsafe{CPointer<CIdentData>(croot.data)} //C data指针
     if(cpdata.isNull()){throw Exception("empty point")}
     let cdata = unsafe{cpdata.read()} //解析指针
-    let name_len = cdata.name_len          //name长度
+    let name_len = cdata.name_len     //name长度
     //从Varray翻译
     let tmp_strarray =  ArrayList<Rune>()  
     for(i in 0..cdata.name.size where i < Int64(name_len))

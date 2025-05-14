@@ -1,4 +1,5 @@
 package L25
+import L25.L25Exception.UnkonwSymbol
 enum Symbol{
     program | 
     fun_def | 
@@ -60,6 +61,5 @@ func toString(symbol: Symbol): String {
         case Symbol.number(value) => return "number ${value}"
         case Symbol.stmt => return "stmt"
         case Symbol.empty => return "empty"
-        case _ => return "unknown"
     }
 }
