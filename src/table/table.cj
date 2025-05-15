@@ -13,7 +13,8 @@ public class Table{
         match(kind){
             case Object.constant => tabelstruct=TableSturct(name,kind,val)
             case Object.variable => tabelstruct=TableSturct(name,kind,level, adr)
-            case Object.procedure => tabelstruct=TableSturct(name,kind,level, adr, size)
+            case Object.function => tabelstruct=TableSturct(name,kind,level, adr, size)
+            case Object.program  => tabelstruct=TableSturct(name,kind)
         }
         tables.append(tabelstruct)
     }

@@ -34,4 +34,14 @@ public class TableSturct{
         this.size = size
         val = 0
     }
+    //初始化程序名
+    init(name:String, kind:Object){
+        
+        this.name = name
+        this.kind = kind
+        this.level = 0
+        this.adr = 0
+        this.size = 0
+        val = 0
+    }
 }

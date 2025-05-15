@@ -10,6 +10,10 @@ public enum Fct{
     ini |
     jmp |
     jpc
+
+    operator func ==(b: Fct): Bool{
+        return toString(this) == toString(b)
+    }
 }
 
 
