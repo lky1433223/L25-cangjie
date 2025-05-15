@@ -15,4 +15,25 @@ public class Code{
         }
         return codes[point]
     }
+    public func print(with_line!:Bool = false, translate_opr!:Bool = false){
+        var line = 0
+        for(code in codes){
+            line++
+            if(with_line){
+                print(line)
+                print(" ")
+            }
+            print(toString(code.f))
+            print(" ")
+            print(code.l)
+            print(" ")
+            if(translate_opr){
+                print((getOpr ~> toString)(code.a))
+            }
+            else{
+                print(code.a)
+            }
+            println()
+        }
+    }
 }

@@ -11,3 +11,17 @@ public enum Fct{
     jmp |
     jpc
 }
+
+
+func toString(fct: Fct): String {
+    match(fct) {
+        case Fct.lit => return "lit"
+        case Fct.opr => return "opr"
+        case Fct.lod => return "lod"
+        case Fct.sto => return "sto"
+        case Fct.cal => return "cal"
+        case Fct.ini => return "ini"
+        case Fct.jmp => return "jmp"
+        case Fct.jpc => return "jpc"
+    }
+}

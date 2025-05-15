@@ -3,8 +3,6 @@ package L25
 import L25.L25Exception.*
 import std.collection.*
 
-foreign func yyparse():Unit
-
 func buildProgram(croot:CASTNode):Program
 {
     var res = Program()
@@ -76,8 +74,6 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         root.insertChild(child)
     }
     return root
-    
-
 }
 
 func printAST(root:AST):Unit
@@ -91,7 +87,7 @@ func printAST(root:AST):Unit
 
 func translateAST(): AST
 {
-    unsafe{yyparse()}
+    
     let CASTproot:CPointer<CASTNode> = unsafe{getAST()} //获取C语言语法树指针
     
     if(CASTproot.isNull()) //判断指针是否为空。这里如果访问RE会导致程序无法结束。

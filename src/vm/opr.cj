@@ -56,3 +56,22 @@ public func toInt(opr: Opr): Int {
         case Opr.inp => return 102
     }
 }
+
+func toString(opr: Opr): String {
+    match(opr) {
+        case Opr.ret => return "ret"
+        case Opr.add => return "add"
+        case Opr.sub => return "sub"
+        case Opr.mul => return "mul"
+        case Opr.div => return "div"
+        case Opr.eq => return "eq"
+        case Opr.ne => return "ne"
+        case Opr.lt => return "lt"
+        case Opr.le => return "le"
+        case Opr.gt => return "gt"
+        case Opr.ge => return "ge"
+        case Opr.prt => return "prt"
+        case Opr.prtln => return "prtln"
+        case Opr.inp => return "inp"
+    }
+}

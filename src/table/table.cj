@@ -1,5 +1,8 @@
 package L25.table
 import std.collection.*
+/*
+* 符号表
+*/
 public class Table{
     var tables:ArrayList<TableSturct>
     init(){
