@@ -17,4 +17,6 @@
 #define NODE_BOOL_EXPR      13
 #define NODE_FUNC_DEF_LIST  14
 #define NODE_STMT           15
+#define NODE_INPUT_STMT     16
+#define NODE_OUTPUT_STMT    17
 #endif

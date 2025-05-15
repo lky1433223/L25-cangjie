@@ -104,7 +104,7 @@ stmt_list:
     }
     | stmt_list stmt SEMICOLON
     {
-
+        $$ = build_stmt_list($1, $2);
     }
     ;
 

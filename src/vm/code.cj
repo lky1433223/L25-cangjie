@@ -1,5 +1,6 @@
 package L25.vm
 import std.collection.*
+import L25.L25Exception.OutOfRange
 //存储可执行的代码，并且包含代码生成文件
 public class Code{
     var codes : ArrayList<Instruction>

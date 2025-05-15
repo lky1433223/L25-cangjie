@@ -1,3 +1,4 @@
+//这里标记节点的symbol
 package L25
 import L25.L25Exception.UnkonwSymbol
 enum Symbol{
@@ -17,7 +18,16 @@ enum Symbol{
     ident(String) |
     number(Int64) |
     stmt |
-    empty
+    empty |
+    input_stmt |
+    output_stmt
+
+    operator func ==(right:Symbol){
+        return toString(this) == toString(right)
+    }
+    operator func !=(right:Symbol){
+        return toString(this) != toString(right)
+    }
 }
 
 func getSymbol(node_type: Int32): Symbol {
@@ -61,5 +71,7 @@ func toString(symbol: Symbol): String {
         case Symbol.number(value) => return "number ${value}"
         case Symbol.stmt => return "stmt"
         case Symbol.empty => return "empty"
+        case Symbol.input_stmt => return "input_stmt"
+        case Symbol.output_stmt => return "output_stmt"
     }
 }

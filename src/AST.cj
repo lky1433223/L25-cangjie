@@ -1,3 +1,4 @@
+//仓颉的AST类型
 package L25
 import std.collection.*
 

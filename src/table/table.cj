@@ -5,20 +5,20 @@ import std.collection.*
 */
 public class Table{
     var tables:ArrayList<TableSturct>
-    init(){
+    public init(){
         tables = ArrayList<TableSturct>()
     }
-    func enter(name:String,kind:Object, val!:Int=0, level!:Int=0, adr!:Int=0, size!:Int = 0){
+    public func enter(name:String,kind:Kind, val!:Int=0, level!:Int=0, adr!:Int=0, size!:Int = 0){
         var tabelstruct:TableSturct
         match(kind){
-            case Object.constant => tabelstruct=TableSturct(name,kind,val)
-            case Object.variable => tabelstruct=TableSturct(name,kind,level, adr)
-            case Object.function => tabelstruct=TableSturct(name,kind,level, adr, size)
-            case Object.program  => tabelstruct=TableSturct(name,kind)
+            case Kind.constant => tabelstruct=TableSturct(name,kind,val)
+            case Kind.variable => tabelstruct=TableSturct(name,kind,level, adr)
+            case Kind.function => tabelstruct=TableSturct(name,kind,level, adr, size)
+            case Kind.program  => tabelstruct=TableSturct(name,kind)
         }
         tables.append(tabelstruct)
     }
-    func position(name:String):?Int{
+    public func position(name:String):?Int{
         for(i in 0..tables.size){
             if(tables[i].name == name){
                 return i
@@ -26,7 +26,50 @@ public class Table{
         }
         return None
     }
-    func print(){
-        //TODO
+    public func print(){
+        // 打印表头
+        println("+-----+----------------------+----------+-------+-------+-------+-------+")
+        println("| idx | name                 | kind     | value | level | addr  | size  |")
+        println("+-----+----------------------+----------+-------+-------+-------+-------+")
+        for (idx in 0..tables.size) {
+            let entry = tables[idx]
+            let name = entry.name
+            let kind = toString(entry.kind)
+
+            let value = match(entry.kind) {
+                case Kind.constant => "${entry.val}"
+                case _ => "-"
+            }
+
+            let level = match(entry.kind) {
+                case Kind.variable => "${entry.level}"
+                case Kind.function => "${entry.level}"
+                case _ => "-"
+            }
+
+            let addr = match(entry.kind) {
+                case Kind.variable => "${entry.adr}"
+                case Kind.function => "${entry.adr}"
+                case _  => "-"
+            }
+
+            let size = match(entry.kind) {
+                case Kind.function => "${entry.size}"
+                case _ => "-"
+            }
+
+            // 格式化输出
+            println(
+                "| ${idx.toString().padLeft(3)} " +
+                "| ${name.padRight(20)} " +
+                "| ${kind.padRight(8)} " +
+                "| ${value.padRight(5)} " +
+                "| ${level.padRight(5)} " +
+                "| ${addr.padRight(5)} " +
+                "| ${size.padRight(5)} |"
+            )
+        }
+
+        println("+-----+----------------------+----------+-------+-------+-------+-------+")
     }
 }

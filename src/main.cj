@@ -4,12 +4,12 @@ import std.io.*
 foreign func yyparse():Unit
 
 main(): Int64 {
-    
-    unsafe{yyparse()}
     try{
         println("请输入L25程序,Ctrl+D结束:")
+        unsafe{yyparse()}
+        println("从CAST翻译成AST:")
         let ast = translateAST()
-        println("翻译成pcode")
+        println("编译:")
         var code:Code = analyze(ast)
         code.print(with_line:true,translate_opr:true)
     }

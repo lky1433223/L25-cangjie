@@ -2,13 +2,13 @@ package L25.table
 
 public class TableSturct{
     var name: String
-    var kind: Object
+    var kind: Kind
     var val:Int
     var level:Int
     var adr:Int
     var size:Int
     //初始化常量
-    init(name:String, kind:Object, val:Int){
+    init(name:String, kind:Kind, val:Int){
         this.name = name
         this.kind = kind
         this.val = val
@@ -17,7 +17,7 @@ public class TableSturct{
         size = 0
     }
     //初始化变量
-    init(name:String, kind:Object, level:Int, adr:Int){
+    init(name:String, kind:Kind, level:Int, adr:Int){
         this.name = name
         this.kind = kind
         this.level = level
@@ -26,7 +26,7 @@ public class TableSturct{
         size = 0
     }
     //初始化函数
-    init(name:String, kind:Object, level:Int, adr:Int, size:Int){
+    init(name:String, kind:Kind, level:Int, adr:Int, size:Int){
         this.name = name
         this.kind = kind
         this.level = level
@@ -35,7 +35,7 @@ public class TableSturct{
         val = 0
     }
     //初始化程序名
-    init(name:String, kind:Object){
+    init(name:String, kind:Kind){
         
         this.name = name
         this.kind = kind

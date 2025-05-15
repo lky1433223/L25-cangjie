@@ -21,7 +21,7 @@ public class WrongSymbolException <: AnalyzeException{
     public init(now:String, acc:String) {
         super("Wrong Symbol Exception, acc ${acc} but get ${now}")
     }
-    public open override func getClassName(): String {
+    public override func getClassName(): String {
         "WrongSymbolException"
     }
 }

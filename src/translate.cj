@@ -3,7 +3,7 @@ package L25
 import L25.L25Exception.*
 import std.collection.*
 
-func buildProgram(croot:CASTNode):Program
+func buildProgram(_:CASTNode):Program
 {
     var res = Program()
     println("build Program")
@@ -26,21 +26,21 @@ func buildIdent(croot:CASTNode):Ident
     println("build Ident " + res.name)
     return res
 }
-func buildStmtList(croot:CASTNode):StmtList
+func buildStmtList(_:CASTNode):StmtList
 {
     var res = StmtList()
     println("build StmtList")
     return res
 }
 
-func buildStmt(croot:CASTNode):Stmt
+func buildStmt(_:CASTNode):Stmt
 {
     var res = Stmt()
     println("build Stmt")
     return res
 }
 
-func buildDeclareStmt(croot:CASTNode):DeclareStmt
+func buildDeclareStmt(_:CASTNode):DeclareStmt
 {
     var res = DeclareStmt()
     println("build DeclareStmt")
@@ -76,12 +76,15 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
     return root
 }
 
-func printAST(root:AST):Unit
+func printAST(root:AST, deep!:Int = 0):Unit
 {
+    for(_ in 1..=deep){
+        print(" ")
+    }
     println(toString(root.symbol))
     for(child in root.children)
     {
-        printAST(child)
+        printAST(child, deep:deep + 1)
     }
 }
 
