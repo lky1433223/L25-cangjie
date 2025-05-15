@@ -4,7 +4,7 @@ import std.collection.*
 * 符号表
 */
 public class Table{
-    var tables:ArrayList<TableSturct>
+    public var tables:ArrayList<TableSturct>
     public init(){
         tables = ArrayList<TableSturct>()
     }
@@ -19,6 +19,7 @@ public class Table{
         }
         tables.append(tabelstruct)
     }
+    //查找一个符号在表里的id
     public func position(name:String):?Int{
         for(i in 0..tables.size){
             if(tables[i].name == name){
@@ -27,8 +28,13 @@ public class Table{
         }
         return None
     }
+    //返回当前最新元素的id
+    public func position():Int{
+        return tables.size - 1
+    }
     public func print(){
         // 打印表头
+        println("符号表:")
         println("+-----+----------------------+----------+-------+-------+-------+-------+")
         println("| idx | name                 | kind     | value | level | addr  | size  |")
         println("+-----+----------------------+----------+-------+-------+-------+-------+")
@@ -51,11 +57,13 @@ public class Table{
             let addr = match(entry.kind) {
                 case Kind.variable => "${entry.adr}"
                 case Kind.function => "${entry.adr}"
+                case Kind.program  => "${entry.adr}"
                 case _  => "-"
             }
 
             let size = match(entry.kind) {
                 case Kind.function => "${entry.size}"
+                case Kind.program  => "${entry.size}"
                 case _ => "-"
             }
 

@@ -3,7 +3,7 @@ import std.collection.*
 import L25.L25Exception.OutOfRange
 //存储可执行的代码，并且包含代码生成文件
 public class Code{
-    var codes : ArrayList<Instruction>
+    public var codes : ArrayList<Instruction>
     public init(){
         codes = ArrayList<Instruction>()
     }
@@ -16,10 +16,15 @@ public class Code{
         }
         return codes[point]
     }
+    //返回当前最新的code的id
+    public func Position():Int{
+        return codes.size - 1
+    }
     public func print(with_line!:Bool = false, translate_opr!:Bool = false){
         var line = 0
+        println("Pcode:")
         for(code in codes){
-            line++
+            
             if(with_line){
                 print(line)
                 print(" ")
@@ -35,6 +40,7 @@ public class Code{
                 print(code.a)
             }
             println()
+            line++
         }
     }
 }

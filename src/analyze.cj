@@ -8,12 +8,10 @@ import L25.L25Exception.*
 var global_code : Code = Code() // 虚拟机代码
 var global_table: Table = Table() // 符号表
 var lev = 0 //层级记录
-var cnt_var = 0 //记录变量个数
+var cnt_var = 0 //数据分配个数（相对地址）
 //分析AST树，返回pcode
 func analyze(ast:AST){
-    global_code.gen(Fct.jmp)
     analyzeProgram(ast)
-
     global_table.print()
     return global_code
 }
@@ -23,13 +21,25 @@ func analyzeProgram(ast:AST):Unit{
     }
     //第一个节点 一定是 ident
     let name = analyzeIdent(ast.children[0])
+    
     global_table.enter(name, Kind.program)
+    global_code.gen(Fct.jmp) //跳转
+    var tid0 = global_table.position() //记录当前层级在符号表的id
+    var cid0 = global_code.Position()  //记录起始指令id
     //TODO:分析函数定义
+
+
     //分析main函数
-    cnt_var = 0 // cnt_var清零
+    cnt_var = 3 // cnt_var清零(3 保留静态链SL 动态链DL 返回地址RA)
     lev++       // 层级++
-    analyzeStmtList(ast.children[1])
-    global_code.gen(Fct.opr,l:0, a:toInt(Opr.ret))
+    analyzeStmtList(ast.children[1]) //分析后面子句
+    
+    global_code.codes[cid0].a = global_code.Position()+1 //更改初始跳转到起始地点
+    global_table.tables[tid0].adr = global_code.Position()+1 //更改符号表中，这个过程的地址
+    global_table.tables[tid0].size = cnt_var //更改符号表中，这个过程的size
+    global_code.gen(Fct.ini,l:0, a:cnt_var) //ini 申请栈空间
+    global_code.gen(Fct.opr,l:0, a:toInt(Opr.ret)) //ret
+    lev--
 }
 
 func analyzeIdent(ast:AST):String{
@@ -80,7 +90,7 @@ func analyzeDeclareStmt(ast:AST){
     let identNode = ast.children[0]
     var name = analyzeIdent(identNode)
     //注册符号表，相对地址从3开始
-    global_table.enter(name, Kind.variable, val:0, level:lev, adr:cnt_var + 3)
+    global_table.enter(name, Kind.variable, val:0, level:lev, adr:cnt_var)
     cnt_var++
 }
 

@@ -2,5 +2,7 @@ program Myapp {
     main {
         let x;
         let y;
+        let z;
+        let a;
     }
 }
