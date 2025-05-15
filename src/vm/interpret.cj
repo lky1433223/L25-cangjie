@@ -1,6 +1,7 @@
 package L25.vm
 import std.console.*
 import std.convert.*
+import std.collection.*
 
 let stacksize = 1024
 public func interpret(code : Code){
@@ -9,6 +10,7 @@ public func interpret(code : Code){
 	var t = 0; /* 栈顶指针 */
     var i = Instruction(Fct.jmp, _l:0, _a:0)/* 存放当前指令 */
     var s = Array<Int>(stacksize,item:0) /* 栈 */
+    var res = ArrayList<Int>()
     /* 通过过程基址求上l层过程的基址 */
     func base(l:Int, b:Int):Int{
         var b1:Int = b
@@ -37,7 +39,7 @@ public func interpret(code : Code){
                                                 p = s[t+3]
                                                 b = s[t+2]
                                 case Opr.add => t = t - 1
-                                                s[t]   = s[t] + s[t + 1]
+                                                s[t] = s[t] + s[t + 1]
 
                                 case Opr.sub => t = t - 1
                                                 s[t] = s[t] - s[t+1] // 栈顶为 a - b（注意操作数顺序）
@@ -49,7 +51,7 @@ public func interpret(code : Code){
                                                 if (s[t + 1] == 0) {
                                                     throw Exception("Division by zero in Opr.div")
                                                 }
-                                                s[t] = s[t + 1] / s[t]  // 栈顶为 a / b（注意操作数顺序）
+                                                s[t] = s[t] / s[t + 1]  // 栈顶为 a / b（注意操作数顺序）
 
                                 case Opr.eq =>  t = t - 1
                                                 match{
@@ -88,6 +90,7 @@ public func interpret(code : Code){
                                                 }
 
                                 case Opr.prt => print(s[t])
+                                                res.append(s[t])
 
                                 case Opr.prtln => println()
 
@@ -114,5 +117,6 @@ public func interpret(code : Code){
                             t = t - 1
         }
     }while(p!=0)
+    return res
 }
 
