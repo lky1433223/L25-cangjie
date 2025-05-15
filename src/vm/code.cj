@@ -1,5 +1,4 @@
 package L25.vm
-
 import std.collection.*
 //存储可执行的代码，并且包含代码生成文件
 public class Code{
