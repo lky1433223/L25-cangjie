@@ -7,8 +7,8 @@ import L25.L25Exception.*
 //TODO: 没有传引用的方式吗，全局变量还是有点太抽象了
 var global_code : Code = Code() // 虚拟机代码
 var global_table: Table = Table() // 符号表
-var cx = 0  //虚拟机代码指针
 var lev = 0 //层级记录
+var cnt_var = 0 //记录变量个数
 //分析AST树，返回pcode
 func analyze(ast:AST){
     global_code.gen(Fct.jmp)
@@ -26,7 +26,8 @@ func analyzeProgram(ast:AST):Unit{
     global_table.enter(name, Kind.program)
     //TODO:分析函数定义
     //分析main函数
-    
+    cnt_var = 0 // cnt_var清零
+    lev++       // 层级++
     analyzeStmtList(ast.children[1])
     global_code.gen(Fct.opr,l:0, a:toInt(Opr.ret))
 }
@@ -77,10 +78,10 @@ func analyzeDeclareStmt(ast:AST){
     }
     //第一个儿子是ident
     let identNode = ast.children[0]
-    analyzeIdent(identNode)
-
-
-
+    var name = analyzeIdent(identNode)
+    //注册符号表，相对地址从3开始
+    global_table.enter(name, Kind.variable, val:0, level:lev, adr:cnt_var + 3)
+    cnt_var++
 }
 
 func analyzeAssignStmt(ast:AST){

@@ -9,6 +9,7 @@ public class Table{
         tables = ArrayList<TableSturct>()
     }
     public func enter(name:String,kind:Kind, val!:Int=0, level!:Int=0, adr!:Int=0, size!:Int = 0){
+        //TODO:检查符号表冲突
         var tabelstruct:TableSturct
         match(kind){
             case Kind.constant => tabelstruct=TableSturct(name,kind,val)
