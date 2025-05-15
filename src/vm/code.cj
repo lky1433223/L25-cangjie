@@ -27,7 +27,7 @@ public class Code{
             print(" ")
             print(code.l)
             print(" ")
-            if(translate_opr){
+            if(translate_opr && (code.f == Fct.opr)){
                 print((getOpr ~> toString)(code.a))
             }
             else{
