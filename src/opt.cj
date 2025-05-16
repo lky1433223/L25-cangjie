@@ -29,6 +29,10 @@ public enum Opt {
             case Opt.ge => return 10
         }
     }
+
+    operator func ==(right:Opt){
+        return this.toInt() == right.toInt()
+    }
 }
 
 

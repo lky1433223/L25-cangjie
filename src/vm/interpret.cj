@@ -99,6 +99,7 @@ public func interpret(code : Code){
                                                 let num = Int64.parse(str)
                                                 t = t + 1
                                                 s[t] = num
+                                case Opr.rev => s[t] = -s[t]
                             }
             case Fct.lod => t = t + 1
                             s[t] = s[base(i.l, b) + i.a]

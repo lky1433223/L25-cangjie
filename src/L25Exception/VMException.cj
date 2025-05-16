@@ -1,4 +1,5 @@
 package L25.L25Exception
+//虚拟机运行时的报错
 //虚拟机运行中越界
 open public class OutOfRange <: L25Exception{
     public init(){

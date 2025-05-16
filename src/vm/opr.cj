@@ -13,9 +13,10 @@ public enum Opr{
     le |
     gt |
     ge |
-    prt |  //输出一个数
-    prtln | //输出换行符
-    inp  //输入一个数
+    prt   |//输出一个数
+    prtln |//输出换行符
+    inp   |//输入一个数
+    rev    //取反
     
 
     func toInt(){
@@ -31,9 +32,10 @@ public enum Opr{
             case Opr.le => return 8
             case Opr.gt => return 9
             case Opr.ge => return 10
-            case Opr.prt => return 100
+            case Opr.prt   => return 100
             case Opr.prtln => return 101
-            case Opr.inp => return 102
+            case Opr.inp   => return 102
+            case Opr.rev => return 21
         }
     }
 
@@ -53,6 +55,7 @@ public enum Opr{
             case Opr.prt => return "prt"
             case Opr.prtln => return "prtln"
             case Opr.inp => return "inp"
+            case Opr.rev => return "rev"
         }
     }
 }
@@ -73,6 +76,7 @@ public func getOpr(opr_type: Int): Opr {
         case 100 => return Opr.prt
         case 101 => return Opr.prtln
         case 102 => return Opr.inp
+        case 21 => return Opr.rev
         case _ => throw UnkonwOpr("UnkonwOpr ${opr_type}")
     }
 }

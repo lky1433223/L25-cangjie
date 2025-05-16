@@ -1,5 +1,5 @@
 package L25.L25Exception
-//Parse过程报错
+//Parse过程报错 基类包含了程序可能的报错和编译报错
 open public class ParseException <: L25Exception{
     public init(){
         super("ParseException");
@@ -12,3 +12,15 @@ open public class ParseException <: L25Exception{
     }
 }
 
+
+open public class CompileError <: ParseException{
+    public init(){
+        super("CompileError");
+    }
+    public init(message: String) {
+        super(message)
+    }
+    public open override func getClassName(): String {
+        "CompileError"
+    }
+}

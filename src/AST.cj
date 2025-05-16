@@ -48,7 +48,7 @@ public class AssignStmt <: AST{
 
 //TODO:EXPR和Term的Opt转Opr
 public class Expr <: AST{
-    var opt:Opt
+    public var opt:Opt
     init(){
         symbol = Symbol.expr
         opt = Opt.add

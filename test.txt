@@ -2,8 +2,16 @@ program Myapp {
     main {
         let x = 1;
         x = 2;
-        let y;
-        let z;
-        let a;
+        let y = -3;
+        let z = 1 * 2;
+        let a = x + 1 * 2;
+    }
+}
+
+
+program Myapp {
+    main {
+        let n = -1;
+        let x = (1 + 2) * 3;
     }
 }

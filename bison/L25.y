@@ -25,7 +25,8 @@ ASTNode* getAST();
 %token LBRACE RBRACE 
 %token LBRACKET RBRACKET
 %token COLON SEMICOLON COMMA
-
+%left PLUS MINUS
+%left STAR DIVIDE
 
 %token <num> NUMBER
 %token <str> IDENT

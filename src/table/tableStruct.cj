@@ -2,9 +2,9 @@ package L25.table
 
 public class TableSturct{
     var name: String
-    var kind: Kind
-    var val:Int       /* 数值，仅const使用 */
-    var level:Int     /* 所处层，仅const不使用 */
+    public var kind: Kind
+    public var val:Int       /* 数值，仅const使用 */
+    public var level:Int     /* 所处层，仅const不使用 */
     public var adr:Int       /* 地址，仅const不使用 */
     public var size:Int      /* 需要分配的数据区空间, 仅procedure使用 */
     //初始化常量
