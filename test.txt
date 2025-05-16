@@ -5,6 +5,7 @@ program Myapp {
         let y = -3;
         let z = 1 * 2;
         let a = x + 1 * 2;
+        let b = (x + y + x * y + a) / z;
     }
 }
 

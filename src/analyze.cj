@@ -4,7 +4,7 @@ import L25.vm.*
 import L25.table.*
 import L25.L25Exception.*
 
-//TODO: 没有传引用的方式吗，全局变量还是有点太抽象了
+//留一个未解释的问题，没有传引用的方式吗，全局变量还是有点太抽象了
 var global_code : Code = Code() // 虚拟机代码
 var global_table: Table = Table() // 符号表
 var lev = 0 //层级记录
@@ -100,12 +100,27 @@ func analyzeDeclareStmt(ast:AST){
             global_code.gen(Fct.sto, l:lev - table.level, a:table.adr)//将栈顶存回
         }
         else{
-            //TODO：处理变量未声明异常
+            //TODO:处理变量未声明异常
         }
     }
 }
 
 func analyzeAssignStmt(ast:AST){
+    //AssignStmt有两个儿子，分别是ident和expr
+    let ident = (ast.children[0] as Ident).getOrThrow()
+    let name = ident.name
+    if(let Some(ident_id) <- global_table.position(name)){
+        let table: TableSturct = global_table.tables[ident_id]
+        match(table.kind){
+            case Kind.variable => analyzeExpr(ast.children[1]) //先分析expr，将结果存回栈顶。
+                                  global_code.gen(Fct.sto, l:lev - table.level, a:table.adr)
+            case _ => throw Exception() //TODO:细化符号错误的异常
+        }
+    }
+    else{
+        throw Exception()//TODO:处理变量未声明异常
+    }
+
 
 }
 

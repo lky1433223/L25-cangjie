@@ -46,7 +46,6 @@ public class AssignStmt <: AST{
     }
 }
 
-//TODO:EXPR和Term的Opt转Opr
 public class Expr <: AST{
     public var opt:Opt
     init(){

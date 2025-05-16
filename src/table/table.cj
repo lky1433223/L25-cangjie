@@ -21,6 +21,7 @@ public class Table{
     }
     //查找一个符号在表里的id
     public func position(name:String):?Int{
+        //TODO:增加指定查找的类型
         for(i in 0..tables.size){
             if(tables[i].name == name){
                 return i
