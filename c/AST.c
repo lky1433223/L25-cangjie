@@ -28,11 +28,12 @@ void free_AST(struct ASTNode* node) {
         free_AST(node->children[i]);
     }
 
-    // 2. 释放当前节点的 data 数据（根据你的实际使用情况调整）
+    // 2. 释放当前节点的 data 数据
     if (node->data != NULL) {
         if (node->node_type == NODE_IDENT) {
             free(((struct identData*)node->data));
-        } else if (node->node_type == NODE_NUMBER) {
+        }
+        else if (node->node_type == NODE_NUMBER) {
             free(((struct numData*)node->data));
         }
     }
@@ -84,6 +85,61 @@ ASTNode* build_declare_stmt(ASTNode* ident, ASTNode* expr){
     return node;
 }
 
+ASTNode* build_expr(int op, ASTNode* expr, ASTNode* term){
+    // 分配 AST 节点内存
+    ASTNode* node = create_node(NODE_EXPR);
+    if (!node) {
+        fprintf(stderr, "Failed to allocate AST node for expr");
+        return NULL;
+    }
+    // 分配 exprData 结构体内存
+    struct exprData* expr_data = (struct exprData*)malloc(sizeof(struct exprData));
+    if (!expr_data) {
+        fprintf(stderr, "Failed to allocate exprData");
+        free(node);
+        return NULL;
+    }
+    expr_data->op = op;
+    node->data = expr_data;
+    if(expr) insert_child(node, expr);
+    if(term) insert_child(node, term);
+    return node;
+}
+
+//创建declare_stmt节点
+ASTNode* build_term(int op, ASTNode* term, ASTNode* factor){
+    // 分配 AST 节点内存
+    ASTNode* node = create_node(NODE_TERM);
+    if (!node) {
+        fprintf(stderr, "Failed to allocate AST node for term");
+        return NULL;
+    }
+    // 分配 exprData 结构体内存
+    struct termData* term_data = (struct termData*)malloc(sizeof(struct termData));
+    if (!term_data) {
+        fprintf(stderr, "Failed to allocate termData");
+        free(node);
+        return NULL;
+    }
+    if(op == OP_DIV || op == OP_MUL){
+        term_data->op = op;
+    }
+    else{
+        term_data->op = 0;
+    }
+    node->data = term_data;
+    if(term) insert_child(node, term);
+    if(factor) insert_child(node, factor);
+
+    return node;
+}
+
+ASTNode* build_factor(ASTNode* next_node){
+    ASTNode* node = create_node(NODE_FACTOR);
+    if(next_node) insert_child(node, next_node);
+    return node;
+}
+
 ASTNode* build_ident(const char* name) {
     // 分配 AST 节点内存
     ASTNode* node = create_node(NODE_IDENT);
@@ -108,3 +164,24 @@ ASTNode* build_ident(const char* name) {
 
     return node;
 }
+
+ASTNode* build_number(const int num){
+    // 分配 AST 节点内存
+    ASTNode* node = create_node(NODE_IDENT);
+    if (!node) {
+        fprintf(stderr, "Failed to allocate AST node for number: %d\n", num);
+        return NULL;
+    }
+    // 分配 numData 结构体内存
+    struct numData* num_data = (struct numData*)malloc(sizeof(struct numData));
+    if (!num_data) {
+        fprintf(stderr, "Failed to allocate numData for: %d\n", num);
+        free(node);
+        return NULL;
+    }
+    num_data->num = num;
+    node->data = num_data;
+    return node;
+}
+
+

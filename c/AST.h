@@ -22,6 +22,15 @@ struct numData{
     int num;
 };
 
+struct exprData{
+    int op; //ADD | SUB
+};
+
+
+struct termData{
+    int op; //MUL | DIV
+};
+
 __attribute__((visibility("default")))
 //递归释放整个AST
 void free_AST(struct ASTNode* node);
@@ -52,6 +61,14 @@ ASTNode* build_stmt(ASTNode* next_node);
 ASTNode* build_declare_stmt(ASTNode* ident, ASTNode* expr);
 
 
+//创建expr节点
+ASTNode* build_expr(int op, ASTNode* expr, ASTNode* term);
+
+//创建declare_stmt节点
+ASTNode* build_term(int op, ASTNode* term, ASTNode* factor);
+
+//创建declare_stmt节点
+ASTNode* build_factor(ASTNode* next_node);
 
 /**
  * 创建一个表示标识符（IDENT）的 AST 节点
@@ -60,6 +77,13 @@ ASTNode* build_declare_stmt(ASTNode* ident, ASTNode* expr);
  */
 ASTNode* build_ident(const char* name);
 
+
+/**
+ * 创建一个表示数字（NUMBER）的 AST 节点
+ * @param  数字
+ * @return 构建好的 ASTNode 指针
+ */
+ASTNode* build_number(const int num);
 
 
 //创建终结符节点（关键字）

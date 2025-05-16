@@ -4,6 +4,7 @@
 #include <math.h>
 #include "AST.h"
 #include "NODE.h"
+#include "OPT.h"
 void yyerror(char *msg);
 int yylex(void);
 struct ASTNode* root;
@@ -120,6 +121,10 @@ declare_stmt:
     {
         $$ = build_declare_stmt($2, NULL);
     }
+    | LET ident ASSIGN expr
+    {
+        $$ = build_declare_stmt($2,$4);
+    }
     ;
 
 assign_stmt:
@@ -179,23 +184,60 @@ bool_expr:
     ;
 
 expr:
-    /* empty */
+    PLUS term
     {
-        $$ = NULL;
+        $$ = build_expr(OP_ADD, NULL, $2);
+    }
+    | MINUS term
+    {
+        $$ = build_expr(OP_SUB, NULL, $2);
+    }
+    | term
+    {
+        //默认是加法
+        $$ = build_expr(OP_ADD, NULL, $1);
+    }
+    | expr PLUS term
+    {
+        $$ = build_expr(OP_ADD, $1, $3);
+    }
+    | expr MINUS term
+    {
+        $$ = build_expr(OP_SUB, $1, $3);
     }
     ;
 
 term:
-    /* empty */
+    factor
     {
-        $$ = NULL;
+        $$ = build_term(0, NULL, $1);
+    }
+    | term STAR factor
+    {
+        $$ = build_term(OP_MUL, $1, $3);
+    }
+    | term DIVIDE factor
+    {
+        $$ = build_term(OP_DIV, $1, $3);
     }
     ;
 
 factor:
-    /* empty */
+    ident
     {
-        $$ = NULL;
+        $$ = build_factor($1);
+    }
+    | number
+    {
+        $$ = build_factor($1);
+    }
+    | LPAREN expr RPAREN
+    {
+        $$ = build_factor($2);
+    }
+    | func_call
+    {
+        $$ = build_factor($1);
     }
     ;
 
@@ -207,7 +249,7 @@ ident:
     ;
 
 number:
-    /* empty */
+    NUMBER
     {
         $$ = NULL;
     }

@@ -12,6 +12,8 @@ main(): Int64 {
         println("编译:")
         var code:Code = analyze(ast)
         code.print(with_line:true,translate_opr:true)
+        println("执行程序")
+        interpret(code)
     }
     catch(e: Error)
     {

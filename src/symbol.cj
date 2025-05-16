@@ -20,7 +20,9 @@ enum Symbol{
     stmt |
     empty |
     input_stmt |
-    output_stmt
+    output_stmt |
+    term |
+    factor 
 
     operator func ==(right:Symbol){
         return toString(this) == toString(right)
@@ -48,6 +50,10 @@ func getSymbol(node_type: Int32): Symbol {
         case 13 => return Symbol.bool_expr
         case 14 => return Symbol.fun_def_list
         case 15 => return Symbol.stmt
+        case 16 => return Symbol.input_stmt
+        case 17 => return Symbol.output_stmt
+        case 18 => return Symbol.term
+        case 19 => return Symbol.factor
         case _ => throw UnkonwSymbol("未知的节点类型: ${node_type}")
     }
 }
@@ -73,5 +79,7 @@ func toString(symbol: Symbol): String {
         case Symbol.empty => return "empty"
         case Symbol.input_stmt => return "input_stmt"
         case Symbol.output_stmt => return "output_stmt"
+        case Symbol.term => return "term"
+        case Symbol.factor => return "factor"
     }
 }

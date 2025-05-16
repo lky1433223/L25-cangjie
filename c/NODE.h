@@ -19,4 +19,6 @@
 #define NODE_STMT           15
 #define NODE_INPUT_STMT     16
 #define NODE_OUTPUT_STMT    17
+#define NODE_TERM           18
+#define NODE_FACTOR         19
 #endif
