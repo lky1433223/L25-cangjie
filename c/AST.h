@@ -1,7 +1,7 @@
 #ifndef H_AST_H
 #define H_AST_H
 
-#define CHILDREN_CAP 5
+#define CHILDREN_CAP 100
 #define MAX_IDNET_LEN 100
 
 struct ASTNode;
@@ -52,7 +52,7 @@ ASTNode* build_program(ASTNode* ident, ASTNode* func_def_list, ASTNode* main_blo
 ASTNode* build_func_def_list(ASTNode* fun_def_list, ASTNode* func_def);
 
 //创建stmt_list节点
-ASTNode* build_stmt_list(ASTNode* stmt_list, ASTNode* stmt);
+ASTNode* build_stmt_list();
 
 //创建stmt节点
 ASTNode* build_stmt(ASTNode* next_node);

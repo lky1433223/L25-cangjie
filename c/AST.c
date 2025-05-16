@@ -65,10 +65,8 @@ ASTNode* build_func_def_list(ASTNode* fun_def_list, ASTNode* func_def)
 }
 
 
-ASTNode* build_stmt_list(ASTNode* stmt_list, ASTNode* stmt){
+ASTNode* build_stmt_list(){
     ASTNode* node = create_node(NODE_STMT_LIST);
-    if(stmt_list) insert_child(node, stmt_list);
-    if(stmt) insert_child(node, stmt);
     return node;
 }
 

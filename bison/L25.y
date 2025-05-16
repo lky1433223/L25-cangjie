@@ -101,11 +101,13 @@ param_list:
 stmt_list:
     stmt SEMICOLON
     {
-        $$ = build_stmt_list(NULL, $1);
+        $$ = build_stmt_list();
+        insert_child($$, $1);
     }
     | stmt_list stmt SEMICOLON
     {
-        $$ = build_stmt_list($1, $2);
+        $$ = $1;
+        insert_child($$, $2);
     }
     ;
 

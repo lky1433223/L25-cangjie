@@ -55,13 +55,9 @@ func analyzeStmtList(ast:AST):Unit{
     if (ast.symbol != Symbol.stmt_list) {
         throw WrongSymbolException(toString(ast.symbol), toString(Symbol.stmt_list))
     }
-    //stmt list节点有2个或1个，{stmt_list} stmt
-    if(ast.children.size == 2){
-        analyzeStmtList(ast.children[0])
-        analyzeStmt(ast.children[1])
-    }
-    else{
-        analyzeStmt(ast.children[0])
+    //stmt list节点有很多儿子
+    for(child in ast.children){
+        analyzeStmt(child)
     }
 }
 

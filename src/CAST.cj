@@ -1,11 +1,12 @@
 //CAST 对应 C语言的AST node
 package L25
-
+let MAX_IDNET_LEN = 100
+let CHILDREN_CAP  = 100
 @C
 struct CASTNode{
     var node_type: Int32 = 0
     var data : CPointer<Unit> = CPointer<Unit>()
-    var children: VArray<CPointer<CASTNode>, $5> = VArray<CPointer<CASTNode>, $5>(item: CPointer<CASTNode>())
+    var children: VArray<CPointer<CASTNode>, $100> = VArray<CPointer<CASTNode>, $100>(item: CPointer<CASTNode>())
     var child_count: Int32 = 0
 }
 
