@@ -35,3 +35,16 @@ public class UnkonwSymbol <: Unkonw{
         "UnkonwSymbol"
     }
 }
+
+
+public class UnkonwOpt <: Unkonw{
+        public init(){
+        super("UnkonwOpt");
+    }
+    public init(message: String) {
+        super(message)
+    }
+    public override func getClassName(): String {
+        "UnkonwOpt"
+    }
+}

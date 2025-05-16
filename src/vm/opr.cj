@@ -1,6 +1,6 @@
 package L25.vm
 import L25.L25Exception.UnkonwOpr
-
+//虚拟机用到的运算操作符
 public enum Opr{
     ret | //函数返回
     add |
@@ -16,6 +16,45 @@ public enum Opr{
     prt |  //输出一个数
     prtln | //输出换行符
     inp  //输入一个数
+    
+
+    func toInt(){
+        match(this) {
+            case Opr.ret => return 0
+            case Opr.add => return 1
+            case Opr.sub => return 2
+            case Opr.mul => return 3
+            case Opr.div => return 4
+            case Opr.eq => return 5
+            case Opr.ne => return 6
+            case Opr.lt => return 7
+            case Opr.le => return 8
+            case Opr.gt => return 9
+            case Opr.ge => return 10
+            case Opr.prt => return 100
+            case Opr.prtln => return 101
+            case Opr.inp => return 102
+        }
+    }
+
+    func toString(){
+        match(this) {
+            case Opr.ret => return "ret"
+            case Opr.add => return "add"
+            case Opr.sub => return "sub"
+            case Opr.mul => return "mul"
+            case Opr.div => return "div"
+            case Opr.eq => return "eq"
+            case Opr.ne => return "ne"
+            case Opr.lt => return "lt"
+            case Opr.le => return "le"
+            case Opr.gt => return "gt"
+            case Opr.ge => return "ge"
+            case Opr.prt => return "prt"
+            case Opr.prtln => return "prtln"
+            case Opr.inp => return "inp"
+        }
+    }
 }
 
 public func getOpr(opr_type: Int): Opr {
@@ -38,40 +77,6 @@ public func getOpr(opr_type: Int): Opr {
     }
 }
 
-public func toInt(opr: Opr): Int {
-    match(opr) {
-        case Opr.ret => return 0
-        case Opr.add => return 1
-        case Opr.sub => return 2
-        case Opr.mul => return 3
-        case Opr.div => return 4
-        case Opr.eq => return 5
-        case Opr.ne => return 6
-        case Opr.lt => return 7
-        case Opr.le => return 8
-        case Opr.gt => return 9
-        case Opr.ge => return 10
-        case Opr.prt => return 100
-        case Opr.prtln => return 101
-        case Opr.inp => return 102
-    }
-}
+public func toInt(opr: Opr){opr.toInt()}
 
-func toString(opr: Opr): String {
-    match(opr) {
-        case Opr.ret => return "ret"
-        case Opr.add => return "add"
-        case Opr.sub => return "sub"
-        case Opr.mul => return "mul"
-        case Opr.div => return "div"
-        case Opr.eq => return "eq"
-        case Opr.ne => return "ne"
-        case Opr.lt => return "lt"
-        case Opr.le => return "le"
-        case Opr.gt => return "gt"
-        case Opr.ge => return "ge"
-        case Opr.prt => return "prt"
-        case Opr.prtln => return "prtln"
-        case Opr.inp => return "inp"
-    }
-}
+func toString(opr: Opr){opr.toString()}

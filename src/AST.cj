@@ -21,23 +21,6 @@ public class Program <: AST{
     }
 }
 
-public class Ident <: AST{
-    var name:String
-    init() {
-        name = String()
-        symbol = Symbol.ident(name)
-    }
-    init(_name:String){
-        name = _name
-        symbol = Symbol.ident(name)
-    }
-    func setName(_name:String)
-    {
-        name = _name;
-        symbol = Symbol.ident(name)
-    }
-}
-
 public class StmtList <: AST{
     init(){
         symbol = Symbol.stmt_list
@@ -57,6 +40,65 @@ public class DeclareStmt <: AST{
     }
 }
 
-public class Number <: AST{
+//TODO:EXPR和Term的Opt转Opr
+public class Expr <: AST{
+    var opt:Opt
+    init(){
+        symbol = Symbol.expr
+        opt = Opt.add
+    }
+    init(opt:Opt){
+        symbol = Symbol.expr
+        this.opt = opt
+    }
+}
 
+public class Term <: AST{
+    var opt:?Opt //Term节点可能只有一个数，这时就是None
+    init(){
+        opt = None
+    }
+    init(opt:Opt){
+        symbol = Symbol.term
+        this.opt = opt
+    }
+}
+
+public class Factor <: AST{
+    init(){
+        symbol = Symbol.factor
+    }
+}
+
+public class Ident <: AST{
+    var name:String
+    init() {
+        name = String()
+        symbol = Symbol.ident(name)
+    }
+    init(_name:String){
+        name = _name
+        symbol = Symbol.ident(name)
+    }
+    func setName(_name:String)
+    {
+        name = _name;
+        symbol = Symbol.ident(name)
+    }
+}
+
+public class Number <: AST{
+    var num:Int
+    init(){
+        num = 0
+        symbol = Symbol.number(num)
+    }
+    init(num:Int){
+        this.num = num
+        symbol = Symbol.number(num)
+    }
+    func setNum(num:Int){
+        this.num = num
+        symbol = Symbol.number(num)
+    }
 }

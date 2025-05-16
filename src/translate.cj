@@ -47,6 +47,36 @@ func buildDeclareStmt(_:CASTNode):DeclareStmt
     return res
 }
 
+func buildExpr(croot:CASTNode):Expr
+{
+    println("build buildExpr")
+    let cpdata: CPointer<CexprData> = unsafe{CPointer<CexprData>(croot.data)} //C data指针
+    if(cpdata.isNull()){throw Exception("empty point")}
+    let cdata = unsafe{cpdata.read()} //解析指针
+    let op = cdata.op
+    var res = Expr(getOpt(op))
+    return res
+}
+
+func buildTerm(croot:CASTNode):Term
+{
+    println("build buildTerm")
+    let cpdata: CPointer<CtermData> = unsafe{CPointer<CtermData>(croot.data)} //C data指针
+    if(cpdata.isNull()){throw Exception("empty point")}
+    let cdata = unsafe{cpdata.read()} //解析指针
+    let op = cdata.op
+    var res = Term()
+    if(op != 0){res = Term(getOpt(op))}
+    return res
+}
+
+func buildFactor(_:CASTNode):Factor
+{
+    println("build buildFactor")
+    var res = Factor()
+    return res
+}
+
 func dfsCAST(cproot:CPointer<CASTNode>):AST
 {
     //判断C语言指针是否为空
@@ -55,6 +85,7 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
     let croot = unsafe{cproot.read()}
     //处理data字段
     let node_symbol = getSymbol(croot.node_type)
+    println(croot.node_type)
     var root : AST
     match (node_symbol){
         case Symbol.program => root = buildProgram(croot)
@@ -62,7 +93,10 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         case Symbol.stmt_list => root = buildStmtList(croot)
         case Symbol.stmt => root = buildStmt(croot)
         case Symbol.declare_stmt => root = buildDeclareStmt(croot)
-        case _ => throw UnkonwSymbol("未知的节点类型")
+        case Symbol.expr => root = buildExpr(croot)
+        case Symbol.term => root = buildTerm(croot)
+        case Symbol.factor => root = buildFactor(croot)
+        case _ => throw UnkonwSymbol("未知的节点类型, ${croot.node_type}")
     }
     //处理儿子节点
     let child_count = croot.child_count
