@@ -27,7 +27,7 @@ ASTNode* getAST();
 %token COLON SEMICOLON COMMA
 
 
-%token NUMBER
+%token <num> NUMBER
 %token <str> IDENT
 
 %type <node> program 
@@ -257,7 +257,7 @@ ident:
 number:
     NUMBER
     {
-        $$ = NULL;
+        $$ = build_number($1);
     }
     ;
 

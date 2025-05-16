@@ -2,6 +2,7 @@
 package L25
 import L25.L25Exception.UnkonwSymbol
 enum Symbol{
+    empty |
     program | 
     fun_def | 
     fun_def_list | 
@@ -18,7 +19,6 @@ enum Symbol{
     ident(String) |
     number(Int64) |
     stmt |
-    empty |
     input_stmt |
     output_stmt |
     term |

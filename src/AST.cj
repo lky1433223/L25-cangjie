@@ -62,6 +62,7 @@ public class Expr <: AST{
 public class Term <: AST{
     var opt:?Opt //Term节点可能只有一个数，这时就是None
     init(){
+        symbol = Symbol.term
         opt = None
     }
     init(opt:Opt){

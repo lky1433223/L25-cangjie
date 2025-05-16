@@ -172,7 +172,7 @@ ASTNode* build_ident(const char* name) {
 
 ASTNode* build_number(const int num){
     // 分配 AST 节点内存
-    ASTNode* node = create_node(NODE_IDENT);
+    ASTNode* node = create_node(NODE_NUMBER);
     if (!node) {
         fprintf(stderr, "Failed to allocate AST node for number: %d\n", num);
         return NULL;
