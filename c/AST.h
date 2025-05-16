@@ -57,17 +57,19 @@ ASTNode* build_stmt_list();
 //创建stmt节点
 ASTNode* build_stmt(ASTNode* next_node);
 
-//创建declare_stmt节点
+//创建declare_stmt节点，变量声明
 ASTNode* build_declare_stmt(ASTNode* ident, ASTNode* expr);
 
+//创建assign_stmt节点，赋值语句
+ASTNode* build_assign_stmt(ASTNode* ident, ASTNode* expr);
 
 //创建expr节点
 ASTNode* build_expr(int op, ASTNode* expr, ASTNode* term);
 
-//创建declare_stmt节点
+//创建term节点
 ASTNode* build_term(int op, ASTNode* term, ASTNode* factor);
 
-//创建declare_stmt节点
+//创建factor节点
 ASTNode* build_factor(ASTNode* next_node);
 
 /**

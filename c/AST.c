@@ -83,6 +83,13 @@ ASTNode* build_declare_stmt(ASTNode* ident, ASTNode* expr){
     return node;
 }
 
+ASTNode* build_assign_stmt(ASTNode* ident, ASTNode* expr){
+    ASTNode* node = create_node(NODE_ASSIGN_STMT);
+    if(ident) insert_child(node, ident);
+    if(expr) insert_child(node, expr);
+    return node;
+}
+
 ASTNode* build_expr(int op, ASTNode* expr, ASTNode* term){
     // 分配 AST 节点内存
     ASTNode* node = create_node(NODE_EXPR);

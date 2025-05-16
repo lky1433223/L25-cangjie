@@ -47,6 +47,12 @@ func buildDeclareStmt(_:CASTNode):DeclareStmt
     return res
 }
 
+func buildAssignStmt(_:CASTNode):AssignStmt
+{
+    var res = AssignStmt()
+    println("build AssignStmt")
+    return res
+}
 func buildExpr(croot:CASTNode):Expr
 {
     println("build buildExpr")
@@ -93,6 +99,7 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         case Symbol.stmt_list => root = buildStmtList(croot)
         case Symbol.stmt => root = buildStmt(croot)
         case Symbol.declare_stmt => root = buildDeclareStmt(croot)
+        case Symbol.assign_stmt => root = buildAssignStmt(croot)
         case Symbol.expr => root = buildExpr(croot)
         case Symbol.term => root = buildTerm(croot)
         case Symbol.factor => root = buildFactor(croot)
@@ -129,7 +136,7 @@ func translateAST(): AST
     
     if(CASTproot.isNull()) //判断指针是否为空。这里如果访问RE会导致程序无法结束。
     {
-        throw ParseException("无法获取语法树根节点。请检查语法错误。")
+        throw ParseException("无法获取语法树根节点。请检查错误。")
     }
     let ASTroot:AST = dfsCAST(CASTproot) //递归解析CAST，创建cangjie类型AST
 

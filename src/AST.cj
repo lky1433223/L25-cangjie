@@ -40,6 +40,12 @@ public class DeclareStmt <: AST{
     }
 }
 
+public class AssignStmt <: AST{
+    init(){
+        symbol = Symbol.assign_stmt
+    }
+}
+
 //TODO:EXPR和Term的Opt转Opr
 public class Expr <: AST{
     var opt:Opt

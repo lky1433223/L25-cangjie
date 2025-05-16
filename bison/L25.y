@@ -116,6 +116,10 @@ stmt:
     {
         $$ = build_stmt($1);
     }
+    | assign_stmt
+    {
+        $$ = build_stmt($1);
+    }
     ;
 
 declare_stmt:
@@ -130,9 +134,9 @@ declare_stmt:
     ;
 
 assign_stmt:
-    /* empty */
+    ident ASSIGN expr
     {
-        $$ = NULL;
+        $$ = build_assign_stmt($1,$3);
     }
     ;
 
