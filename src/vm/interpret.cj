@@ -91,8 +91,8 @@ public func interpret(code : Code){
 
                                 case Opr.prt => print(s[t])
                                                 print(" ")
-                                                t = t - 1
                                                 res.append(s[t])
+                                                t = t - 1
 
                                 case Opr.prtln => println()
 

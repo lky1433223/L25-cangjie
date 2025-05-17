@@ -4,6 +4,7 @@ import std.unittest.testmacro.*
 import L25.vm.*
 
 @Test
+//测试虚拟机代码
 class InterpretTests{
 
     @TestCase
@@ -15,6 +16,7 @@ class InterpretTests{
         codes.gen(Fct.opr, l:0, a:toInt(Opr.prt))
         codes.gen(Fct.opr, l:0, a:toInt(Opr.prtln))
         codes.gen(Fct.opr, l:0, a:toInt(Opr.ret))
+        codes.print(translate_opr:true)
         var res = interpret(codes)
         @Expect(res[0], 3)
     }
