@@ -202,9 +202,29 @@ output_stmt:
     ;
 
 bool_expr:
-    /* empty */
+    expr EQ expr
     {
-        $$ = NULL;
+        $$ = build_bool_expr(EQ, $1, $3);
+    }
+    | expr NEQ expr
+    {
+        $$ = build_bool_expr(NEQ, $1, $3);
+    }
+    | expr LT expr
+    {
+        $$ = build_bool_expr(LT, $1, $3);
+    }
+    | expr LE expr
+    {
+        $$ = build_bool_expr(LE, $1, $3);
+    }
+    | expr GT expr
+    {
+        $$ = build_bool_expr(GT, $1, $3);
+    }
+    | expr GE expr
+    {
+        $$ = build_bool_expr(GE, $1, $3);
     }
     ;
 

@@ -82,6 +82,18 @@ public class Term <: AST{
     }
 }
 
+public class BoolExpr <: AST{
+    public var opt:Opt
+    init(){
+        symbol = Symbol.expr
+        opt = Opt.add
+    }
+    init(opt:Opt){
+        symbol = Symbol.expr
+        this.opt = opt
+    }
+}
+
 public class Factor <: AST{
     init(){
         symbol = Symbol.factor

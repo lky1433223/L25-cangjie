@@ -31,6 +31,10 @@ struct termData{
     int op; //MUL | DIV
 };
 
+struct boolExprData{
+    int op; //EQ NE LT LE GT GE
+};
+
 __attribute__((visibility("default")))
 //递归释放整个AST
 void free_AST(struct ASTNode* node);
@@ -77,6 +81,9 @@ ASTNode* build_term(int op, ASTNode* term, ASTNode* factor);
 
 //创建factor节点
 ASTNode* build_factor(ASTNode* next_node);
+
+//创建bool_expr节点
+ASTNode* build_bool_expr(int op, ASTNode* expr1, ASTNode* expr2);
 
 //创建arg_list节点
 ASTNode* build_arg_list();

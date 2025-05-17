@@ -103,6 +103,16 @@ func buildTerm(croot:CASTNode):Term
     return res
 }
 
+func buildBoolExpr(croot:CASTNode):BoolExpr{
+    println("build BoolExpr")
+    let cpdata: CPointer<CboolExprData> = unsafe{CPointer<CboolExprData>(croot.data)} //C data指针
+    if(cpdata.isNull()){throw Exception("empty point")}
+    let cdata = unsafe{cpdata.read()} //解析指针
+    let op = cdata.op
+    var res = BoolExpr(getOpt(op))
+    return res
+}
+
 func buildFactor(_:CASTNode):Factor
 {
     println("build buildFactor")
@@ -150,6 +160,7 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         case Symbol.output_stmt => root = buildOutputStmt(croot)
         case Symbol.arg_list => root = buildArgList(croot)
         case Symbol.param_list => root = builParamList(croot)
+        case Symbol.bool_expr => root = buildBoolExpr(croot)
         case _ => throw UnkonwSymbol("未知的节点类型, ${croot.node_type}")
     }
     //处理儿子节点

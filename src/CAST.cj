@@ -31,6 +31,11 @@ struct CtermData {
     var op: Int32 = 0
 }
 
+@C
+struct CboolExprData {
+    var op: Int32 = 0
+}
+
 foreign func getAST() : CPointer<CASTNode>
 foreign func free_AST(root: CPointer<CASTNode>):Unit
 

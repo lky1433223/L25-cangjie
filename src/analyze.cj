@@ -11,7 +11,7 @@ var global_table: Table = Table() // 符号表
 var lev = 0 //层级记录
 var cnt_var = 0 //数据分配个数（相对地址）
 //分析AST树，返回pcode
-func analyze(ast:AST){
+func analyzeAST(ast:AST){
     analyzeProgram(ast)
     global_table.print()
     return global_code

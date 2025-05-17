@@ -161,6 +161,22 @@ ASTNode* build_factor(ASTNode* next_node){
     return node;
 }
 
+ASTNode* build_bool_expr(int op, ASTNode* expr1, ASTNode* expr2){
+    ASTNode* node = create_node(NODE_BOOL_EXPR);
+    // 分配 boolExprData 结构体内存
+    struct boolExprData* bool_expr_data = (struct boolExprData*)malloc(sizeof(struct boolExprData));
+    if (!bool_expr_data) {
+        fprintf(stderr, "Failed to allocate boolExprData");
+        free(node);
+        return NULL;
+    }
+    bool_expr_data->op = op;
+    node->data = bool_expr_data;
+    if(expr1) insert_child(node, expr1);
+    if(expr2) insert_child(node, expr2);
+    return node;
+}
+
 ASTNode* build_arg_list(){
     ASTNode* node = create_node(NODE_ARG_LIST);
     return node;
