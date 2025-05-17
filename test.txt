@@ -6,6 +6,7 @@ program Myapp {
         let z = 1 * 2;
         let a = x + 1 * 2;
         let b = (x + y + x * y + a) / z;
+        output(a, b);
     }
 }
 
@@ -14,5 +15,12 @@ program Myapp {
     main {
         let n = -1;
         let x = (1 + 2) * 3;
+    }
+}
+
+
+program Myapp {
+    main {
+        output(1);
     }
 }

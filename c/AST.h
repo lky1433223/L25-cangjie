@@ -63,6 +63,9 @@ ASTNode* build_declare_stmt(ASTNode* ident, ASTNode* expr);
 //创建assign_stmt节点，赋值语句
 ASTNode* build_assign_stmt(ASTNode* ident, ASTNode* expr);
 
+//创建output_stmt节点
+ASTNode* build_output_stmt(ASTNode* arg_list);
+
 //创建expr节点
 ASTNode* build_expr(int op, ASTNode* expr, ASTNode* term);
 
@@ -71,6 +74,9 @@ ASTNode* build_term(int op, ASTNode* term, ASTNode* factor);
 
 //创建factor节点
 ASTNode* build_factor(ASTNode* next_node);
+
+//创建arg_list节点
+ASTNode* build_arg_list();
 
 /**
  * 创建一个表示标识符（IDENT）的 AST 节点

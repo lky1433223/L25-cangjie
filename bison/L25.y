@@ -121,6 +121,10 @@ stmt:
     {
         $$ = build_stmt($1);
     }
+    | output_stmt
+    {
+        $$ = build_stmt($1);
+    }
     ;
 
 declare_stmt:
@@ -163,9 +167,15 @@ func_call:
     ;
 
 arg_list:
-    /* empty */
+    expr
     {
-        $$ = NULL;
+        $$ = build_arg_list();
+        insert_child($$, $1);
+    }
+    | arg_list COMMA expr
+    {
+        $$ = $1;
+        insert_child($$, $3);
     }
     ;
 
@@ -177,9 +187,9 @@ input_stmt:
     ;
 
 output_stmt:
-    /* empty */
+    OUTPUT LPAREN arg_list RPAREN
     {
-        $$ = NULL;
+        $$ = build_output_stmt($3);
     }
     ;
 

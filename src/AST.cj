@@ -46,6 +46,12 @@ public class AssignStmt <: AST{
     }
 }
 
+public class OutputStmt <: AST{
+    init(){
+        symbol = Symbol.output_stmt
+    }
+}
+
 public class Expr <: AST{
     public var opt:Opt
     init(){
@@ -106,5 +112,12 @@ public class Number <: AST{
     func setNum(num:Int){
         this.num = num
         symbol = Symbol.number(num)
+    }
+}
+
+
+public class ArgList <: AST{
+    init(){
+        symbol = Symbol.arg_list
     }
 }

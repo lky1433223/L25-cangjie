@@ -58,6 +58,8 @@ ASTNode* build_program(ASTNode* ident, ASTNode* func_def_list, ASTNode* main_blo
     return node;
 }
 
+
+
 ASTNode* build_func_def_list(ASTNode* fun_def_list, ASTNode* func_def)
 {
     ASTNode* node = create_node(NODE_FUNC_DEF_LIST);
@@ -87,6 +89,13 @@ ASTNode* build_assign_stmt(ASTNode* ident, ASTNode* expr){
     ASTNode* node = create_node(NODE_ASSIGN_STMT);
     if(ident) insert_child(node, ident);
     if(expr) insert_child(node, expr);
+    return node;
+}
+
+//创建output_stmt节点
+ASTNode* build_output_stmt(ASTNode* arg_list){
+    ASTNode* node = create_node(NODE_OUTPUT_STMT);
+    if(arg_list) insert_child(node, arg_list);
     return node;
 }
 
@@ -142,6 +151,11 @@ ASTNode* build_term(int op, ASTNode* term, ASTNode* factor){
 ASTNode* build_factor(ASTNode* next_node){
     ASTNode* node = create_node(NODE_FACTOR);
     if(next_node) insert_child(node, next_node);
+    return node;
+}
+
+ASTNode* build_arg_list(){
+    ASTNode* node = create_node(NODE_ARG_LIST);
     return node;
 }
 

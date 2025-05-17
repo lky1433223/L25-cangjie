@@ -25,19 +25,24 @@ func analyzeProgram(ast:AST):Unit{
     global_table.enter(name, Kind.program)
     global_code.gen(Fct.jmp) //跳转
     var tid0 = global_table.position() //记录当前层级在符号表的id
-    var cid0 = global_code.Position()  //记录起始指令id
+    var cid_jmp = global_code.Position()  //记录入口跳转指令id
     //TODO:分析函数定义
 
 
+
     //分析main函数
+
+    global_code.codes[cid_jmp].a = global_code.Position()+1 //更改初始跳转到起始地点
+
+    global_code.gen(Fct.ini,l:0, a:0) //ini 申请栈空间  此时还不知道，需要后续回填
+    var cid_ini = global_code.Position() //记录入口申请栈空间指令id
+    
     cnt_var = 3 // cnt_var清零(3 保留静态链SL 动态链DL 返回地址RA)
     lev++       // 层级++
-    analyzeStmtList(ast.children[1]) //分析后面子句
-    
-    global_code.codes[cid0].a = global_code.Position()+1 //更改初始跳转到起始地点
+    analyzeStmtList(ast.children[1]) //分析后面主函数子句
     global_table.tables[tid0].adr = global_code.Position()+1 //更改符号表中，这个过程的地址
     global_table.tables[tid0].size = cnt_var //更改符号表中，这个过程的size
-    global_code.gen(Fct.ini,l:0, a:cnt_var) //ini 申请栈空间
+    global_code.codes[cid_ini].a = cnt_var   //更改指令中申请的栈空间
     global_code.gen(Fct.opr,l:0, a:toInt(Opr.ret)) //ret
     lev--
 }

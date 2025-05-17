@@ -3,7 +3,7 @@
 // 节点类型常量（用宏代替enum）
 #define NODE_PROGRAM        0
 #define NODE_FUNC_DEF       1
-#define NODE_PARAM_LIST     2
+#define NODE_PARAM_LIST     2  //函数参数列表
 #define NODE_STMT_LIST      3
 #define NODE_DECLARE_STMT   4
 #define NODE_ASSIGN_STMT    5
@@ -21,4 +21,5 @@
 #define NODE_OUTPUT_STMT    17
 #define NODE_TERM           18
 #define NODE_FACTOR         19
+#define NODE_ARG_LIST       20
 #endif
