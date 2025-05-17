@@ -189,6 +189,6 @@ func translateAST(): AST
 
     printAST(ASTroot)
 
-    unsafe{free_AST(CASTproot)}
+    unsafe{free_AST(CASTproot)} //释放树，防止内存泄漏
     return ASTroot
 }

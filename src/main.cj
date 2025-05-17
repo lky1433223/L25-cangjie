@@ -1,12 +1,26 @@
 package L25
 import L25.vm.*
-import std.io.*
 import L25.L25Exception.ParseException
+import std.io.*
+import std.console.*
+import std.convert.*
 foreign func yyparse():Int
-
+foreign func reset_yyin(fname: CString):Unit //重定向yyparse的输入
 main(): Int64 {
     try{
-        println("请输入L25程序,Ctrl+D结束:")
+        println("请输入L25文件名(留空则需要后续手动输入代码)")
+        if(let Some(fname) <-  Console.stdIn.readln()){
+            if(fname.size != 0){
+                let pfname = unsafe{LibC.mallocCString(fname)}
+                unsafe{reset_yyin(pfname)}
+            }
+            else{
+                println("请输入L25代码,Ctrl+D结束")
+            }
+        }
+        else{
+            println("请输入L25代码,Ctrl+D结束")
+        }
         let yyresult:Int = unsafe{yyparse()}
         if(yyresult!=0){throw ParseException("语法分析异常,请检查程序")}
         println("从CAST翻译成AST:")

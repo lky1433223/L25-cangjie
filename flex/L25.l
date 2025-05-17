@@ -3,7 +3,7 @@
 #include <string.h>
 #include "parser.tab.h"
 #include "AST.h"
-
+FILE* fin;
 void yyerror(char *);
 int yywrap(void);
 
@@ -63,3 +63,13 @@ int yywrap(void)
   return 1;
 }
 
+void reset_yyin(char* fname)
+{
+  printf("use L25 FILE %s \n", fname);
+  if ((fin = fopen(fname, "r")) == NULL)
+	{
+		printf("Can't open the input file!\n");
+		exit(1);
+	}
+  yyset_in(fin);
+}
