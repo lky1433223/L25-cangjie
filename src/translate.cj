@@ -73,6 +73,13 @@ func buildOutputStmt(_:CASTNode):OutputStmt
     return res
 }
 
+func buildIfStmt(_:CASTNode):IfStmt
+{
+    var res = IfStmt()
+    println("build IfStmt")
+    return res
+}
+
 func buildInputStmt(_:CASTNode):InputStmt
 {
     var res = InputStmt()
@@ -161,6 +168,7 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         case Symbol.arg_list => root = buildArgList(croot)
         case Symbol.param_list => root = builParamList(croot)
         case Symbol.bool_expr => root = buildBoolExpr(croot)
+        case Symbol.if_stmt => root = buildIfStmt(croot)
         case _ => throw UnkonwSymbol("未知的节点类型, ${croot.node_type}")
     }
     //处理儿子节点

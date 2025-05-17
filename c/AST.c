@@ -92,17 +92,24 @@ ASTNode* build_assign_stmt(ASTNode* ident, ASTNode* expr){
     return node;
 }
 
-//创建output_stmt节点
 ASTNode* build_output_stmt(ASTNode* arg_list){
     ASTNode* node = create_node(NODE_OUTPUT_STMT);
     if(arg_list) insert_child(node, arg_list);
     return node;
 }
 
-//创建input_stmt节点
 ASTNode* build_input_stmt(ASTNode* param_list){
     ASTNode* node = create_node(NODE_INPUT_STMT);
     if(param_list) insert_child(node, param_list);
+    return node;
+}
+
+
+ASTNode* build_if_stmt(ASTNode* bool_expr, ASTNode* if_stmt_list, ASTNode* else_stmt_list){
+    ASTNode* node = create_node(NODE_IF_STMT);
+    if(bool_expr) insert_child(node, bool_expr);
+    if(if_stmt_list) insert_child(node, if_stmt_list);
+    if(else_stmt_list) insert_child(node, else_stmt_list);
     return node;
 }
 
@@ -127,7 +134,6 @@ ASTNode* build_expr(int op, ASTNode* expr, ASTNode* term){
     return node;
 }
 
-//创建declare_stmt节点
 ASTNode* build_term(int op, ASTNode* term, ASTNode* factor){
     // 分配 AST 节点内存
     ASTNode* node = create_node(NODE_TERM);

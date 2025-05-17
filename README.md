@@ -30,7 +30,7 @@ a compiler developed in cangjie for L25
 | assign_stmt | ✅  | ✅  | ✅ | ✅  | ✅  | ✅  | 已完成 |
 | input_stmt | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 需实现输入 |
 | output_stmt | ✅  | ✅  | ✅ | ✅  | ✅  | ⭕️  | 需要重新处理代码输入问题 |
-| if_stmt | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | 需实现条件语句 |
+| if_stmt | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 需实现条件语句 |
 | while_stmt | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | 需实现循环语句 |
 | func_call | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | 需实现函数调用 |
 | expr | ✅ | ✅  | ✅  | ✅  | ✅  | ✅  | 已完成 |
@@ -38,7 +38,7 @@ a compiler developed in cangjie for L25
 | factor | ✅ | ✅  | ✅  | ✅  | ✅  | ⭕️  | 还未实现函数调用 |
 | ident | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 已完成 |
 | number | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 已完成 |
-| bool_expr | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | 需实现布尔表达式 |
+| bool_expr | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 需实现布尔表达式的pcode生成 |
 
 
 ## 终结符

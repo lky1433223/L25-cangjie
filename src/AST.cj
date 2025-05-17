@@ -58,6 +58,12 @@ public class InputStmt <: AST{
     }
 }
 
+public class IfStmt <: AST{
+    init(){
+        symbol = Symbol.if_stmt
+    }
+}
+
 public class Expr <: AST{
     public var opt:Opt
     init(){
@@ -85,11 +91,11 @@ public class Term <: AST{
 public class BoolExpr <: AST{
     public var opt:Opt
     init(){
-        symbol = Symbol.expr
-        opt = Opt.add
+        symbol = Symbol.bool_expr
+        opt = Opt.eq
     }
     init(opt:Opt){
-        symbol = Symbol.expr
+        symbol = Symbol.bool_expr
         this.opt = opt
     }
 }

@@ -133,6 +133,10 @@ stmt:
     {
         $$ = build_stmt($1);
     }
+    | if_stmt
+    {
+        $$ = build_stmt($1);
+    }
     ;
 
 declare_stmt:
@@ -154,9 +158,13 @@ assign_stmt:
     ;
 
 if_stmt:
-    /* empty */
+    IF LPAREN bool_expr RPAREN LBRACE stmt_list RBRACE
     {
-        $$ = NULL;
+        $$ = build_if_stmt($3, $6, NULL);
+    }
+    | IF LPAREN bool_expr RPAREN LBRACE stmt_list RBRACE ELSE LBRACE stmt_list RBRACE
+    {
+        $$ = build_if_stmt($3, $6, $10);
     }
     ;
 
@@ -204,27 +212,27 @@ output_stmt:
 bool_expr:
     expr EQ expr
     {
-        $$ = build_bool_expr(EQ, $1, $3);
+        $$ = build_bool_expr(OP_EQ, $1, $3);
     }
     | expr NEQ expr
     {
-        $$ = build_bool_expr(NEQ, $1, $3);
+        $$ = build_bool_expr(OP_NE, $1, $3);
     }
     | expr LT expr
     {
-        $$ = build_bool_expr(LT, $1, $3);
+        $$ = build_bool_expr(OP_LT, $1, $3);
     }
     | expr LE expr
     {
-        $$ = build_bool_expr(LE, $1, $3);
+        $$ = build_bool_expr(OP_LE, $1, $3);
     }
     | expr GT expr
     {
-        $$ = build_bool_expr(GT, $1, $3);
+        $$ = build_bool_expr(OP_GT, $1, $3);
     }
     | expr GE expr
     {
-        $$ = build_bool_expr(GE, $1, $3);
+        $$ = build_bool_expr(OP_GE, $1, $3);
     }
     ;
 

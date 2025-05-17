@@ -131,7 +131,22 @@ func analyzeAssignStmt(ast:AST){
 }
 
 func analyzeIfStmt(ast:AST){
-    
+    //子节点  bool_expr stmt_list [stmt_list]
+    analyzeBoolExpr(ast.children[0])
+
+    global_code.gen(Fct.jpc, l:0, a:0) //jpc 稍后会回填
+    let cid_jpc = global_code.Position()
+    //处理if block
+    analyzeStmtList(ast.children[1]);
+    global_code.codes[cid_jpc].a = global_code.Position() + 1
+    if(ast.children.size == 3){
+        global_code.gen(Fct.jmp, l:0, a:0) //如果有else block就要跳过, jmp 稍后回填
+        global_code.codes[cid_jpc].a = global_code.Position() + 1 //因为这里有else，会在if末尾添加jmp，所以jpc要再+1
+        let cid_jmp = global_code.Position()
+        //下面生成else部分的代码
+        analyzeStmtList(ast.children[2])
+        global_code.codes[cid_jmp].a = global_code.Position() + 1
+    }
 }
 
 func analyzeWhileStmt(ast:AST){
@@ -195,11 +210,8 @@ func analyzeExpr(ast:AST):Unit{
 }
 func analyzeTerm(ast:AST):Unit{
     let term = (ast as Term).getOrThrow()
-    println("analyze Term")
     
     if(let Some(opt) <- term.opt){ //是一个未处理完的表达式, term opt factor,先分析term
-        print(opt.toInt())
-        print(" ")
         println(term.children.size)
         analyzeTerm(term.children[0])
         analyzeFactor(term.children[1])
@@ -210,7 +222,6 @@ func analyzeTerm(ast:AST):Unit{
         }
     }
     else{                          //是单个数字，也就没有符号了
-        println("no opt ")
         println(term.children.size)
         analyzeFactor(term.children[0])
     }
@@ -239,6 +250,21 @@ func analyzeFactor(ast:AST){
     }
 }
 
+func analyzeBoolExpr(ast:AST){
+//ast: expr1 expr2
+    let bool_expr = (ast as BoolExpr).getOrThrow()
+    analyzeExpr(bool_expr.children[0])
+    analyzeExpr(bool_expr.children[1])
+    match(bool_expr.opt){
+        case Opt.eq => global_code.gen(Fct.opr, a:toInt(Opr.eq))
+        case Opt.ne => global_code.gen(Fct.opr, a:toInt(Opr.ne))
+        case Opt.le => global_code.gen(Fct.opr, a:toInt(Opr.le))
+        case Opt.lt => global_code.gen(Fct.opr, a:toInt(Opr.lt))
+        case Opt.ge => global_code.gen(Fct.opr, a:toInt(Opr.ge))
+        case Opt.gt => global_code.gen(Fct.opr, a:toInt(Opr.gt))
+        case _ => throw Exception() //细化这个处理
+    }
+}
 func analyzeFunCall(ast:AST){
 
 }
