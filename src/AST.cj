@@ -64,6 +64,12 @@ public class IfStmt <: AST{
     }
 }
 
+public class WhileStmt <: AST{
+    init(){
+        symbol = Symbol.while_stmt
+    }
+}
+
 public class Expr <: AST{
     public var opt:Opt
     init(){

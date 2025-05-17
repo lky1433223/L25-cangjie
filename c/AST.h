@@ -76,6 +76,10 @@ ASTNode* build_input_stmt(ASTNode* param_list);
 //创建if_stmt节点
 ASTNode* build_if_stmt(ASTNode* bool_expr, ASTNode* if_stmt_list, ASTNode* else_stmt_list);
 
+
+//创建while_stmt节点
+ASTNode* build_while_stmt(ASTNode* bool_expr, ASTNode* stmt_list);
+
 //创建expr节点
 ASTNode* build_expr(int op, ASTNode* expr, ASTNode* term);
 

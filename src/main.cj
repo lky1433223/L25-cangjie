@@ -55,6 +55,10 @@ main(): Int64 {
     }
     catch(e : Exception)
     {
+        let st = e.getStackTrace()
+        for(item in st){
+            println(item.methodName)
+        }
         println(e)
     }
     

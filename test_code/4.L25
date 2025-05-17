@@ -1,0 +1,10 @@
+program TestWhile{
+    main{
+        let a = 4;
+        while(a == 4){
+            output(a);
+            a = a + 1;
+        };
+        output(a);
+    }
+}

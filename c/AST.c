@@ -113,6 +113,13 @@ ASTNode* build_if_stmt(ASTNode* bool_expr, ASTNode* if_stmt_list, ASTNode* else_
     return node;
 }
 
+ASTNode* build_while_stmt(ASTNode* bool_expr, ASTNode* stmt_list){
+    ASTNode* node = create_node(NODE_WHILE_STMT);
+    if(bool_expr) insert_child(node, bool_expr);
+    if(stmt_list) insert_child(node, stmt_list);
+    return node;
+}
+
 ASTNode* build_expr(int op, ASTNode* expr, ASTNode* term){
     // 分配 AST 节点内存
     ASTNode* node = create_node(NODE_EXPR);

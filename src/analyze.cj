@@ -150,7 +150,17 @@ func analyzeIfStmt(ast:AST){
 }
 
 func analyzeWhileStmt(ast:AST){
+    //子节点 bool_expr stmt_list 
+    let cid_while = global_code.Position() //先记录起始的pcode id
     
+    analyzeBoolExpr(ast.children[0])
+    global_code.gen(Fct.jpc, l:0, a:0) //jpc 稍后会回填
+    let cid_jpc = global_code.Position()
+
+    //分析stmt_list
+    analyzeStmtList(ast.children[1])
+    global_code.gen(Fct.jmp, l:0, a:cid_while + 1) //跳回起始
+    global_code.codes[cid_jpc].a = global_code.Position() + 1 //回填跳转
 }
 
 

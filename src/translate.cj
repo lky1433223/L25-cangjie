@@ -80,6 +80,13 @@ func buildIfStmt(_:CASTNode):IfStmt
     return res
 }
 
+func buildWhileStmt(_:CASTNode):WhileStmt
+{
+    var res = WhileStmt()
+    println("build WhileStmt")
+    return res
+}
+
 func buildInputStmt(_:CASTNode):InputStmt
 {
     var res = InputStmt()
@@ -169,6 +176,7 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         case Symbol.param_list => root = builParamList(croot)
         case Symbol.bool_expr => root = buildBoolExpr(croot)
         case Symbol.if_stmt => root = buildIfStmt(croot)
+        case Symbol.while_stmt => root = buildWhileStmt(croot)
         case _ => throw UnkonwSymbol("未知的节点类型, ${croot.node_type}")
     }
     //处理儿子节点

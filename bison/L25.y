@@ -137,6 +137,10 @@ stmt:
     {
         $$ = build_stmt($1);
     }
+    | while_stmt
+    {
+        $$ = build_stmt($1);
+    }
     ;
 
 declare_stmt:
@@ -169,9 +173,9 @@ if_stmt:
     ;
 
 while_stmt:
-    /* empty */
+    WHILE LPAREN bool_expr RPAREN LBRACE stmt_list RBRACE
     {
-        $$ = NULL;
+        $$ = build_while_stmt($3, $6);
     }
     ;
 
