@@ -52,6 +52,12 @@ public class OutputStmt <: AST{
     }
 }
 
+public class InputStmt <: AST{
+    init(){
+        symbol = Symbol.input_stmt
+    }
+}
+
 public class Expr <: AST{
     public var opt:Opt
     init(){
@@ -119,5 +125,11 @@ public class Number <: AST{
 public class ArgList <: AST{
     init(){
         symbol = Symbol.arg_list
+    }
+}
+
+public class ParamList <: AST{
+    init(){
+        symbol = Symbol.param_list
     }
 }

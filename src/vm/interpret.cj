@@ -27,7 +27,7 @@ public func interpret(code : Code){
     s[2] = 0
     s[3] = 0
     do{
-        println("pointer:${p}")
+        // println("pointer:${p}")
         i = code.getCode(p)
         p += 1
         match(i.f){
@@ -90,6 +90,8 @@ public func interpret(code : Code){
                                                 }
 
                                 case Opr.prt => print(s[t])
+                                                print(" ")
+                                                t = t - 1
                                                 res.append(s[t])
 
                                 case Opr.prtln => println()

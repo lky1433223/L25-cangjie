@@ -1,0 +1,7 @@
+program TestINOUT{
+    main{
+        let a;
+        input(a);
+        output(a);
+    }
+}

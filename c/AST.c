@@ -99,6 +99,13 @@ ASTNode* build_output_stmt(ASTNode* arg_list){
     return node;
 }
 
+//创建input_stmt节点
+ASTNode* build_input_stmt(ASTNode* param_list){
+    ASTNode* node = create_node(NODE_INPUT_STMT);
+    if(param_list) insert_child(node, param_list);
+    return node;
+}
+
 ASTNode* build_expr(int op, ASTNode* expr, ASTNode* term){
     // 分配 AST 节点内存
     ASTNode* node = create_node(NODE_EXPR);
@@ -156,6 +163,11 @@ ASTNode* build_factor(ASTNode* next_node){
 
 ASTNode* build_arg_list(){
     ASTNode* node = create_node(NODE_ARG_LIST);
+    return node;
+}
+
+ASTNode* build_param_list(){
+    ASTNode* node = create_node(NODE_PARAM_LIST);
     return node;
 }
 

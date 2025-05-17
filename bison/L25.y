@@ -51,8 +51,6 @@ ASTNode* getAST();
 %type <node> factor
 %type <node> ident
 %type <node> number
-%type <node> letter
-%type <node> digit
 
 %%
 program:
@@ -93,9 +91,15 @@ func_def:
     ;
 
 param_list:
-    /* empty */
+    | ident
     {
-        $$ = NULL;
+        $$ = build_param_list();
+        insert_child($$, $1);
+    }
+    | param_list COMMA ident
+    {
+        $$ = $1;
+        insert_child($$, $3);
     }
     ;
 
@@ -122,6 +126,10 @@ stmt:
         $$ = build_stmt($1);
     }
     | output_stmt
+    {
+        $$ = build_stmt($1);
+    }
+    | input_stmt
     {
         $$ = build_stmt($1);
     }
@@ -180,9 +188,9 @@ arg_list:
     ;
 
 input_stmt:
-    /* empty */
+    INPUT LPAREN param_list RPAREN
     {
-        $$ = NULL;
+        $$ = build_input_stmt($3);
     }
     ;
 
@@ -272,19 +280,6 @@ number:
     }
     ;
 
-letter:
-    /* empty */
-    {
-        $$ = NULL;
-    }
-    ;
-
-digit:
-    /* empty */
-    {
-        $$ = NULL;
-    }
-    ;
 
 
 %%

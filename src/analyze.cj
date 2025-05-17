@@ -3,6 +3,7 @@ package L25
 import L25.vm.*
 import L25.table.*
 import L25.L25Exception.*
+import std.collection.ArrayList
 
 //留一个未解释的问题，没有传引用的方式吗，全局变量还是有点太抽象了
 var global_code : Code = Code() // 虚拟机代码
@@ -137,12 +138,39 @@ func analyzeWhileStmt(ast:AST){
     
 }
 
-func analyzeOutputStmt(ast:AST){
 
+func analyzeOutputStmt(ast:AST){
+    //下一个节点是arg_list,实际需要做的是，遍历arg_list，对里面的每个expr执行计算，然后print,最后println
+    analyzeArgList(ast.children[0]){ expr_list : ArrayList<AST> =>
+        for(expr in expr_list){
+            analyzeExpr(expr) //先计算expr，结果会存在栈顶
+            global_code.gen(Fct.opr, l:0, a:toInt(Opr.prt))
+        }
+        global_code.gen(Fct.opr, l:0, a:toInt(Opr.prtln))
+    }
 }
 
 func analyzeInputStmt(ast:AST){
+    //下一个节点是arg_list,需要的是每次输入一个，然后执行sto
+    analyzeParamList(ast.children[0]){ ident_list : ArrayList<AST> =>
+        for(ident in ident_list){
+            let name = analyzeIdent(ident)
+            global_code.gen(Fct.opr, l:0, a:toInt(Opr.inp)) //读入到栈顶
+            if(let Some(ident_id) <- global_table.position(name)){
+                let table = global_table.tables[ident_id]
+                match(table.kind){
+                    case Kind.variable => global_code.gen(Fct.sto, l:lev - table.level, a:table.adr); //变量，找到变量地址并将其值填入
+                    case _ => throw CompileError() //TODO:细化这个CE
+                }
+            }
+            else
+            {
+                throw Exception() //TODO:细化这个Expection
+            }
 
+        }
+
+    }
 }
 
 func analyzeExpr(ast:AST):Unit{
@@ -192,7 +220,7 @@ func analyzeFactor(ast:AST){
     //factor 只有一个节点 分别处理
     match(child.symbol){
         //是符号表中的符号
-        case Symbol.ident(name) => //给变量赋值
+        case Symbol.ident(name) => //取变量名做解析
                                     if(let Some(ident_id) <- global_table.position(name)){
                                         let table: TableSturct = global_table.tables[ident_id]
                                         match(table.kind){
@@ -213,4 +241,13 @@ func analyzeFactor(ast:AST){
 
 func analyzeFunCall(ast:AST){
 
+}
+
+//分析ArgList，不同的ArgList需要用不同的操作，因此传入fn函数
+func analyzeArgList(ast:AST, fn:(ArrayList<AST>) -> Unit){
+    fn(ast.children)
+}
+
+func analyzeParamList(ast:AST, fn:(ArrayList<AST>) -> Unit){
+    fn(ast.children)
 }

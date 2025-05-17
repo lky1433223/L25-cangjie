@@ -73,6 +73,13 @@ func buildOutputStmt(_:CASTNode):OutputStmt
     return res
 }
 
+func buildInputStmt(_:CASTNode):InputStmt
+{
+    var res = InputStmt()
+    println("build InputStmt")
+    return res
+}
+
 func buildExpr(croot:CASTNode):Expr
 {
     println("build buildExpr")
@@ -111,6 +118,13 @@ func buildArgList(_:CASTNode):ArgList
     return res
 }
 
+func builParamList(_:CASTNode):ParamList
+{
+    var res = ParamList()
+    println("build ParamList")
+    return res
+}
+
 func dfsCAST(cproot:CPointer<CASTNode>):AST
 {
     //判断C语言指针是否为空
@@ -132,8 +146,10 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         case Symbol.term => root = buildTerm(croot)
         case Symbol.factor => root = buildFactor(croot)
         case Symbol.number(_) => root = buildNumber(croot)
+        case Symbol.input_stmt => root = buildInputStmt(croot)
         case Symbol.output_stmt => root = buildOutputStmt(croot)
         case Symbol.arg_list => root = buildArgList(croot)
+        case Symbol.param_list => root = builParamList(croot)
         case _ => throw UnkonwSymbol("未知的节点类型, ${croot.node_type}")
     }
     //处理儿子节点
