@@ -60,9 +60,19 @@ ASTNode* build_program(ASTNode* ident, ASTNode* func_def_list, ASTNode* main_blo
 
 
 
-ASTNode* build_func_def_list(ASTNode* fun_def_list, ASTNode* func_def)
+ASTNode* build_func_def_list()
 {
     ASTNode* node = create_node(NODE_FUNC_DEF_LIST);
+    return node;
+}
+
+ASTNode* build_func_def(ASTNode* ident, ASTNode* param_list, ASTNode* stmt_list, ASTNode* ret_expr)
+{
+    ASTNode* node = create_node(NODE_FUNC_DEF);
+    if(ident)      insert_child(node, ident);
+    if(param_list) insert_child(node, param_list);
+    if(stmt_list)  insert_child(node, stmt_list);
+    if(ret_expr)   insert_child(node, ret_expr);
     return node;
 }
 

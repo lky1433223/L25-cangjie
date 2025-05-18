@@ -6,7 +6,7 @@
 FILE* fin;
 void yyerror(char *);
 int yywrap(void);
-
+extern YYLTYPE yylloc;  // Bison 会在 parser.tab.h 中定义 YYLTYPE
 %}
 
 letter [a-zA-Z]

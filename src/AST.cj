@@ -21,6 +21,18 @@ public class Program <: AST{
     }
 }
 
+public class FuncDefList <: AST{
+    init(){
+        symbol = Symbol.fun_def_list
+    }
+}
+
+public class FuncDef <: AST{
+    init(){
+        symbol = Symbol.fun_def
+    }
+}
+
 public class StmtList <: AST{
     init(){
         symbol = Symbol.stmt_list

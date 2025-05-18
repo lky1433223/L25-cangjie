@@ -53,7 +53,10 @@ ASTNode* build_program(ASTNode* ident, ASTNode* func_def_list, ASTNode* main_blo
 
 
 //创建func_def_list节点
-ASTNode* build_func_def_list(ASTNode* fun_def_list, ASTNode* func_def);
+ASTNode* build_func_def_list();
+
+//创建func_def节点
+ASTNode* build_func_def(ASTNode* ident, ASTNode* param_list, ASTNode* stmt_list, ASTNode* ret_expr);
 
 //创建stmt_list节点
 ASTNode* build_stmt_list();

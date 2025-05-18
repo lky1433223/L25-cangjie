@@ -14,7 +14,6 @@ enum Symbol{
     while_stmt | 
     func_call | 
     expr |
-    string_list | 
     bool_expr |
     ident(String) |
     number(Int64) |
@@ -47,7 +46,6 @@ func getSymbol(node_type: Int32): Symbol {
         case 9 => return Symbol.expr
         case 10 => return Symbol.ident("")  // NODE_IDENT，需动态传入标识符名称
         case 11 => return Symbol.number(0)   // NODE_NUMBER，需动态传入数值
-        case 12 => return Symbol.string_list // NODE_STRING_LIST
         case 13 => return Symbol.bool_expr
         case 14 => return Symbol.fun_def_list
         case 15 => return Symbol.stmt
@@ -72,7 +70,6 @@ func toString(symbol: Symbol): String {
         case Symbol.while_stmt => return "while_stmt"
         case Symbol.func_call => return "func_call"
         case Symbol.expr => return "expr"
-        case Symbol.string_list => return "string_list"
         case Symbol.bool_expr => return "bool_expr"
         case Symbol.fun_def_list => return "fun_def_list"
         case Symbol.ident(name) => return "ident ${name}"

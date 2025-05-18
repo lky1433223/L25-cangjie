@@ -21,7 +21,7 @@ func parse(_:Int):Int64{
         println("请输入L25代码,Ctrl+D结束")
     }
     let yyresult:Int = unsafe{yyparse()}
-    // if(yyresult!=0){throw ParseException("语法分析异常,请检查程序")}
+    if(yyresult!=0){throw ParseException("语法分析异常,请检查程序")}
     return yyresult
 }
 func translate(yyresult:Int64):AST{

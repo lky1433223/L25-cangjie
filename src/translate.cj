@@ -9,6 +9,19 @@ func buildProgram(_:CASTNode):Program
     println("build Program")
     return res
 }
+
+func buildFuncDefList(_:CASTNode):FuncDefList{
+    var res = FuncDefList()
+    println("build FuncDefList")
+    return res
+}
+
+func buildFuncDef(_:CASTNode):FuncDef{
+    var res = FuncDef()
+    println("build FuncDef")
+    return res
+}
+
 func buildIdent(croot:CASTNode):Ident
 {
     var res = Ident() //定义Ident类型
@@ -26,6 +39,7 @@ func buildIdent(croot:CASTNode):Ident
     println("build Ident " + res.name)
     return res
 }
+
 func buildNumber(croot:CASTNode):Number
 {
     let cpdata: CPointer<CNumData> = unsafe{CPointer<CNumData>(croot.data)} //C data指针
@@ -35,8 +49,6 @@ func buildNumber(croot:CASTNode):Number
     println("build Number ${res.num}" )
     return res
 }
-
-
 
 func buildStmtList(_:CASTNode):StmtList
 {
@@ -177,6 +189,9 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         case Symbol.bool_expr => root = buildBoolExpr(croot)
         case Symbol.if_stmt => root = buildIfStmt(croot)
         case Symbol.while_stmt => root = buildWhileStmt(croot)
+        case Symbol.fun_def_list => root = buildFuncDefList(croot)
+        case Symbol.fun_def => root = buildFuncDef(croot)
+        case Symbol.func_call => root = AST()
         case _ => throw UnkonwSymbol("未知的节点类型, ${croot.node_type}")
     }
     //处理儿子节点

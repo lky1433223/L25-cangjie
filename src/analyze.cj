@@ -28,7 +28,14 @@ func analyzeProgram(ast:AST):Unit{
     var tid0 = global_table.position() //记录当前层级在符号表的id
     var cid_jmp = global_code.Position()  //记录入口跳转指令id
     //TODO:分析函数定义
-
+    var main_block:AST
+    if(ast.children.size == 3){
+        var fun_def_list = ast.children[1]
+        main_block = ast.children[2]
+    }
+    else{
+        main_block = ast.children[1]
+    }
 
 
     //分析main函数
@@ -40,7 +47,7 @@ func analyzeProgram(ast:AST):Unit{
     
     cnt_var = 3 // cnt_var清零(3 保留静态链SL 动态链DL 返回地址RA)
     lev++       // 层级++
-    analyzeStmtList(ast.children[1]) //分析后面主函数子句
+    analyzeStmtList(main_block) //分析后面主函数子句
     global_table.tables[tid0].adr = global_code.Position()+1 //更改符号表中，这个过程的地址
     global_table.tables[tid0].size = cnt_var //更改符号表中，这个过程的size
     global_code.codes[cid_ini].a = cnt_var   //更改指令中申请的栈空间
