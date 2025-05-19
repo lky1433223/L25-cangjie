@@ -1,5 +1,5 @@
-program TestFuncDef{
-    func testfunc(){
+program TestFuncDefParam{
+    func testfunc(a, b, c){
         let aaa = 1;
         return aaa;
     }

@@ -8,8 +8,10 @@ import std.collection.ArrayList
 //留一个未解释的问题，没有传引用的方式吗，全局变量还是有点太抽象了
 var global_code : Code = Code() // 虚拟机代码
 var global_table: Table = Table() // 符号表
+var global_name: ArrayList<String> = ArrayList<String>() //临时记录符号
 var lev = 0 //层级记录
 var cnt_var = 0 //数据分配个数（相对地址）
+var cnt_param = 0 //变量分配个数 
 //分析AST树，返回pcode
 func analyzeAST(ast:AST){
     analyzeProgram(ast)
@@ -27,24 +29,21 @@ func analyzeProgram(ast:AST):Unit{
     global_code.gen(Fct.jmp) //跳转
     var tid0 = global_table.position() //记录当前层级在符号表的id
     var cid_jmp = global_code.Position()  //记录入口跳转指令id
-    //TODO:分析函数定义
+
     var main_block:AST
-    if(ast.children.size == 3){
+    if(ast.children.size == 3){ //有函数定义 分析
         var fun_def_list = ast.children[1]
         main_block = ast.children[2]
+        analyzeFuncDefList(fun_def_list)
     }
-    else{
+    else{ //没有函数定义 第二个儿子就是主函数
         main_block = ast.children[1]
     }
 
-
     //分析main函数
-
     global_code.codes[cid_jmp].a = global_code.Position()+1 //更改初始跳转到起始地点
-
     global_code.gen(Fct.ini,l:0, a:0) //ini 申请栈空间  此时还不知道，需要后续回填
     var cid_ini = global_code.Position() //记录入口申请栈空间指令id
-    
     cnt_var = 3 // cnt_var清零(3 保留静态链SL 动态链DL 返回地址RA)
     lev++       // 层级++
     analyzeStmtList(main_block) //分析后面主函数子句
@@ -52,6 +51,78 @@ func analyzeProgram(ast:AST):Unit{
     global_table.tables[tid0].size = cnt_var //更改符号表中，这个过程的size
     global_code.codes[cid_ini].a = cnt_var   //更改指令中申请的栈空间
     global_code.gen(Fct.opr,l:0, a:toInt(Opr.ret)) //ret
+    lev--
+}
+
+func analyzeFuncDefList(ast:AST){
+    for(child in ast.children){
+        analyzeFuncDef(child)
+    }
+}
+
+//函数调用过程：预留一个位置给返回值，然后压入参数，然后执行函数调用，最后需要出栈
+func analyzeFuncDef(ast:AST){
+    // 儿子有 ident [param] stmt return
+    let tmp_global_name = ArrayList<String>()
+    //由于ArrayList执行浅拷贝，这里手动clone
+    for(item in global_name){
+        tmp_global_name.append(item)
+    }
+    global_name.clear()
+
+    cnt_param = 0
+    cnt_var = 3
+    lev++
+    let name = analyzeIdent(ast.children[0])
+    global_table.enter(name, Kind.function, level:lev, adr:global_code.Position(), size:0, param:0) //size param需要后续回填
+    var tid0 = global_table.position()
+    global_code.gen(Fct.jmp, l:0, a:0) //跳转地址后续回填
+    var cid_jmp = global_code.Position()
+    var stmt_list = ast.children[1]
+    var ret = ast.children[2]
+    if(ast.children.size == 4){
+        var param = ast.children[1]
+        stmt_list = ast.children[2]
+        ret = ast.children[3]
+        //分析所有的参数，从-x - -1分配栈空间。他们的入栈和出栈在调用的时候处理
+        analyzeParamList(param){ ident_list: ArrayList<AST> =>
+            cnt_param = ident_list.size
+            var param_adr = -cnt_param //变量的地址为负的，
+            for(ident in ident_list){
+                let name = analyzeIdent(ident)
+                global_name.append(name)
+                global_table.enter(name, Kind.variable, level:lev, adr:param_adr)
+            }
+        }
+    }
+
+    //分析 stmt
+    global_code.codes[cid_jmp].a = global_code.Position() + 1
+    global_code.gen(Fct.ini,l:0, a:0) //ini 申请栈空间  此时还不知道，需要后续回填
+    var cid_ini = global_code.Position()
+    analyzeStmtList(stmt_list)
+    global_table.tables[tid0].size = cnt_var //回填符号表中的变量个数
+    global_table.tables[tid0].param = cnt_param //回填符号表中的参数个数
+    global_code.codes[cid_ini].a = cnt_var //回填代码中的申请栈空间
+    
+
+
+    //进行返回值处理，回填到预留的地址
+    analyzeExpr(ret) //返回值是一个表达式，计算后填入栈顶
+    global_code.gen(Fct.sto, l:0, a:-(cnt_param + 1)) //回填到预留的返回值地址，也是回退之后的栈顶
+    global_code.gen(Fct.opr, l:0, a:toInt(Opr.ret))   //返回，执行相关的栈操作
+
+    //清理临时的缓存
+    //清除符号表
+    for(name in global_name){
+        global_table.remove(name, Kind.variable, lev)
+    }
+    //还原global_name
+    global_name.clear()
+    for(item in tmp_global_name){
+        global_name.append(item)
+    }
+    //恢复lev
     lev--
 }
 
@@ -100,6 +171,7 @@ func analyzeDeclareStmt(ast:AST){
     var name = analyzeIdent(identNode)
     //注册符号表，相对地址从3开始
     global_table.enter(name, Kind.variable, val:0, level:lev, adr:cnt_var)
+    global_name.append(name)
     cnt_var++
 
     //如果有第二个儿子，是一个表达式，需要进行计算并给变量赋值
@@ -108,7 +180,7 @@ func analyzeDeclareStmt(ast:AST){
         //计算表达式
         analyzeExpr(exprNode)
         //给变量赋值
-        if(let Some(ident_id) <- global_table.position(name)){
+        if(let Some(ident_id) <- global_table.position(name, Kind.variable, lev)){
             let table: TableSturct = global_table.tables[ident_id]
             global_code.gen(Fct.sto, l:lev - table.level, a:table.adr)//将栈顶存回
         }
@@ -122,7 +194,7 @@ func analyzeAssignStmt(ast:AST){
     //AssignStmt有两个儿子，分别是ident和expr
     let ident = (ast.children[0] as Ident).getOrThrow()
     let name = ident.name
-    if(let Some(ident_id) <- global_table.position(name)){
+    if(let Some(ident_id) <- global_table.position(name, Kind.variable, lev)){
         let table: TableSturct = global_table.tables[ident_id]
         match(table.kind){
             case Kind.variable => analyzeExpr(ast.children[1]) //先分析expr，将结果存回栈顶。
@@ -188,7 +260,7 @@ func analyzeInputStmt(ast:AST){
         for(ident in ident_list){
             let name = analyzeIdent(ident)
             global_code.gen(Fct.opr, l:0, a:toInt(Opr.inp)) //读入到栈顶
-            if(let Some(ident_id) <- global_table.position(name)){
+            if(let Some(ident_id) <- global_table.position(name, Kind.variable, lev)){
                 let table = global_table.tables[ident_id]
                 match(table.kind){
                     case Kind.variable => global_code.gen(Fct.sto, l:lev - table.level, a:table.adr); //变量，找到变量地址并将其值填入
@@ -227,9 +299,7 @@ func analyzeExpr(ast:AST):Unit{
 }
 func analyzeTerm(ast:AST):Unit{
     let term = (ast as Term).getOrThrow()
-    
     if(let Some(opt) <- term.opt){ //是一个未处理完的表达式, term opt factor,先分析term
-        println(term.children.size)
         analyzeTerm(term.children[0])
         analyzeFactor(term.children[1])
         match(opt){
@@ -239,7 +309,6 @@ func analyzeTerm(ast:AST):Unit{
         }
     }
     else{                          //是单个数字，也就没有符号了
-        println(term.children.size)
         analyzeFactor(term.children[0])
     }
 }
@@ -249,7 +318,7 @@ func analyzeFactor(ast:AST){
     match(child.symbol){
         //是符号表中的符号
         case Symbol.ident(name) => //取变量名做解析
-                                    if(let Some(ident_id) <- global_table.position(name)){
+                                    if(let Some(ident_id) <- global_table.position(name, Kind.variable, lev)){
                                         let table: TableSturct = global_table.tables[ident_id]
                                         match(table.kind){
                                             case Kind.constant => global_code.gen(Fct.lit, l:0, a:table.val) //常量 直接读常量

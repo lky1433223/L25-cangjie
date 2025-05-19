@@ -118,6 +118,7 @@ public func interpret(code : Code){
                                 p = i.a
                             }
                             t = t - 1
+            case Fct.pop => t = t - 1
         }
     }while(p!=0)
     return res

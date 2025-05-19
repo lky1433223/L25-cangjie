@@ -1,0 +1,7 @@
+program TestFuncDefParam{
+    func testfunc(){
+        return 1;
+    }
+    main{
+    }
+}

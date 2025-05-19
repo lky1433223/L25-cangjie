@@ -71,7 +71,6 @@ program:
     }
     | PROGRAM ident LBRACE func_def_list  MAIN LBRACE stmt_list RBRACE RBRACE 
     { 
-        printf("func_def_list");
         $$=build_program($2, $4, $7);
         root = $$;
     }
@@ -80,7 +79,6 @@ program:
 func_def_list:
     func_def
     {
-        printf("func_def_list");
         $$ = build_func_def_list();
         insert_child($$, $1);
     }
@@ -94,8 +92,6 @@ func_def_list:
 func_def:
     FUNC ident LPAREN RPAREN LBRACE stmt_list RETURN expr SEMICOLON RBRACE
     {
-
-        printf("func_def");
         $$ = build_func_def($2, NULL, $6, $8);
     }
     | FUNC ident LPAREN param_list RPAREN LBRACE stmt_list RETURN expr SEMICOLON RBRACE

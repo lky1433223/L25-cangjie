@@ -8,22 +8,32 @@ public class Table{
     public init(){
         tables = ArrayList<TableSturct>()
     }
-    public func enter(name:String,kind:Kind, val!:Int=0, level!:Int=0, adr!:Int=0, size!:Int = 0){
+    public func enter(name:String,kind:Kind, val!:Int=0, level!:Int=0, adr!:Int=0, size!:Int = 0, param!:Int = 0){
         //TODO:检查符号表冲突
         var tabelstruct:TableSturct
         match(kind){
             case Kind.constant => tabelstruct=TableSturct(name,kind,val)
             case Kind.variable => tabelstruct=TableSturct(name,kind,level, adr)
-            case Kind.function => tabelstruct=TableSturct(name,kind,level, adr, size)
+            case Kind.function => tabelstruct=TableSturct(name,kind,level, adr, size, param)
             case Kind.program  => tabelstruct=TableSturct(name,kind)
         }
         tables.append(tabelstruct)
     }
     //查找一个符号在表里的id
-    public func position(name:String):?Int{
+    // public func position(name:String):?Int{
+    //     //TODO:增加指定查找的类型
+    //     for(i in 0..tables.size){
+    //         if(tables[i].name == name){
+    //             return i
+    //         }
+    //     }
+    //     return None
+    // }
+    //查找一个符号在表里的id,并且严格要求level
+    public func position(name:String, kind:Kind, level:Int):?Int{
         //TODO:增加指定查找的类型
         for(i in 0..tables.size){
-            if(tables[i].name == name){
+            if(tables[i].name == name && tables[i].level == level && tables[i].kind == kind){
                 return i
             }
         }
@@ -33,6 +43,12 @@ public class Table{
     public func position():Int{
         return tables.size - 1
     }
+    //删除一个指定的符号
+    public func remove(name:String, kind:Kind, level:Int){
+        let table_id = position(name, kind, level).getOrThrow()
+        tables.remove(table_id)
+    }
+
     public func print(){
         // 打印表头
         println("符号表:")

@@ -4,9 +4,9 @@ public enum Kind{
 	variable | // 变量
 	function | // 函数
 	program    // 程序名
-	// operator func  ==(right: Kind){
-	// 	return toString(this) == toString(right)
-	// }
+	operator func  ==(right: Kind){
+		return toString(this) == toString(right)
+	}
 }
 
 func toString(obj: Kind): String {
