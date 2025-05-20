@@ -189,9 +189,13 @@ while_stmt:
     ;
 
 func_call:
-    /* empty */
+    ident LPAREN RPAREN
     {
-        $$ = NULL;
+        $$ = build_func_call($1, NULL);
+    }
+    | ident LPAREN arg_list RPAREN
+    {
+        $$ = build_func_call($1, $3);
     }
     ;
 

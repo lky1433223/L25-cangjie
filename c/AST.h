@@ -58,6 +58,9 @@ ASTNode* build_func_def_list();
 //创建func_def节点
 ASTNode* build_func_def(ASTNode* ident, ASTNode* param_list, ASTNode* stmt_list, ASTNode* ret_expr);
 
+//创建func_call节点
+ASTNode* build_func_call(ASTNode* ident, ASTNode* arg_list);
+
 //创建stmt_list节点
 ASTNode* build_stmt_list();
 
@@ -100,6 +103,8 @@ ASTNode* build_arg_list();
 
 //创建param_list节点
 ASTNode* build_param_list();
+
+
 
 /**
  * 创建一个表示标识符（IDENT）的 AST 节点

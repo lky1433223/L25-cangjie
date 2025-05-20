@@ -1,7 +1,10 @@
 program TestFuncDefParam{
-    func testfunc(){
-        return 1;
+    func testfunc(b){
+        let a = b;
+        return a;
     }
     main{
+        let a = testfunc(3);
+        output(a);
     }
 }

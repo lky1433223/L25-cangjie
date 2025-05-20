@@ -20,15 +20,15 @@ public class Table{
         tables.append(tabelstruct)
     }
     //查找一个符号在表里的id
-    // public func position(name:String):?Int{
-    //     //TODO:增加指定查找的类型
-    //     for(i in 0..tables.size){
-    //         if(tables[i].name == name){
-    //             return i
-    //         }
-    //     }
-    //     return None
-    // }
+    public func position(name:String, kind:Kind):?Int{
+        //TODO:增加指定查找的类型
+        for(i in 0..tables.size){
+            if(tables[i].name == name && tables[i].kind == kind){
+                return i
+            }
+        }
+        return None
+    }
     //查找一个符号在表里的id,并且严格要求level
     public func position(name:String, kind:Kind, level:Int):?Int{
         //TODO:增加指定查找的类型
@@ -52,9 +52,9 @@ public class Table{
     public func print(){
         // 打印表头
         println("符号表:")
-        println("+-----+----------------------+----------+-------+-------+-------+-------+")
-        println("| idx | name                 | kind     | value | level | addr  | size  |")
-        println("+-----+----------------------+----------+-------+-------+-------+-------+")
+        println("+-----+----------------------+----------+-------+-------+-------+-------+-------+")
+        println("| idx | name                 | kind     | value | level | addr  | size  | param |")
+        println("+-----+----------------------+----------+-------+-------+-------+-------+-------+")
         for (idx in 0..tables.size) {
             let entry = tables[idx]
             let name = entry.name
@@ -84,6 +84,11 @@ public class Table{
                 case _ => "-"
             }
 
+            let param = match(entry.kind) {
+                case Kind.function => "${entry.param}"
+                case _ => "-"
+            }
+
             // 格式化输出
             println(
                 "| ${idx.toString().padLeft(3)} " +
@@ -92,10 +97,11 @@ public class Table{
                 "| ${value.padRight(5)} " +
                 "| ${level.padRight(5)} " +
                 "| ${addr.padRight(5)} " +
-                "| ${size.padRight(5)} |"
+                "| ${size.padRight(5)} " + 
+                "| ${param.padRight(5)} |"
             )
         }
 
-        println("+-----+----------------------+----------+-------+-------+-------+-------+")
+        println("+-----+----------------------+----------+-------+-------+-------+-------+-------+")
     }
 }

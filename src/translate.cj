@@ -146,6 +146,12 @@ func buildFactor(_:CASTNode):Factor
     return res
 }
 
+func buildFuncCall(_:CASTNode):FuncCall
+{
+    println("build buildFuncCall")
+    var res = FuncCall()
+    return res
+}
 
 func buildArgList(_:CASTNode):ArgList
 {
@@ -191,7 +197,7 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         case Symbol.while_stmt => root = buildWhileStmt(croot)
         case Symbol.fun_def_list => root = buildFuncDefList(croot)
         case Symbol.fun_def => root = buildFuncDef(croot)
-        case Symbol.func_call => root = AST()
+        case Symbol.func_call => root = buildFuncCall(croot)
         case _ => throw UnkonwSymbol("未知的节点类型, ${croot.node_type}")
     }
     //处理儿子节点

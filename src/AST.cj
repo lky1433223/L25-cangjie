@@ -157,6 +157,12 @@ public class Number <: AST{
     }
 }
 
+public class FuncCall <: AST{
+    init(){
+        symbol = Symbol.func_call
+    }
+}
+
 
 public class ArgList <: AST{
     init(){

@@ -85,6 +85,13 @@ ASTNode* build_func_def(ASTNode* ident, ASTNode* param_list, ASTNode* stmt_list,
     return node;
 }
 
+ASTNode *build_func_call(ASTNode *ident, ASTNode *arg_list)
+{
+    ASTNode* node = create_node(NODE_FUNC_CALL);
+    if(ident) insert_child(node, ident);
+    if(arg_list) insert_child(node, arg_list);
+    return node;
+}
 
 ASTNode* build_stmt_list(){
     ASTNode* node = create_node(NODE_STMT_LIST);
