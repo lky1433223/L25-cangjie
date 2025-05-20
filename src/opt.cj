@@ -48,7 +48,7 @@ func getOpt(value: Int32): Opt {
         case 8 => return Opt.le
         case 9 => return Opt.gt
         case 10 => return Opt.ge
-        case _ => return throw UnkonwOpt("未知的操作类型: ${value}")
+        case _ => throw UnkonwOpt("未知的操作类型: ${value}")
     }
 }
 
