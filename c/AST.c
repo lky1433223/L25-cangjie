@@ -36,6 +36,15 @@ void free_AST(struct ASTNode* node) {
         else if (node->node_type == NODE_NUMBER) {
             free(((struct numData*)node->data));
         }
+        else if (node->node_type == NODE_EXPR) {
+            free(((struct exprData*)node->data));
+        }
+        else if (node->node_type == NODE_TERM) {
+            free(((struct termData*)node->data));
+        }
+        else if (node->node_type == NODE_BOOL_EXPR) {
+            free(((struct boolExprData*)node->data));
+        }
     }
 
     // 3. 最后释放当前节点自身
