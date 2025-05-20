@@ -58,7 +58,6 @@ ASTNode* getAST();
 
 %%
 program:
-    /* test */
     PROGRAM
     { 
         $$=build_program(NULL,NULL,NULL);
@@ -101,7 +100,7 @@ func_def:
     ;
 
 param_list:
-    | ident
+    ident
     {
         $$ = build_param_list();
         insert_child($$, $1);

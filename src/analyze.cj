@@ -352,7 +352,7 @@ func analyzeBoolExpr(ast:AST){
     }
 }
 func analyzeFunCall(ast:AST){
-
+    
 }
 
 //分析ArgList，不同的ArgList需要用不同的操作，因此传入fn函数

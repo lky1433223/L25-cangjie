@@ -24,7 +24,7 @@ func parse(_:Int):Int64{
     if(yyresult!=0){throw ParseException("语法分析异常,请检查程序")}
     return yyresult
 }
-func translate(yyresult:Int64):AST{
+func translate(_:Int64):AST{
     println("从CAST翻译成AST:")
     let ast = translateAST()
     return ast
@@ -47,7 +47,7 @@ func g(x: Float32): Int32 { Int32(x) }
 main(): Int64 {
     try{
         let compile = (parse ~> translate ~> analyze ~> run)
-        let res = compile(0)
+        let _ = compile(0)
     }
     catch(e: Error)
     {
