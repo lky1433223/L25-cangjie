@@ -41,9 +41,6 @@ func run(code:Code){
     return res
 }
 
-func f(x: Int32): Float32 { Float32(x) }
-func g(x: Float32): Int32 { Int32(x) }
-
 main(): Int64 {
     try{
         let compile = (parse ~> translate ~> analyze ~> run)

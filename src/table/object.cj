@@ -9,7 +9,7 @@ public enum Kind{
 	}
 }
 
-func toString(obj: Kind): String {
+public func toString(obj: Kind): String {
     match(obj) {
         case Kind.constant => return "constant"
         case Kind.variable => return "variable"

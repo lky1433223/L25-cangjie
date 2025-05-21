@@ -1,0 +1,24 @@
+program TestScope{
+    func add(a, b){
+        let res = a + b;
+        return res;
+    }
+    main{
+        let res = 0;
+        if(res == 0){
+            let x = add(1, 2);
+            if(x == 4){
+                let x = 11;
+                res = x;
+            }else{
+                let x = 12;
+                res = x;
+            };
+        }
+        else{
+            let x = add(3, 4);
+            res = x;
+        };
+        output(res);
+    }
+}

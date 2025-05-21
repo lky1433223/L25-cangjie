@@ -24,3 +24,18 @@ open public class CompileError <: ParseException{
         "CompileError"
     }
 }
+
+open public class UndefinedSymbol<: CompileError{
+    public init(){
+        super("UndefinedSymbol");
+    }
+    public init(message: String) {
+        super(message)
+    }
+    public init(kind:String, name:String) {
+        super("Undefined Symbol, ${kind}:${name}")
+    }
+    public open override func getClassName(): String {
+        "UndefinedSymbol"
+    }
+}
