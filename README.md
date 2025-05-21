@@ -1,4 +1,3 @@
-
 # L25-cangjie
 
 a compiler developed in cangjie for L25
@@ -27,9 +26,9 @@ a compiler developed in cangjie for L25
 | stmt_list | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 已完成 |
 | stmt |  ✅  | ✅ | ✅ | ✅ | ✅ | ✅ | 已完成 |
 | declare_stmt | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 已完成 |
-| assign_stmt | ✅  | ✅  | ✅ | ✅  | ✅  | ✅  | 已完成 |
+| assign_stmt | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 已完成 |
 | input_stmt | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 已完成 |
-| output_stmt | ✅  | ✅  | ✅ | ✅  | ✅  | ✅  | 已完成 |
+| output_stmt | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 已完成 |
 | if_stmt | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 已完成 |
 | while_stmt | ✅ | ✅ | ✅ |✅ | ✅ | ✅ | 已完成 |
 | func_call | ✅ | ✅ | ✅ | ✅ |✅ | ✅ | 需实现函数调用 |
