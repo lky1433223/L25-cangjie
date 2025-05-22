@@ -1,4 +1,8 @@
 program Myapp {
+    func add(){
+        let a = 1;
+        retur a;
+    }
     main {
         let x = 1;
         x = 2;
@@ -6,21 +10,8 @@ program Myapp {
         let z = 1 * 2;
         let a = x + 1 * 2;
         let b = (x + y + x * y + a) / z;
+        if(){
+        }
         output(a, b);
-    }
-}
-
-
-program Myapp {
-    main {
-        let n = -1;
-        let x = (1 + 2) * 3;
-    }
-}
-
-
-program Myapp {
-    main {
-        output(1);
     }
 }

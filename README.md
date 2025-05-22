@@ -49,13 +49,17 @@ TODO:release
    ```bash
    make
    ```
-4. 运行自己的代码
-   
+
+4. 运行|调试|单元测试
+   使用cjpm运行
    ```bash
    cjpm run
    ```
-
-5. 运行单元测试
+   测试
+   ```bash
+   cjpm run -g
+   ```
+   单元测试
    ```bash
    cjpm test
    ```
