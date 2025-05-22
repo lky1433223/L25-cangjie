@@ -4,3 +4,10 @@ cangjie
     filter call_regexp_common C++
     extension cj
     3rd_gen_scale 2.50
+
+L25
+    filter rm_comments_in_strings " /* */
+    filter rm_comments_in_strings " // 
+    filter call_regexp_common C++
+    extension l25
+    3rd_gen_scale 2.50
