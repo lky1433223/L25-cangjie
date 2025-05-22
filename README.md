@@ -13,6 +13,7 @@
 
 `仓颉`是由华为技术有限公司开发的面向全场景应用开发的现代编程语言。
 感谢`仓颉`的[跨语言互操作](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fuser_manual%2Fsource_zh_cn%2FFFI%2Fcangjie-c.html)能力，本项目才能基于 flex 和 bison 进行快速开发。
+
 在本项目中，`C` 部分的代码会返回 `AST` 的根节点指针。在`仓颉`中捕获这一个指针，并由[CPointer<T>](https://docs.cangjie-lang.cn/docs/0.53.18/libs/std/core/core_package_api/core_package_intrinsics.html#cpointert)进行解析。
 解析后的 `C` 风格的 `AST` 会被[翻译](src/translate.cj)为`仓颉`风格的`AST`，再进行后续的编译工作。
 
