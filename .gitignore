@@ -81,3 +81,14 @@ target/
 #mac
 .DS_Store
 
+# colorL25
+.vscode-test/
+colorL25/src/
+colorL25/node_modules/
+.yarnrc
+vsc-extension-quickstart.md
+**/tsconfig.json
+**/eslint.config.mjs
+**/*.map
+**/*.ts
+**/.vscode-test.*
