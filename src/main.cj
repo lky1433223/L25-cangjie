@@ -52,10 +52,17 @@ main(): Int64 {
     }
     catch(e : Exception)
     {
-        let st = e.getStackTrace()
-        for(item in st){
-            println(item.methodName)
+        @When[debug]
+        func printTree(){
+            let st = e.getStackTrace()
+            for(item in st){
+                println(item.methodName)
+            }
         }
+        @When[!debug]
+        func printTree(){
+        }
+        printTree()
         println(e)
     }
     

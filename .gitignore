@@ -77,7 +77,7 @@ target/
 .cache/
 .vscode/
 *.macrocall
-
+bin/
 #mac
 .DS_Store
 

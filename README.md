@@ -7,10 +7,9 @@
 ![Stars](https://img.shields.io/github/stars/lky1433223/L25-cangjie)
 
 
-本编译器使用[flex](https://github.com/westes/flex)，[bison](https://www.gnu.org/software/bison/manual/bison.html#)和[仓颉](#关于仓颉)实现[L25语言](#l25-语言)的编译执行，功能如下:
+本编译器使用[flex](https://github.com/westes/flex)，[bison](https://www.gnu.org/savannah-checkouts/gnu/bison/bison.html)和[仓颉](#关于仓颉)实现[L25语言](#l25-语言)的编译执行，功能如下:
 
 - 基于flex+bison实现基本词语法分析，并构建AST
-  
 
 - **加分：** 使用仓颉对AST进行语义分析，生成Pcode代码
   
@@ -38,6 +37,14 @@ TODO:release
    - 安装[CJPM](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fuser_manual%2Fsource_zh_cn%2FCompile-And-Build%2Fcjpm_usage_OHOS.html)
    - (可选) 安装[IDE插件](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Ftools%2Fsource_zh_cn%2FIDE%2Fuser_manual_community.html)
 2. 安装flex + bison
+   本项目使用bison -v3.8.1,如果版本较低可能导致编译失败。需要构建新版本bison。
+   参考bison[官方文档](https://www.gnu.org/savannah-checkouts/gnu/bison/bison.html):
+   - 下载bison[源码](https://ftp.gnu.org/gnu/bison/bison-3.8.1.tar.gz)，并解压
+   - 执行```configure```进行配置，需要选择路径： ```./configure --prefix=$HOME/mybison/installed```
+   - 执行```make install```
+   - 编译后的bison可执行文件在```$HOME/mybison/installed/bin```
+   - 需要相应修改Makefi中的`YACC`
+
 3. 构建项目
    ```bash
    make
@@ -105,7 +112,7 @@ TODO:release
 <digit> = "0" | "1" | ... | "9"
 ```
 
-## 语法特性
+## 语法描述
 - 变量名覆盖
   
   内部作用域的变量会覆盖外部变量。
@@ -131,9 +138,9 @@ TODO:release
 
 感谢[仓颉](https://cangjie-lang.cn/)的[跨语言互操作](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fuser_manual%2Fsource_zh_cn%2FFFI%2Fcangjie-c.html)能力，本项目才能基于 flex 和 bison 进行快速开发。
 
-在本项目中，`C` 部分的代码会返回 `AST` 的根节点指针。在`仓颉`中捕获这一个指针，并由[CPointer<T>](https://docs.cangjie-lang.cn/docs/0.53.18/libs/std/core/core_package_api/core_package_intrinsics.html#cpointert)进行解析。
+在本项目中，`C` 部分的代码会返回 `AST` 的根节点指针。在`仓颉`中由[CPointer<T>](https://docs.cangjie-lang.cn/docs/0.53.18/libs/std/core/core_package_api/core_package_intrinsics.html#cpointert)捕获该地址，并解析`AST`。
 
-解析后的 `C` 风格的 `AST` 会被[翻译](src/translate.cj)为`仓颉`风格的`AST`，再进行后续的语义分析和代码生成工作。
+解析后的 `C` 风格的 `AST` 会被[翻译](src/translate.cj)为`仓颉`风格的`AST`，进行后续的语义分析和代码生成工作。
 
 
 # Task List

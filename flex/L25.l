@@ -6,8 +6,24 @@
 FILE* fin;
 void yyerror(char *);
 int yywrap(void);
+
+//YY_USER_ACTION 会在处理每一个变量的时候调用
+#define YY_USER_ACTION \
+    yylloc.first_line = yylloc.last_line; \
+    yylloc.first_column = yylloc.last_column; \
+    for (char *p = yytext; *p; p++) { \
+        if (*p == '\n') { \
+            yylloc.last_line++; \
+            yylloc.last_column = 1; \
+        } else { \
+            yylloc.last_column++; \
+        } \
+    } \
+    //printf("%d %d %d %d\n", yylloc.first_line, yylloc.first_column, yylloc.last_line, yylloc.last_column);
+
 extern YYLTYPE yylloc;  // Bison 会在 parser.tab.h 中定义 YYLTYPE
 %}
+
 
 letter [a-zA-Z]
 digit [0-9]+

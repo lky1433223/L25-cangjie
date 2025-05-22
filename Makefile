@@ -5,7 +5,8 @@ LDFLAGS := -dynamiclib -mmacosx-version-min=12.0 # 指定最低版本12.0 避免
 
 # Flex/Bison 设置
 LEX := flex
-YACC := bison
+# YACC := bison
+YACC := ./bin/bin/bison
 YFLAGS := -d                  # 生成头文件
 
 # 文件路径设置

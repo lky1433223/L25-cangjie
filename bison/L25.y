@@ -1,5 +1,5 @@
 %locations
-
+%define parse.error verbose
 %{
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,7 +7,7 @@
 #include "AST.h"
 #include "NODE.h"
 #include "OPT.h"
-void yyerror(char *msg);
+void yyerror(const char *msg);
 int yylex(void);
 struct ASTNode* root;
 __attribute__((visibility("default"))) 
@@ -334,6 +334,6 @@ ASTNode* getAST(){
     return root;
 }
 
-void yyerror(char* msg ) {
-        printf("%s\n",msg);
+void yyerror(const char* msg ) {
+        printf("Error at:%d:%d: %s\n",yylloc.first_line, yylloc.first_column, msg);
 }
