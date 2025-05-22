@@ -25,6 +25,13 @@
 
 TODO:release
 
+## 使用[colorL25](https://marketplace.visualstudio.com/items?itemName=ShiinaRikka.colorl25&ssr=false#overview)插件
+
+1. 在VScode中，`Ctrl + Shift + P` (`Command + Shift + P`for mac) 打开命令面板
+2. `View: Show Extensions`显示扩展
+3. 在应用商店中搜索`colorL25`，安装扩展
+4. 扩展会自动为`.l25`文件进行代码高亮显示
+   
 ## 自己构建
 1. 配置仓颉
    - 安装[仓颉工具链](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fuser_manual%2Fsource_zh_cn%2Ffirst_understanding%2Finstall_Community.html)
