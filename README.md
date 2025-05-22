@@ -4,9 +4,7 @@ a compiler developed in cangjie for L25
 本项目使用 flex+bison 实现 L25 语法的词法分析和语法分析。并构建 AST。
 由仓颉实现 AST 的解析和 Pcode 生成。
 
-# 关于 [仓颉<img src="https://csdnimg.cn/release/devpress-cangjie/public/img/logo.81433277.png " 
-alt="仓颉" width="20" height="20" 
-style="vertical-align: middle; display: inline-block; margin: 0 2px;" />](https://cangjie-lang.cn/)
+# 关于 [仓颉<img src="https://csdnimg.cn/release/devpress-cangjie/public/img/logo.81433277.png " alt="仓颉"  height="40" style="vertical-align: middle; display: inline-block; margin: 0 2px;" />](https://cangjie-lang.cn/)
 
 `仓颉`是由华为技术有限公司开发的面向全场景应用开发的现代编程语言。
 感谢`仓颉`的[跨语言互操作](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fuser_manual%2Fsource_zh_cn%2FFFI%2Fcangjie-c.html)能力，本项目才能基于 flex 和 bison 进行快速开发。
