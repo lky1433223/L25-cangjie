@@ -38,6 +38,7 @@ TODO:release
    - (可选) 安装[IDE插件](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Ftools%2Fsource_zh_cn%2FIDE%2Fuser_manual_community.html)
 2. 安装flex + bison
    本项目使用bison -v3.8.1,如果版本较低可能导致编译失败。需要构建新版本bison。
+
    参考bison[官方文档](https://www.gnu.org/savannah-checkouts/gnu/bison/bison.html):
    - 下载bison[源码](https://ftp.gnu.org/gnu/bison/bison-3.8.1.tar.gz)，并解压
    - 执行```configure```进行配置，需要选择路径： ```./configure --prefix=$HOME/mybison/installed```
@@ -51,6 +52,7 @@ TODO:release
    ```
 
 4. 运行|调试|单元测试
+   
    使用cjpm运行
    ```bash
    cjpm run
