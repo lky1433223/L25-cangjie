@@ -30,19 +30,18 @@ TODO:release
    - 安装[仓颉工具链](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fuser_manual%2Fsource_zh_cn%2Ffirst_understanding%2Finstall_Community.html)
    - 安装[CJPM](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fuser_manual%2Fsource_zh_cn%2FCompile-And-Build%2Fcjpm_usage_OHOS.html)
    - (可选) 安装[IDE插件](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Ftools%2Fsource_zh_cn%2FIDE%2Fuser_manual_community.html)
-2. 安装bison
-3. 安装flex
-4. 构建项目
+2. 安装flex + bison
+3. 构建项目
    ```bash
    make
    ```
-5. 运行自己的代码
+4. 运行自己的代码
    
    ```bash
    cjpm run
    ```
 
-6. 运行单元测试
+5. 运行单元测试
    ```bash
    cjpm test
    ```
