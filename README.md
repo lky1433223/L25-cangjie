@@ -1,6 +1,6 @@
 # L25-cangjie
 
-> a compiler developed by <img src="images/cangjie.png" alt="仓颉"  height="20" style="vertical-align: middle; display: inline-block; margin: 0 2px;" /> for **L25 languages**
+> a compiler developed by **仓颉** for **L25 languages**
 
 ![License](https://img.shields.io/github/license/lky1433223/L25-cangjie)
 ![Issues](https://img.shields.io/github/issues/lky1433223/L25-cangjie)
@@ -119,6 +119,7 @@ TODO:release
 
 
 # 关于仓颉 
+<img src="images/cangjie.png" alt="仓颉"  height="50" style="vertical-align: middle; display: inline-block; margin: 0 2px;" /> 
 
 [仓颉](https://cangjie-lang.cn/)是由华为技术有限公司开发的面向全场景应用开发的现代编程语言。
 
