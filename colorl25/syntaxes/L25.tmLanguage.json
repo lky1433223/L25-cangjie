@@ -1,0 +1,116 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "L25",
+	"fileTypes": [".L25"],
+	"scopeName": "source.l25",
+	"patterns": [
+		{ 
+			"include": "#comments" 
+		},
+		{
+			"include": "#keywords"
+		},
+		{ 
+			"include": "#types"
+		},  
+		{
+			"include": "#strings"
+		},
+		{ 
+			"include": "#operators" 
+		},
+		{ 
+			"include": "#numbers" 
+		},
+		{ 
+			"include": "#function-declaration" 
+		},
+    	{ 
+			"include": "#variable-declaration" 
+		},
+    	{ 
+			"include": "#function-call"
+		},
+		{
+			"include": "#variable"
+		}
+	],
+	"repository": {
+		"comments": {
+			"patterns": [{
+				"name": "comment.line.double-slash.L25",
+				"match": "//.*$"
+			}]
+		},
+		"variable":{
+			"patterns": [
+				{
+					"name":"variable.name.L25",
+					"match": ""
+				}
+			]
+		},
+		"function-declaration": {
+			"patterns": [
+				{
+					"name": "entity.name.function.L25",
+					"match": "(?<=\\bfunc\\s+)[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*\\()"
+				}
+			]
+		},
+		"variable-declaration": {
+			"patterns": [
+				{
+				"name": "variable.other.L25",
+				"match": "(?<=\\blet\\s+|\\bvar\\s+|\\bconst\\s+)[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*[=:])"
+				}
+			]
+		},
+		"function-call": {
+			"patterns": [
+				{
+				"name": "entity.name.function.L25",
+				"match": "[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*\\()"
+				}
+			]
+		},
+		"types": {
+			"patterns": [{
+				"name": "entity.name.type.L25",
+				"match": "(?<=\\bprogram\\s+|\\btype\\s+)[a-zA-Z_][a-zA-Z0-9_]*"
+			}]
+		},
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.L25",
+				"match": "\\b(program|func|main|let|if|else|while|for|return|input|output)\\b"
+			}]
+		},
+		"operators": {
+			"patterns": [{
+				"name": "keyword.operator.L25",
+				"match": "==|!=|<=|>=|\\>|\\<|\\=|\\+|-|\\*|%"
+			},
+			{
+			"name": "keyword.operator.L25",
+			"match": "/(?![/])"  
+			}
+		]
+		},
+		"numbers": {
+			"patterns": [{
+				"name": "constant.numeric.L25",
+				"match": "\\b\\d+\\.?\\d*\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.L25",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [{
+					"name": "constant.character.escape.L25",
+					"match": "\\\\."
+			}]
+		}
+	}
+}

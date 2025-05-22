@@ -1,0 +1,31 @@
+{
+  "name": "colorl25",
+  "displayName": "colorL25",
+  "license": "MIT",
+  "description": "Syntax highlighting for the L25 programming language.",
+  "version": "1.0.0",
+  "publisher": "ShiinaRikka",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lky1433223/L25-cangjie.git/colorL25"  
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "L25",
+      "aliases": ["L25", "L25"],
+      "extensions": [".l25"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "L25",
+      "scopeName": "source.l25",
+      "path": "./syntaxes/L25.tmLanguage.json"
+    }]
+  }
+}

@@ -3,10 +3,12 @@ program TestScope{
         let res = a + b;
         return res;
     }
+    
     main{
         let res = 0;
         if(res == 0){
             let x = add(1, 2);
+            //测试while嵌套
             while(x < 5){
                 x = x + 1;
                 let y = x;

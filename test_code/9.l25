@@ -1,0 +1,14 @@
+// This is a comment
+program Example {
+    func add(a, b) {
+        let c = a + b;
+        return c;
+    }
+    main {
+        let x = 1;
+        let y;
+        input(y);
+        let res = add(x, y);
+        output(res);
+    }
+}

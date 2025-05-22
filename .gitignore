@@ -82,6 +82,7 @@ target/
 .DS_Store
 
 # colorL25
+*.vsix
 .vscode-test/
 colorL25/src/
 colorL25/node_modules/
