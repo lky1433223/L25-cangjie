@@ -2,11 +2,9 @@
 
 > a compiler developed in cangjie for L25 languages
 
-![License](https://img.shields.io/github/license/Voltline/L25-Compiler)
-![Issues](https://img.shields.io/github/issues/Voltline/L25-Compiler)
-![Stars](https://img.shields.io/github/stars/Voltline/L25-Compiler)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Voltline/L25-Compiler)
-
+![License](https://img.shields.io/github/license/lky1433223/L25-cangjie)
+![Issues](https://img.shields.io/github/issues/lky1433223/L25-cangjie)
+![Stars](https://img.shields.io/github/stars/lky1433223/L25-cangjie)
 本项目使用 flex+bison 实现 L25 语法的词法分析和语法分析。并构建 AST。
 由仓颉实现 AST 的解析和 Pcode 生成。
 
