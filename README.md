@@ -66,8 +66,12 @@ TODO:release
    cjpm test
    ```
 
+## 代码行数统计
+1. 安装[cloc](https://github.com/AlDanial/cloc)代码行数统计工具
+2. 运行[```./cloc.sh```](cloc.sh)脚本，这会自动使用[```cangjie_lang.txt```](cangjie_lang.txt)配置文件，添加对仓颉和L25语言的代码行数统计
 
-
+## 也许你会用到。。。。
+[```./kill.sh```](kill.sh)，如果C语言写法导致了内存泄漏或空指针，仓颉在捕获时会发生异常，并导致程序无法自行停止。~~ 你可能需要这个脚本来手动kill程序。~~
 # L25 语言
 
 ## EBNF描述
