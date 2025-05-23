@@ -24,6 +24,8 @@
 
 TODO:release
 
+运行时会显示AST：
+![AST](images/quickstart/AST.png)
 ## 使用[colorL25](https://marketplace.visualstudio.com/items?itemName=ShiinaRikka.colorl25&ssr=false#overview)插件
 
 1. 在VScode中，`Ctrl + Shift + P` (`Command + Shift + P`for mac) 打开命令面板
@@ -65,7 +67,7 @@ TODO:release
    ```bash
    cjpm test
    ```
-⚠️warning: 在测试中发现，遍历AST可能导致爆栈，请开启编译优化：`-O2 --fno-chir-function-inlining`
+⚠️warning: 遍历AST可能导致递归栈溢出，请开启编译优化：`-O2 --fno-chir-function-inlining`
 ## 代码行数统计
 1. 安装[cloc](https://github.com/AlDanial/cloc)代码行数统计工具
 2. 运行[```./cloc.sh```](cloc.sh)脚本，这会自动使用[```cangjie_lang.txt```](cangjie_lang.txt)配置文件，添加对仓颉和L25语言的代码行数统计
@@ -154,7 +156,8 @@ TODO:release
 
 
 # Task List
-
+## 待实现的功能
+- 跨平台release（等待仓颉支持mac交叉编译）
 ## 待实现的语法
 
 - 实现多种变量类型

@@ -2,23 +2,37 @@
 package L25
 import L25.L25Exception.*
 import std.collection.*
+var global_deep = 0
+
+@When[debug]
+func printBuildStatus(symbol:Symbol){
+    for(_ in 1..global_deep){
+        print(" ")
+    }
+    println("${toString(symbol)}")
+}
+@When[!debug]
+func printBuildStatus(_:Symbol){
+    //Do nothing
+}
+
 
 func buildProgram(_:CASTNode):Program
 {
     var res = Program()
-    println("build Program")
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildFuncDefList(_:CASTNode):FuncDefList{
     var res = FuncDefList()
-    println("build FuncDefList")
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildFuncDef(_:CASTNode):FuncDef{
     var res = FuncDef()
-    println("build FuncDef")
+    printBuildStatus(res.symbol)
     return res
 }
 
@@ -36,7 +50,7 @@ func buildIdent(croot:CASTNode):Ident
         tmp_strarray.append(Rune(cdata.name[i]))
     }   
     res.setName(String(tmp_strarray))
-    println("build Ident " + res.name)
+    printBuildStatus(res.symbol)
     return res
 }
 
@@ -46,129 +60,130 @@ func buildNumber(croot:CASTNode):Number
     if(cpdata.isNull()){throw TranslateException("empty point")}
     let cdata = unsafe{cpdata.read()} //解析指针
     var res = Number(Int64(cdata.num)) //定义Ident类型
-    println("build Number ${res.num}" )
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildStmtList(_:CASTNode):StmtList
 {
     var res = StmtList()
-    println("build StmtList")
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildStmt(_:CASTNode):Stmt
 {
     var res = Stmt()
-    println("build Stmt")
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildDeclareStmt(_:CASTNode):DeclareStmt
 {
     var res = DeclareStmt()
-    println("build DeclareStmt")
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildAssignStmt(_:CASTNode):AssignStmt
 {
     var res = AssignStmt()
-    println("build AssignStmt")
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildOutputStmt(_:CASTNode):OutputStmt
 {
     var res = OutputStmt()
-    println("build OutputStmt")
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildIfStmt(_:CASTNode):IfStmt
 {
     var res = IfStmt()
-    println("build IfStmt")
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildWhileStmt(_:CASTNode):WhileStmt
 {
     var res = WhileStmt()
-    println("build WhileStmt")
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildInputStmt(_:CASTNode):InputStmt
 {
     var res = InputStmt()
-    println("build InputStmt")
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildExpr(croot:CASTNode):Expr
 {
-    println("build buildExpr")
     let cpdata: CPointer<CexprData> = unsafe{CPointer<CexprData>(croot.data)} //C data指针
     if(cpdata.isNull()){throw TranslateException("empty point")}
     let cdata = unsafe{cpdata.read()} //解析指针
     let op = cdata.op
     var res = Expr(getOpt(op))
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildTerm(croot:CASTNode):Term
 {
-    println("build buildTerm")
     let cpdata: CPointer<CtermData> = unsafe{CPointer<CtermData>(croot.data)} //C data指针
     if(cpdata.isNull()){throw TranslateException("empty point")}
     let cdata = unsafe{cpdata.read()} //解析指针
     let op = cdata.op
     var res = Term()
     if(op != 0){res = Term(getOpt(op))}
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildBoolExpr(croot:CASTNode):BoolExpr{
-    println("build BoolExpr")
     let cpdata: CPointer<CboolExprData> = unsafe{CPointer<CboolExprData>(croot.data)} //C data指针
     if(cpdata.isNull()){throw TranslateException("empty point")}
     let cdata = unsafe{cpdata.read()} //解析指针
     let op = cdata.op
     var res = BoolExpr(getOpt(op))
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildFactor(_:CASTNode):Factor
 {
-    println("build buildFactor")
     var res = Factor()
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildFuncCall(_:CASTNode):FuncCall
 {
-    println("build buildFuncCall")
     var res = FuncCall()
+    printBuildStatus(res.symbol)
     return res
 }
 
 func buildArgList(_:CASTNode):ArgList
 {
     var res = ArgList()
-    println("build ArgList")
+    printBuildStatus(res.symbol)
     return res
 }
 
 func builParamList(_:CASTNode):ParamList
 {
     var res = ParamList()
-    println("build ParamList")
+    printBuildStatus(res.symbol)
     return res
 }
 
 func dfsCAST(cproot:CPointer<CASTNode>):AST
 {
+    global_deep++
     //判断C语言指针是否为空
     if(cproot.isNull()){throw TranslateException("empty point")}
     //解析地址到struct
@@ -200,9 +215,8 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         case Symbol.func_call => root = buildFuncCall(croot)
         case _ => throw UnkonwSymbol("未知的节点类型, ${croot.node_type}")
     }
-    //处理儿子节点
+    //遍历链表，处理儿子节点
     let child_count = croot.child_count
-    println("处理儿子节点${child_count}")
     var current = unsafe{croot.children.read().next}
     for(_ in 0..child_count)
     {
@@ -212,18 +226,39 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         root.insertChild(child)
         current = unsafe{current.read().next}
     }
+    global_deep--
     return root
 }
 
-func printAST(root:AST, deep!:Int = 0):Unit
+func printAST(node:AST, prefix: String, isTail:Bool):Unit
 {
-    for(_ in 1..=deep){
-        print(" ")
+    print(prefix)
+    if(isTail){
+        print("\u{001B}[90m└── \u{001B}[0m")
     }
-    println(toString(root.symbol))
-    for(child in root.children)
+    else{
+        print("\u{001B}[90m├── \u{001B}[0m")
+    }
+    println(toColorString(node.symbol))
+    var children = node.children
+    for(i in 0..children.size)
     {
-        printAST(child, deep:deep + 1)
+        var isLast = (i == children.size-1)
+        var newPrefix = prefix.clone()
+        if(isTail){
+            newPrefix = newPrefix + "    "
+        }
+        else{
+            newPrefix = newPrefix + "\u{001B}[90m│   \u{001B}[0m" 
+        }
+        printAST(children[i], newPrefix, isLast)
+    }
+}
+
+func printASTRoot(root:AST){
+    println(toColorString(root.symbol))
+    for (i in 0..root.children.size) {
+        printAST(root.children[i], "", i == root.children.size-1)
     }
 }
 
@@ -236,9 +271,12 @@ func translateAST(): AST
     {
         throw ParseException("无法获取语法树根节点。请检查错误。")
     }
+    println("遍历 CAST 翻译中...")
     let ASTroot:AST = dfsCAST(CASTproot) //递归解析CAST，创建cangjie类型AST
+    println("CAST -> AST 翻译完成")
+    println("AST如下:")
 
-    printAST(ASTroot)
+    printASTRoot(ASTroot)
 
     unsafe{free_AST(CASTproot)} //释放树，防止内存泄漏
     return ASTroot

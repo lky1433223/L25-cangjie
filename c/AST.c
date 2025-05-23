@@ -45,6 +45,7 @@ void insert_list(ListNode* head, ASTNode* data) {
     if (newNode == NULL) {
         // 内存分配失败
         safe_fprintf(stderr, "Failed to allocate new ListNode");
+        return;
     }
     newNode->data = data;
     newNode->next = NULL;
@@ -308,5 +309,3 @@ ASTNode* build_number(const int num){
     node->data = num_data;
     return node;
 }
-
-

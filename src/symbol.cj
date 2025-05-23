@@ -1,6 +1,7 @@
 //这里标记节点的symbol
 package L25
 import L25.L25Exception.UnkonwSymbol
+import L25.utils.Color
 enum Symbol{
     empty |
     program | 
@@ -81,5 +82,45 @@ func toString(symbol: Symbol): String {
         case Symbol.term => return "term"
         case Symbol.factor => return "factor"
         case Symbol.arg_list => return "arg_list"
+    }
+}
+
+
+func toColorString(symbol: Symbol): String {
+    match (symbol) {
+        // 程序结构（绿色）
+        case Symbol.program => return "${Color.ANSI_GREEN}program${Color.ANSI_RESET}"
+        case Symbol.fun_def => return "${Color.ANSI_GREEN}fun_def${Color.ANSI_RESET}"
+        case Symbol.fun_def_list => return "${Color.ANSI_GREEN}fun_def_list${Color.ANSI_RESET}"
+
+        // 参数和语句结构（黄色）
+        case Symbol.param_list => return "${Color.ANSI_YELLOW}param_list${Color.ANSI_RESET}"
+        case Symbol.stmt_list => return "${Color.ANSI_YELLOW}stmt_list${Color.ANSI_RESET}"
+        case Symbol.stmt => return "${Color.ANSI_YELLOW}stmt${Color.ANSI_RESET}"
+
+        // 具体语句类型（青色）
+        case Symbol.declare_stmt => return "${Color.ANSI_CYAN}declare_stmt${Color.ANSI_RESET}"
+        case Symbol.assign_stmt => return "${Color.ANSI_CYAN}assign_stmt${Color.ANSI_RESET}"
+        case Symbol.if_stmt => return "${Color.ANSI_CYAN}if_stmt${Color.ANSI_RESET}"
+        case Symbol.while_stmt => return "${Color.ANSI_CYAN}while_stmt${Color.ANSI_RESET}"
+        case Symbol.input_stmt => return "${Color.ANSI_CYAN}input_stmt${Color.ANSI_RESET}"
+        case Symbol.output_stmt => return "${Color.ANSI_CYAN}output_stmt${Color.ANSI_RESET}"
+
+        // 表达式（蓝色）
+        case Symbol.expr => return "${Color.ANSI_BLUE}expr${Color.ANSI_RESET}"
+        case Symbol.bool_expr => return "${Color.ANSI_BLUE}bool_expr${Color.ANSI_RESET}"
+        case Symbol.term => return "${Color.ANSI_BLUE}term${Color.ANSI_RESET}"
+        case Symbol.factor => return "${Color.ANSI_BLUE}factor${Color.ANSI_RESET}"
+
+        // 标识符和字面量（紫色）
+        case Symbol.ident(name) => return "${Color.ANSI_PURPLE}ident ${Color.ANSI_UnderLine}${name}${Color.ANSI_RESET}"
+        case Symbol.number(value) => return "${Color.ANSI_PURPLE}number ${Color.ANSI_UnderLine}${value}${Color.ANSI_RESET}"
+
+        // 函数相关（亮蓝色）
+        case Symbol.func_call => return "${Color.ANSI_CYAN}func_call${Color.ANSI_RESET}"
+        case Symbol.arg_list => return "${Color.ANSI_CYAN}arg_list${Color.ANSI_RESET}"
+
+        // 特殊符号（灰色）
+        case Symbol.empty => return "${Color.ANSI_GRAY}empty${Color.ANSI_RESET}"
     }
 }
