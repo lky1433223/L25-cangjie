@@ -5,6 +5,15 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include <stdarg.h>
+
+int safe_fprintf(FILE* stream, const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    int ret = vfprintf(stream, format, args);
+    va_end(args);
+    return ret;
+}
 
 ASTNode* create_node(int node_type) {
     // 分配节点内存
@@ -22,7 +31,7 @@ ASTNode* create_node(int node_type) {
 
 void insert_list(ListNode* head, ASTNode* data) {
     if (head == NULL) {
-        fprintf(stderr, "Insert to an empty List"); // 空链表无法插入
+        safe_fprintf(stderr, "Insert to an empty List"); // 空链表无法插入
         return;
     }
 
@@ -35,7 +44,7 @@ void insert_list(ListNode* head, ASTNode* data) {
     ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
     if (newNode == NULL) {
         // 内存分配失败
-        fprintf(stderr, "Failed to allocate new ListNode");
+        safe_fprintf(stderr, "Failed to allocate new ListNode");
     }
     newNode->data = data;
     newNode->next = NULL;
@@ -180,13 +189,13 @@ ASTNode* build_expr(int op, ASTNode* expr, ASTNode* term){
     // 分配 AST 节点内存
     ASTNode* node = create_node(NODE_EXPR);
     if (!node) {
-        fprintf(stderr, "Failed to allocate AST node for expr");
+        safe_fprintf(stderr, "Failed to allocate AST node for expr");
         return NULL;
     }
     // 分配 exprData 结构体内存
     struct exprData* expr_data = (struct exprData*)malloc(sizeof(struct exprData));
     if (!expr_data) {
-        fprintf(stderr, "Failed to allocate exprData");
+        safe_fprintf(stderr, "Failed to allocate exprData");
         free(node);
         return NULL;
     }
@@ -201,13 +210,13 @@ ASTNode* build_term(int op, ASTNode* term, ASTNode* factor){
     // 分配 AST 节点内存
     ASTNode* node = create_node(NODE_TERM);
     if (!node) {
-        fprintf(stderr, "Failed to allocate AST node for term");
+        safe_fprintf(stderr, "Failed to allocate AST node for term");
         return NULL;
     }
     // 分配 exprData 结构体内存
     struct termData* term_data = (struct termData*)malloc(sizeof(struct termData));
     if (!term_data) {
-        fprintf(stderr, "Failed to allocate termData");
+        safe_fprintf(stderr, "Failed to allocate termData");
         free(node);
         return NULL;
     }
@@ -235,7 +244,7 @@ ASTNode* build_bool_expr(int op, ASTNode* expr1, ASTNode* expr2){
     // 分配 boolExprData 结构体内存
     struct boolExprData* bool_expr_data = (struct boolExprData*)malloc(sizeof(struct boolExprData));
     if (!bool_expr_data) {
-        fprintf(stderr, "Failed to allocate boolExprData");
+        safe_fprintf(stderr, "Failed to allocate boolExprData");
         free(node);
         return NULL;
     }
@@ -260,14 +269,14 @@ ASTNode* build_ident(const char* name) {
     // 分配 AST 节点内存
     ASTNode* node = create_node(NODE_IDENT);
     if (!node) {
-        fprintf(stderr, "Failed to allocate AST node for ident: %s\n", name);
+        safe_fprintf(stderr, "Failed to allocate AST node for ident: %s\n", name);
         return NULL;
     }
 
     // 分配 identData 结构体内存
     struct identData* id_data = (struct identData*)malloc(sizeof(struct identData));
     if (!id_data) {
-        fprintf(stderr, "Failed to allocate identData for: %s\n", name);
+        safe_fprintf(stderr, "Failed to allocate identData for: %s\n", name);
         free(node);
         return NULL;
     }
@@ -285,13 +294,13 @@ ASTNode* build_number(const int num){
     // 分配 AST 节点内存
     ASTNode* node = create_node(NODE_NUMBER);
     if (!node) {
-        fprintf(stderr, "Failed to allocate AST node for number: %d\n", num);
+        safe_fprintf(stderr, "Failed to allocate AST node for number: %d\n", num);
         return NULL;
     }
     // 分配 numData 结构体内存
     struct numData* num_data = (struct numData*)malloc(sizeof(struct numData));
     if (!num_data) {
-        fprintf(stderr, "Failed to allocate numData for: %d\n", num);
+        safe_fprintf(stderr, "Failed to allocate numData for: %d\n", num);
         free(node);
         return NULL;
     }
