@@ -6,8 +6,9 @@
  * @Description: L25分析中所有异常的基类
  */
 package L25.L25Exception
-open public class L25Exception <: Exception{
-    public init(){
+
+public open class L25Exception <: Exception {
+    public init() {
         super("L25Exception");
     }
     public init(message: String) {

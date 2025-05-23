@@ -7,8 +7,8 @@
  */
 package L25.L25Exception
 
-open public class Unkonw <: L25Exception{
-    public init(){
+public open class Unkonw <: L25Exception {
+    public init() {
         super("Unkonw");
     }
     public init(message: String) {
@@ -19,8 +19,8 @@ open public class Unkonw <: L25Exception{
     }
 }
 
-public class UnkonwOpr <: Unkonw{
-        public init(){
+public class UnkonwOpr <: Unkonw {
+    public init() {
         super("UnkonwOpr");
     }
     public init(message: String) {
@@ -31,8 +31,8 @@ public class UnkonwOpr <: Unkonw{
     }
 }
 
-public class UnkonwSymbol <: Unkonw{
-    public init(){
+public class UnkonwSymbol <: Unkonw {
+    public init() {
         super("UnkonwSymbol");
     }
     public init(message: String) {
@@ -43,9 +43,8 @@ public class UnkonwSymbol <: Unkonw{
     }
 }
 
-
-public class UnkonwOpt <: Unkonw{
-        public init(){
+public class UnkonwOpt <: Unkonw {
+    public init() {
         super("UnkonwOpt");
     }
     public init(message: String) {

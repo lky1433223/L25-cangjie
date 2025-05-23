@@ -26,7 +26,7 @@ func buildIdent(croot:CASTNode):Ident
 {
     var res = Ident() //定义Ident类型
     let cpdata: CPointer<CIdentData> = unsafe{CPointer<CIdentData>(croot.data)} //C data指针
-    if(cpdata.isNull()){throw Exception("empty point")}
+    if(cpdata.isNull()){throw TranslateException("empty point")}
     let cdata = unsafe{cpdata.read()} //解析指针
     let name_len = cdata.name_len     //name长度
     //从Varray翻译
@@ -43,7 +43,7 @@ func buildIdent(croot:CASTNode):Ident
 func buildNumber(croot:CASTNode):Number
 {
     let cpdata: CPointer<CNumData> = unsafe{CPointer<CNumData>(croot.data)} //C data指针
-    if(cpdata.isNull()){throw Exception("empty point")}
+    if(cpdata.isNull()){throw TranslateException("empty point")}
     let cdata = unsafe{cpdata.read()} //解析指针
     var res = Number(Int64(cdata.num)) //定义Ident类型
     println("build Number ${res.num}" )
@@ -110,7 +110,7 @@ func buildExpr(croot:CASTNode):Expr
 {
     println("build buildExpr")
     let cpdata: CPointer<CexprData> = unsafe{CPointer<CexprData>(croot.data)} //C data指针
-    if(cpdata.isNull()){throw Exception("empty point")}
+    if(cpdata.isNull()){throw TranslateException("empty point")}
     let cdata = unsafe{cpdata.read()} //解析指针
     let op = cdata.op
     var res = Expr(getOpt(op))
@@ -121,7 +121,7 @@ func buildTerm(croot:CASTNode):Term
 {
     println("build buildTerm")
     let cpdata: CPointer<CtermData> = unsafe{CPointer<CtermData>(croot.data)} //C data指针
-    if(cpdata.isNull()){throw Exception("empty point")}
+    if(cpdata.isNull()){throw TranslateException("empty point")}
     let cdata = unsafe{cpdata.read()} //解析指针
     let op = cdata.op
     var res = Term()
@@ -132,7 +132,7 @@ func buildTerm(croot:CASTNode):Term
 func buildBoolExpr(croot:CASTNode):BoolExpr{
     println("build BoolExpr")
     let cpdata: CPointer<CboolExprData> = unsafe{CPointer<CboolExprData>(croot.data)} //C data指针
-    if(cpdata.isNull()){throw Exception("empty point")}
+    if(cpdata.isNull()){throw TranslateException("empty point")}
     let cdata = unsafe{cpdata.read()} //解析指针
     let op = cdata.op
     var res = BoolExpr(getOpt(op))
@@ -170,7 +170,7 @@ func builParamList(_:CASTNode):ParamList
 func dfsCAST(cproot:CPointer<CASTNode>):AST
 {
     //判断C语言指针是否为空
-    if(cproot.isNull()){throw Exception("empty point")}
+    if(cproot.isNull()){throw TranslateException("empty point")}
     //解析地址到struct
     let croot = unsafe{cproot.read()}
     //处理data字段

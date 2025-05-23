@@ -6,8 +6,9 @@
  * @Description: Parse过程异常，通常是在Bison语法分析过程中出错，不包含Compile Error
  */
 package L25.L25Exception
-open public class ParseException <: L25Exception{
-    public init(){
+
+public open class ParseException <: L25Exception {
+    public init() {
         super("ParseException");
     }
     public init(message: String) {
@@ -17,7 +18,3 @@ open public class ParseException <: L25Exception{
         "ParseException"
     }
 }
-
-
-
-
