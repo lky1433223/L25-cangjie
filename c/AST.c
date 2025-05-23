@@ -14,9 +14,35 @@ ASTNode* create_node(int node_type) {
     node->node_type = node_type;
     node->data = NULL;
     node->child_count = 0;
+    node->children = malloc(sizeof(ListNode));
+    node->children->data = NULL;
+    node->children->next = NULL;
     return node;
 }
 
+void insert_list(ListNode* head, ASTNode* data) {
+    if (head == NULL) {
+        fprintf(stderr, "Insert to an empty List"); // 空链表无法插入
+        return;
+    }
+
+    // 找到最后一个节点
+    while (head->next != NULL) {
+        head = head->next;
+    }
+
+    // 分配新节点
+    ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
+    if (newNode == NULL) {
+        // 内存分配失败
+        fprintf(stderr, "Failed to allocate new ListNode");
+    }
+    newNode->data = data;
+    newNode->next = NULL;
+
+    // 插入到链表尾部
+    head->next = newNode;
+}
 
 void free_AST(struct ASTNode* node) {
     if (node == NULL) {
@@ -24,8 +50,12 @@ void free_AST(struct ASTNode* node) {
     }
 
     // 1. 先递归释放所有子节点
-    for (int i = 0; i < node->child_count; ++i) {
-        free_AST(node->children[i]);
+    ListNode* child = node->children;
+    while (child != NULL) {
+        ListNode* next = child->next;
+        free_AST(child->data); // 递归释放子节点
+        free(child);           // 释放链表节点
+        child = next;
     }
 
     // 2. 释放当前节点的 data 数据
@@ -53,8 +83,8 @@ void free_AST(struct ASTNode* node) {
 
 void insert_child(ASTNode* father, ASTNode* child)
 {
-    assert(father->child_count < CHILDREN_CAP);
-    father->children[father->child_count++] = child;
+    insert_list(father->children, child);
+    father->child_count++;
 }
 
 

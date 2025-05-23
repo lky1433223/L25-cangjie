@@ -1,15 +1,23 @@
 #ifndef H_AST_H
 #define H_AST_H
 
-#define CHILDREN_CAP 100
 #define MAX_IDNET_LEN 100
 
 struct ASTNode;
 typedef struct ASTNode ASTNode;
+struct ListNode;
+typedef struct ListNode ListNode;
+// 链表节点结构
+struct ListNode {
+    ASTNode* data;         // data指针
+    struct ListNode* next; // 下一个节点
+};
+
+
 struct ASTNode{
     int node_type;       //标识节点类型
     void* data;     //实际的节点信息
-    ASTNode* children[CHILDREN_CAP];
+    ListNode* children;
     int child_count;    // 当前子节点数量
 };
 
