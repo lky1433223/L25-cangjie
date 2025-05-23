@@ -29,6 +29,21 @@ public enum Opt {
             case Opt.ge => return 10
         }
     }
+    
+    func toString():String{
+        match(this) {
+            case Opt.add => return "add"
+            case Opt.sub => return "sub"
+            case Opt.mul => return "mul"
+            case Opt.div => return "div"
+            case Opt.eq => return  "eq"
+            case Opt.ne => return  "ne"
+            case Opt.lt => return  "lt"
+            case Opt.le => return  "le"
+            case Opt.gt => return  "gt"
+            case Opt.ge => return  "ge"
+        }
+    }
 
     operator func ==(right:Opt){
         return this.toInt() == right.toInt()
@@ -53,3 +68,5 @@ func getOpt(value: Int32): Opt {
 }
 
 func toInt(opt:Opt){opt.toInt()}
+
+public func toString(opt:Opt){opt.toString()}

@@ -180,7 +180,7 @@ func analyzeDeclareStmt(ast: AST) {
             let table: TableSturct = global_table.tables[ident_id]
             global_code.gen(Fct.sto, l: lev - table.level, a: table.adr) //将栈顶存回
         } else {
-            //TODO:处理变量未声明异常
+            throw UnDeclaredIdent(toString(Kind.variable), name) //TODO:position
         }
     }
 }
@@ -197,7 +197,7 @@ func analyzeAssignStmt(ast: AST) {
         analyzeExpr(ast.children[1]) //先分析expr，将结果存回栈顶。
         global_code.gen(Fct.sto, l: lev - table.level, a: table.adr)
     } else {
-        throw UnDeclaredIdent(toString(Kind.variable), name)
+        throw UnDeclaredIdent(toString(Kind.variable), name) //TODO:position
     }
 }
 
@@ -276,12 +276,9 @@ func analyzeInputStmt(ast: AST) {
             global_code.gen(Fct.opr, l: 0, a: toInt(Opr.inp)) //读入到栈顶
             if (let Some(ident_id) <- global_table.position(name, Kind.variable)) {
                 let table = global_table.tables[ident_id]
-                match (table.kind) {
-                    case Kind.variable => global_code.gen(Fct.sto, l: lev - table.level, a: table.adr); //变量，找到变量地址并将其值填入
-                    case _ => throw CompileError() //TODO:细化这个CE
-                }
+                global_code.gen(Fct.sto, l: lev - table.level, a: table.adr); //变量，找到变量地址并将其值填入
             } else {
-                throw Exception() //TODO:细化这个Expection
+                throw UnDeclaredIdent(toString(Kind.variable), name) //TODO:Position
             }
         }
     }
@@ -293,21 +290,19 @@ func analyzeExpr(ast: AST): Unit {
     }
 
     let expr = (ast as Expr).getOrThrow()
-    //只有一个节点，就是+-或无符号（默认+），如果是-直接进行变号
-    if (ast.children.size == 1) {
+
+    if (ast.children.size == 1) { //只有一个节点，就是+-或无符号（默认+），如果是-直接进行变号
         analyzeTerm(ast.children[0]) //先分析儿子
         if (expr.opt == Opt.sub) {
             global_code.gen(Fct.opr, l: 0, a: toInt(Opr.rev))
         }
-    }
-        //有两个节点，一个expr一个term，先执行expr，然后分析term，然后生成运算符
-        else {
+    } else { //有两个节点，一个expr一个term，先执行expr，然后分析term，然后生成运算符
         analyzeExpr(expr.children[0])
         analyzeTerm(expr.children[1])
         match (expr.opt) {
             case Opt.add => global_code.gen(Fct.opr, l: 0, a: toInt(Opr.add))
             case Opt.sub => global_code.gen(Fct.opr, l: 0, a: toInt(Opr.sub))
-            case _ => throw Exception() //TODO:细化符号错误的异常
+            case _ => throw WrongOptException(toString(expr.opt), toString(ast.symbol))
         }
     }
 }
@@ -323,7 +318,7 @@ func analyzeTerm(ast: AST): Unit {
         match (opt) {
             case Opt.div => global_code.gen(Fct.opr, l: 0, a: toInt(Opr.div))
             case Opt.mul => global_code.gen(Fct.opr, l: 0, a: toInt(Opr.mul))
-            case _ => throw Exception() //TODO:细化符号错误的异常
+            case _ => throw WrongOptException(toString(opt), toString(ast.symbol))
         }
     } else { //是单个数字，也就没有符号了
         analyzeFactor(term.children[0])
@@ -339,15 +334,14 @@ func analyzeFactor(ast: AST) {
     match (child.symbol) {
         //是符号表中的符号
         case Symbol.ident(name) => //取变量名做解析
-            if (let Some(ident_id) <- global_table.position(name, Kind.variable)) {
+            if (let Some(ident_id) <- global_table.position(name, Kind.variable)) { //如果找到了变量
                 let table: TableSturct = global_table.tables[ident_id]
-                match (table.kind) {
-                    case Kind.constant => global_code.gen(Fct.lit, l: 0, a: table.val) //常量 直接读常量
-                    case Kind.variable => global_code.gen(Fct.lod, l: lev - table.level, a: table.adr); //变量，找到变量地址并将其值入栈
-                    case _ => throw CompileError() //TODO:细化这个CE
-                }
+                global_code.gen(Fct.lod, l: lev - table.level, a: table.adr); //变量，找到变量地址并将其值入栈
+            } else if (let Some(ident_id) <- global_table.position(name, Kind.constant)) { //如果找到了常量
+                let table: TableSturct = global_table.tables[ident_id]
+                global_code.gen(Fct.lit, l: 0, a: table.val) //常量 直接读常量
             } else {
-                throw CompileError() //TODO:细化这个CE
+                throw UnDeclaredIdent(toString(Kind.variable) + " or " + toString(Kind.constant), name) //TODO:Position
             }
         case Symbol.number(num) => global_code.gen(Fct.lit, l: 0, a: num) //数字，直接读数字
         case Symbol.expr => analyzeExpr(child) // 下一个节点是Expr，继续执行Expr
@@ -397,7 +391,7 @@ func analyzeFunCall(ast: AST) {
             global_code.gen(Fct.pop)
         }
     } else {
-        throw Exception() // TODO:细化这个Exception
+        throw UnDeclaredIdent(toString(Kind.function), name) // TODO:Position
     }
 }
 

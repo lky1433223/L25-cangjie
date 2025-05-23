@@ -4,16 +4,8 @@ program Myapp {
         return a;
     }
     main {
-        let x = 1;
-        let x = 2;
-        x = 2;
-        let y = -3;
-        let z = 1 * 2;
-        let a = x + 1 * 2;
-        let b = (x + y + x * y + a) / z;
-        if(1==1){
-            x = 3;
-        };
-        output(a, b);
+        let c = 2;
+        let x = c;
+        output(c, x);
     }
 }

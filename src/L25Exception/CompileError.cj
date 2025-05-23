@@ -1,7 +1,7 @@
 /*
  * @Author: shiinarikka
  * @Date: 2025-05-23 14:03:13
- * @LastEditTime: 2025-05-23 23:06:57
+ * @LastEditTime: 2025-05-23 23:37:14
  * @FilePath: /L25/src/L25Exception/CompileError.cj
  * @Description: 包含所有编译报错
  */
@@ -48,10 +48,10 @@ public open class UnDeclaredIdent <: CompileError {
         super(message)
     }
     public init(kind: String, name: String) {
-        super("UnDeclared Ident, ${kind}:${name}")
+        super("UnDeclared Ident, ${kind}: ${name}")
     }
     public init(kind: String, name: String, first_line:Int, first_colume:Int, last_line:Int, last_colume:Int) {
-        super("UnDeclared Ident, ${kind}:${name}", first_line, first_colume, last_line, last_colume)
+        super("UnDeclared Ident, ${kind}: ${name}", first_line, first_colume, last_line, last_colume)
     }
     public open override func getClassName(): String {
         "UnDeclaredIdent"
