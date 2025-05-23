@@ -31,7 +31,7 @@ TODO:release
 3. 在应用商店中搜索`colorL25`，安装扩展
 4. 扩展会自动为`.l25`文件进行代码高亮显示
    
-## 自己构建
+## 自己构建🔧
 1. 配置仓颉
    - 安装[仓颉工具链](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fuser_manual%2Fsource_zh_cn%2Ffirst_understanding%2Finstall_Community.html)
    - 安装[CJPM](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fuser_manual%2Fsource_zh_cn%2FCompile-And-Build%2Fcjpm_usage_OHOS.html)
@@ -65,7 +65,7 @@ TODO:release
    ```bash
    cjpm test
    ```
-
+⚠️warning: 在测试中发现，遍历AST可能导致爆栈，请开启编译优化：`-O2 --fno-chir-function-inlining`
 ## 代码行数统计
 1. 安装[cloc](https://github.com/AlDanial/cloc)代码行数统计工具
 2. 运行[```./cloc.sh```](cloc.sh)脚本，这会自动使用[```cangjie_lang.txt```](cangjie_lang.txt)配置文件，添加对仓颉和L25语言的代码行数统计

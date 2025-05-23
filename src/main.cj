@@ -81,6 +81,7 @@ main(): Int64 {
             println(e)
         }
         printTree()
+        return 0
     }
     catch(e : Exception)
     {

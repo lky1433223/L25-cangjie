@@ -2,7 +2,7 @@
 
 [package]
   cjc-version = "0.53.18"
-  compile-option = ""
+  compile-option = "-O2 --fno-chir-function-inlining"
   description = "L25"
   link-option = ""
   name = "L25"
