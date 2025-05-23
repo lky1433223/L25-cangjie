@@ -23,7 +23,15 @@ public class Table{
             case Kind.program  => tabelstruct=TableSturct(name,kind)
         }
         tables.append(tabelstruct)
-        this.print()
+        @When[debug]
+        func printSelf(){
+            this.print()
+        }
+        @When[!debug]
+        func printSelf(){
+            //Do nothing
+        }
+        printSelf()
     }
 
     //查找一个符号在表里的id  由于符号遮蔽 优先选择最高scope的符号

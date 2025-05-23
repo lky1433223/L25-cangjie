@@ -6,10 +6,9 @@ import L25.table.*
 import L25.L25Exception.*
 import std.collection.ArrayList
 
-//留一个未解释的问题，没有传引用的方式吗，全局变量还是有点太抽象了
+//TODO:留一个未解释的问题，没有传引用的方式吗，全局变量还是有点太抽象了
 var global_code: Code = Code() // 虚拟机代码
 var global_table: Table = Table() // 符号表
-// var global_name: ArrayList<String> = ArrayList<String>() //临时记录符号
 var lev = 0 //层级记录
 var scop = 0 //作用域记录
 var cnt_var = 0 //数据分配个数（相对地址）
@@ -120,7 +119,6 @@ func analyzeFuncDef(ast: AST) {
     //清理临时的缓存
     //清除符号表
     global_table.remove(scop)
-    global_table.print()
     //恢复lev
     lev--
 }

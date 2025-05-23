@@ -69,10 +69,6 @@ main(): Int64 {
     }
     catch(e: Error)
     {
-        println(e)
-    }
-    catch(e : Exception)
-    {
         @When[debug]
         func printTree(){
             let st = e.getStackTrace()
@@ -82,8 +78,23 @@ main(): Int64 {
         }
         @When[!debug]
         func printTree(){
+            println(e)
         }
         printTree()
+    }
+    catch(e : Exception)
+    {
+        // @When[debug]
+        // func printTree(){
+        //     let st = e.getStackTrace()
+        //     for(item in st){
+        //         println(item.methodName)
+        //     }
+        // }
+        // @When[!debug]
+        // func printTree(){
+        // }
+        // printTree()
         println(e)
     }
     

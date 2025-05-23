@@ -202,6 +202,7 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
     }
     //处理儿子节点
     let child_count = croot.child_count
+    println("处理儿子节点${child_count}")
     for(child_id in 0..child_count)
     {
         let cpchild = croot.children[Int64(child_id)]
