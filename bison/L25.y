@@ -9,6 +9,7 @@
 #include "OPT.h"
 void yyerror(const char *msg);
 int yylex(void);
+extern char global_filename[200];
 struct ASTNode* root;
 __attribute__((visibility("default"))) 
 //获取AST根节点指针
@@ -335,5 +336,5 @@ ASTNode* getAST(){
 }
 
 void yyerror(const char* msg ) {
-        fprintf(stderr, "Error at:%d:%d: %s\n",yylloc.first_line, yylloc.first_column, msg);
+        fprintf(stderr, "\033[38;5;196m\033[48;5;232mError\033[0m in \033[36m%s\033[0m at \033[38;5;226m%d:%d\033[0m: \033[38;5;255m%s\033[0m\n", global_filename, yylloc.first_line, yylloc.first_column, msg);
 }

@@ -1,5 +1,6 @@
 package L25.table
 import std.collection.*
+import L25.L25Exception.Redefination
 /*
 * 符号表
 */
@@ -12,9 +13,10 @@ public class Table{
         //查找是否存在变量名冲突(同类型 同作用域 重名)，允许变量名遮蔽，
         for(item in tables){
             if(item.kind == kind && item.name == name && item.scope == scope){
-                throw Exception() //TODO:
+                throw Redefination(toString(kind), name) 
             }
         }
+        
         var tabelstruct:TableSturct
         match(kind){
             case Kind.constant => tabelstruct=TableSturct(name,kind,val)

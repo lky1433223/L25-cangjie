@@ -4,6 +4,7 @@
 #include "parser.tab.h"
 #include "AST.h"
 FILE* fin;
+char global_filename[200];
 void yyerror(char *);
 int yywrap(void);
 
@@ -81,7 +82,8 @@ int yywrap(void)
 
 void reset_yyin(char* fname)
 {
-  printf("use L25 FILE %s \n", fname);
+  strcpy(global_filename, fname);
+  printf("use L25 FILE %s \n", global_filename);
   if ((fin = fopen(fname, "r")) == NULL)
 	{
 		printf("Can't open the input file!\n");
