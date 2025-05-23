@@ -1,5 +1,5 @@
 program Myapp {
-    func add(){
+    func add(a, a){
         let a = 1;
         return a;
     }
