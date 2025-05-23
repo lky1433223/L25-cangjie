@@ -1,11 +1,13 @@
 #include"AST.h"
 #include"NODE.h"
 #include"OPT.h"
+#include "parser.tab.h"  // 包含 Bison 生成的头文件
 #include<assert.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include <stdarg.h>
+extern YYLTYPE yylloc;   // 声明全局位置变量
 
 int safe_fprintf(FILE* stream, const char* format, ...) {
     va_list args;
@@ -26,6 +28,10 @@ ASTNode* create_node(int node_type) {
     node->children = malloc(sizeof(ListNode));
     node->children->data = NULL;
     node->children->next = NULL;
+    node->first_line = yylloc.first_line;
+    node->first_colume = yylloc.first_column;
+    node->last_line = yylloc.last_line;
+    node->last_colume = yylloc.last_column;
     return node;
 }
 

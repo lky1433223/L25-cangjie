@@ -15,6 +15,10 @@ struct CASTNode {
     var data: CPointer<Unit> = CPointer<Unit>()
     var children: CPointer<ListNode> = CPointer<ListNode>()
     var child_count: Int32 = 0
+    var first_line: Int32 = 0
+    var first_colume: Int32 = 0
+    var last_line: Int32 = 0
+    var last_colume: Int32 = 0
 }
 
 @C

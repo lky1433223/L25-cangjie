@@ -5,14 +5,14 @@ import std.collection.*
 var global_deep = 0
 
 @When[debug]
-func printBuildStatus(symbol:Symbol){
+func printBuildStatus(node:AST){
     for(_ in 1..global_deep){
         print(" ")
     }
-    println("${toString(symbol)}")
+    println("${toString(node.symbol)} ${node.first_line}:${node.first_colume}-${node.last_line}:${node.last_colume}")
 }
 @When[!debug]
-func printBuildStatus(_:Symbol){
+func printBuildStatus(node:AST){
     //Do nothing
 }
 
@@ -20,19 +20,17 @@ func printBuildStatus(_:Symbol){
 func buildProgram(_:CASTNode):Program
 {
     var res = Program()
-    printBuildStatus(res.symbol)
     return res
 }
 
 func buildFuncDefList(_:CASTNode):FuncDefList{
     var res = FuncDefList()
-    printBuildStatus(res.symbol)
     return res
 }
 
 func buildFuncDef(_:CASTNode):FuncDef{
     var res = FuncDef()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
@@ -50,7 +48,7 @@ func buildIdent(croot:CASTNode):Ident
         tmp_strarray.append(Rune(cdata.name[i]))
     }   
     res.setName(String(tmp_strarray))
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
@@ -60,63 +58,63 @@ func buildNumber(croot:CASTNode):Number
     if(cpdata.isNull()){throw TranslateException("empty point")}
     let cdata = unsafe{cpdata.read()} //解析指针
     var res = Number(Int64(cdata.num)) //定义Ident类型
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
 func buildStmtList(_:CASTNode):StmtList
 {
     var res = StmtList()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
 func buildStmt(_:CASTNode):Stmt
 {
     var res = Stmt()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
 func buildDeclareStmt(_:CASTNode):DeclareStmt
 {
     var res = DeclareStmt()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
 func buildAssignStmt(_:CASTNode):AssignStmt
 {
     var res = AssignStmt()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
 func buildOutputStmt(_:CASTNode):OutputStmt
 {
     var res = OutputStmt()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
 func buildIfStmt(_:CASTNode):IfStmt
 {
     var res = IfStmt()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
 func buildWhileStmt(_:CASTNode):WhileStmt
 {
     var res = WhileStmt()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
 func buildInputStmt(_:CASTNode):InputStmt
 {
     var res = InputStmt()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
@@ -127,7 +125,7 @@ func buildExpr(croot:CASTNode):Expr
     let cdata = unsafe{cpdata.read()} //解析指针
     let op = cdata.op
     var res = Expr(getOpt(op))
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
@@ -139,7 +137,7 @@ func buildTerm(croot:CASTNode):Term
     let op = cdata.op
     var res = Term()
     if(op != 0){res = Term(getOpt(op))}
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
@@ -149,35 +147,35 @@ func buildBoolExpr(croot:CASTNode):BoolExpr{
     let cdata = unsafe{cpdata.read()} //解析指针
     let op = cdata.op
     var res = BoolExpr(getOpt(op))
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
 func buildFactor(_:CASTNode):Factor
 {
     var res = Factor()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
 func buildFuncCall(_:CASTNode):FuncCall
 {
     var res = FuncCall()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
 func buildArgList(_:CASTNode):ArgList
 {
     var res = ArgList()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
 func builParamList(_:CASTNode):ParamList
 {
     var res = ParamList()
-    printBuildStatus(res.symbol)
+     
     return res
 }
 
@@ -215,6 +213,9 @@ func dfsCAST(cproot:CPointer<CASTNode>):AST
         case Symbol.func_call => root = buildFuncCall(croot)
         case _ => throw UnkonwSymbol("未知的节点类型, ${croot.node_type}")
     }
+    //拷贝line colume
+    root.setLC(croot.first_line, croot.first_colume, croot.last_line, croot.last_colume)
+    printBuildStatus(root)
     //遍历链表，处理儿子节点
     let child_count = croot.child_count
     var current = unsafe{croot.children.read().next}

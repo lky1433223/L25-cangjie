@@ -5,12 +5,26 @@ import std.collection.*
 open public class AST{
     var children: ArrayList<AST>
     var symbol: Symbol
+    var first_line:Int
+    var first_colume:Int
+    var last_line:Int
+    var last_colume:Int
     init() {
         children = ArrayList<AST>()
         symbol = Symbol.empty
+        first_line = 0
+        first_colume = 0
+        last_line = 0
+        last_colume = 0
     }
     public func insertChild(child:AST){
         children.append(child)
+    }
+    public func setLC(first_line:Int32, first_colume:Int32, last_line:Int32, last_colume:Int32){
+        this.first_line = Int64(first_line)
+        this.first_colume = Int64(first_colume)
+        this.last_line = Int64(last_line)
+        this.last_colume = Int64(last_colume)
     }
 
 }

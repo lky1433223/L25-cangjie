@@ -19,6 +19,10 @@ struct ASTNode{
     void* data;     //实际的节点信息
     ListNode* children;
     int child_count;    // 当前子节点数量
+    int first_line;
+    int first_colume;
+    int last_line;
+    int last_colume;
 };
 
 struct identData{
