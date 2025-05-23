@@ -46,18 +46,18 @@ func parse(_:Int):Int64{
  * @Exception: TranslateException UnKonwException ParseException
  */
 func translate(_:Int64):AST{
-    println("从CAST翻译成AST:")
+    println("--------------翻译CAST->AST------------")
     let ast = translateAST()
     return ast
 }
 func analyze(ast:AST):Code{
-    println("编译:")
+    println("--------------执行语法分析并生成Pcode------------")
     var code:Code = analyzeAST(ast)
     code.print(with_line:true,translate_opr:true)
     return code
 }
 func run(code:Code){
-    println("执行程序")
+    println("--------------执行程序-------------")
     var res = interpret(code)
     return res
 }

@@ -23,15 +23,7 @@ public class Table{
             case Kind.program  => tabelstruct=TableSturct(name,kind)
         }
         tables.append(tabelstruct)
-        @When[debug]
-        func printSelf(){
-            this.print()
-        }
-        @When[!debug]
-        func printSelf(){
-            //Do nothing
-        }
-        printSelf()
+        
     }
 
     //查找一个符号在表里的id  由于符号遮蔽 优先选择最高scope的符号
@@ -49,13 +41,22 @@ public class Table{
     }
     //删除某一作用域的所有符号
     public func remove(scope:Int){
+        @When[debug]
+        func printSelf(){
+            this.print()
+        }
+        @When[!debug]
+        func printSelf(){
+            //Do nothing
+        }
+        printSelf()
+        
         for(i in tables.size-1 ..= 0 : -1){
             if(tables[i].scope == scope){
-                print(i)
                 tables.remove(i)
             }
         }
-        println()
+        
     }
     public func print(){
         // 打印表头

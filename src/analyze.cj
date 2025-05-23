@@ -17,7 +17,6 @@ var cnt_param = 0 //变量分配个数
 //分析AST树，返回pcode
 func analyzeAST(ast: AST) {
     analyzeProgram(ast)
-    global_table.print()
     return global_code
 }
 
@@ -54,6 +53,7 @@ func analyzeProgram(ast: AST): Unit {
     global_table.tables[tid0].size = cnt_var //更改符号表中，这个过程的size
     global_code.codes[cid_ini].a = cnt_var //更改指令中申请的栈空间
     global_code.gen(Fct.opr, l: 0, a: toInt(Opr.ret)) //ret
+    global_table.remove(scop)
     lev--
 }
 

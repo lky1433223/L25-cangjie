@@ -1,6 +1,7 @@
 package L25.vm
 import std.collection.*
 import L25.L25Exception.OutOfRange
+import L25.utils.Color
 //存储可执行的代码，并且包含代码生成文件
 public class Code{
     public var codes : ArrayList<Instruction>
@@ -26,13 +27,10 @@ public class Code{
         for(code in codes){
             
             if(with_line){
-                print(line)
-                print(" ")
+                print("${Color.ANSI_BLUE}${line.toString().padLeft(3)}${Color.ANSI_RESET}${Color.ANSI_GRAY}|${Color.ANSI_RESET} ")
             }
-            print(toString(code.f))
-            print(" ")
-            print(code.l)
-            print(" ")
+            print("${Color.ANSI_RESET}${toString(code.f)}${Color.ANSI_RESET} ")
+            print("${Color.ANSI_RESET}${code.l.toString()}${Color.ANSI_RESET} ")
             if(translate_opr && (code.f == Fct.opr)){
                 print((getOpr ~> toString)(code.a))
             }

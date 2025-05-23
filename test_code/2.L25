@@ -1,7 +1,8 @@
 program TestINOUT{
     main{
         let a;
-        input(a);
-        output(a);
+        let b;
+        input(a,b);
+        output(a+b);
     }
 }

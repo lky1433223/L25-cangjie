@@ -24,8 +24,21 @@
 
 TODO:release
 
-运行时会显示AST：
-![AST](images/quickstart/AST.png)
+运行时会显示编译过程中的AST和Pcode，最后执行L25程序。
+
+示例：
+```swift
+program TestINOUT{
+    main{
+        let a;
+        let b;
+        input(a,b);
+        output(a+b);
+    }
+}
+```
+
+![Example](images/quickstart/run.png)
 ## 使用[colorL25](https://marketplace.visualstudio.com/items?itemName=ShiinaRikka.colorl25&ssr=false#overview)插件
 
 1. 在VScode中，`Ctrl + Shift + P` (`Command + Shift + P`for mac) 打开命令面板
@@ -163,6 +176,7 @@ TODO:release
 - 实现多种变量类型
 - 指针类型
 - 实现函数嵌套声明
+- 符号表中重命名变量的地址复用
   
 ## 语义语法分析及代码生成
 | 非终结符 | C Sturct | Bison  | CAST  | AST  | CAST → AST  |  analyze | 备注 |
