@@ -12,7 +12,7 @@ func printBuildStatus(node:AST){
     println("${toString(node.symbol)} ${node.first_line}:${node.first_colume}-${node.last_line}:${node.last_colume}")
 }
 @When[!debug]
-func printBuildStatus(node:AST){
+func printBuildStatus(_:AST){
     //Do nothing
 }
 

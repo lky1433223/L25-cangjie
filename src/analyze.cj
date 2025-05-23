@@ -26,8 +26,12 @@ func analyzeProgram(ast: AST): Unit {
     }
     //第一个节点 一定是 ident
     let name = analyzeIdent(ast.children[0])
-
-    global_table.enter(name, Kind.program)
+    try {
+        global_table.enter(name, Kind.program)
+    } catch (e: Redefination) {
+        throw Redefination(toString(Kind.program), name, ast.children[0].first_line, ast.children[0].first_colume, ast.children[0].last_line,
+            ast.children[0].last_colume)
+    }
     global_code.gen(Fct.jmp) //跳转
     var tid0 = global_table.position() //记录当前层级在符号表的id
     var cid_jmp = global_code.Position() //记录入口跳转指令id
@@ -78,7 +82,12 @@ func analyzeFuncDef(ast: AST) {
 
     global_code.gen(Fct.jmp, l: 0, a: 0) //跳转地址后续回填
     var cid_jmp = global_code.Position()
-    global_table.enter(name, Kind.function, level: lev, adr: global_code.Position(), size: 0, param: 0, scope: scop) //size param需要后续回填
+    try {
+        global_table.enter(name, Kind.function, level: lev, adr: global_code.Position(), size: 0, param: 0, scope: scop) //size param需要后续回填
+    } catch (e: Redefination) {
+        throw Redefination(toString(Kind.function), name, ast.children[0].first_line, ast.children[0].first_colume, ast.children[0].last_line,
+            ast.children[0].last_colume)
+    }
     var tid0 = global_table.position()
     lev++
     scop = 1 // 作用域为1
@@ -96,7 +105,12 @@ func analyzeFuncDef(ast: AST) {
             for (ident in ident_list) {
                 let name = analyzeIdent(ident)
                 // global_name.append(name)
-                global_table.enter(name, Kind.variable, level: lev, adr: param_adr, scope: scop)
+                try {
+                    global_table.enter(name, Kind.variable, level: lev, adr: param_adr, scope: scop)
+                } catch (e: Redefination) {
+                    throw Redefination(toString(Kind.variable), name, ident.first_line, ident.first_colume, ident.last_line,
+                        ident.last_colume)
+                }
                 param_adr++
             }
         }
@@ -167,7 +181,12 @@ func analyzeDeclareStmt(ast: AST) {
     let identNode = ast.children[0]
     var name = analyzeIdent(identNode)
     //注册符号表，相对地址从3开始
-    global_table.enter(name, Kind.variable, val: 0, level: lev, adr: cnt_var, scope: scop)
+    try {
+        global_table.enter(name, Kind.variable, val: 0, level: lev, adr: cnt_var, scope: scop)
+    } catch (e: Redefination) {
+        throw Redefination(toString(Kind.variable), name, ast.children[0].first_line, ast.children[0].first_colume, ast.children[0].last_line,
+            ast.children[0].last_colume)
+    }
     cnt_var++
 
     //如果有第二个儿子，是一个表达式，需要进行计算并给变量赋值
@@ -180,7 +199,8 @@ func analyzeDeclareStmt(ast: AST) {
             let table: TableSturct = global_table.tables[ident_id]
             global_code.gen(Fct.sto, l: lev - table.level, a: table.adr) //将栈顶存回
         } else {
-            throw UnDeclaredIdent(toString(Kind.variable), name) //TODO:position
+            throw UnDeclaredIdent(toString(Kind.variable), name, ast.first_line, ast.first_colume, ast.last_line,
+                ast.last_colume)
         }
     }
 }
@@ -197,7 +217,8 @@ func analyzeAssignStmt(ast: AST) {
         analyzeExpr(ast.children[1]) //先分析expr，将结果存回栈顶。
         global_code.gen(Fct.sto, l: lev - table.level, a: table.adr)
     } else {
-        throw UnDeclaredIdent(toString(Kind.variable), name) //TODO:position
+        throw UnDeclaredIdent(toString(Kind.variable), name, ast.first_line, ast.first_colume, ast.last_line,
+            ast.last_colume)
     }
 }
 
@@ -278,7 +299,8 @@ func analyzeInputStmt(ast: AST) {
                 let table = global_table.tables[ident_id]
                 global_code.gen(Fct.sto, l: lev - table.level, a: table.adr); //变量，找到变量地址并将其值填入
             } else {
-                throw UnDeclaredIdent(toString(Kind.variable), name) //TODO:Position
+                throw UnDeclaredIdent(toString(Kind.variable), name, ast.first_line, ast.first_colume, ast.last_line,
+                    ast.last_colume)
             }
         }
     }
@@ -341,7 +363,8 @@ func analyzeFactor(ast: AST) {
                 let table: TableSturct = global_table.tables[ident_id]
                 global_code.gen(Fct.lit, l: 0, a: table.val) //常量 直接读常量
             } else {
-                throw UnDeclaredIdent(toString(Kind.variable) + " or " + toString(Kind.constant), name) //TODO:Position
+                throw UnDeclaredIdent(toString(Kind.variable) + " or " + toString(Kind.constant), name, ast.first_line,
+                    ast.first_colume, ast.last_line, ast.last_colume)
             }
         case Symbol.number(num) => global_code.gen(Fct.lit, l: 0, a: num) //数字，直接读数字
         case Symbol.expr => analyzeExpr(child) // 下一个节点是Expr，继续执行Expr
@@ -391,7 +414,8 @@ func analyzeFunCall(ast: AST) {
             global_code.gen(Fct.pop)
         }
     } else {
-        throw UnDeclaredIdent(toString(Kind.function), name) // TODO:Position
+        throw UnDeclaredIdent(toString(Kind.function), name, ast.first_line, ast.first_colume, ast.last_line,
+            ast.last_colume)
     }
 }
 

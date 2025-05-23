@@ -9,6 +9,7 @@
 #include <stdarg.h>
 extern YYLTYPE yylloc;   // 声明全局位置变量
 
+//TODO:维护非根节点的yylloc信息，现在在create_node的时候创建，实际是错误的，
 int safe_fprintf(FILE* stream, const char* format, ...) {
     va_list args;
     va_start(args, format);

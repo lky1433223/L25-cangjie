@@ -20,12 +20,11 @@ foreign func yyparse(): Int
  */
 foreign func reset_yyin(fname: CString): Unit
 
-
 /**
- * @description: 读取文件，输出代码错误行 
+ * @description: 读取文件，输出代码错误行
  * @return :Unit
  */
-foreign func print_error_context_file(fname:CString, line:Int32, colume:Int32):Unit
+foreign func print_error_context_file(fname: CString, line: Int32, colume: Int32): Unit
 
 /**
  * @description: 读取L25代码，进行词语法分析
@@ -83,6 +82,7 @@ main(): Int64 {
     } catch (e: CompileError) { //捕获编译报错并输出
         @When[debug]
         func printError() {
+            println(e)
             let st = e.getStackTrace()
             for (item in st) {
                 println(item.methodName)
@@ -93,13 +93,13 @@ main(): Int64 {
         func printError() {
             let ERROR_TAG = "${Color.ERROR_TAG}Error${Color.ANSI_RESET}"
             var ERROR_FILE = "${Color.ANSI_CYAN}Console${Color.ANSI_RESET}"
-            if(let Some(filename) <- global_filename){
+            if (let Some(filename) <- global_filename) {
                 ERROR_FILE = "${Color.ANSI_CYAN}${filename}${Color.ANSI_RESET}"
             }
             let ERROR_POS = "${Color.ERROR_LOC}${e.first_line}:${e.first_colume}${Color.ANSI_RESET}"
             println("${ERROR_TAG} in ${ERROR_FILE} at ${ERROR_POS}: ${Color.ERROR_MSG}${e}${Color.ANSI_RESET}")
             //输出源文件对应行
-            if(let Some(filename) <- global_filename){
+            if (let Some(filename) <- global_filename) {
                 let pfname = unsafe { LibC.mallocCString(filename) }
                 unsafe { print_error_context_file(pfname, Int32(e.first_line), Int32(e.first_colume)) }
             }
@@ -108,6 +108,7 @@ main(): Int64 {
     } catch (e: Error) {
         @When[debug]
         func printError() {
+            println(e)
             let st = e.getStackTrace()
             for (item in st) {
                 println(item.methodName)
@@ -122,6 +123,7 @@ main(): Int64 {
     } catch (e: Exception) {
         @When[debug]
         func printError() {
+            println(e)
             let st = e.getStackTrace()
             for (item in st) {
                 println(item.methodName)
