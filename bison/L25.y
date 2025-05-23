@@ -3,12 +3,15 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include "AST.h"
 #include "NODE.h"
 #include "OPT.h"
+
 void yyerror(const char *msg);
 int yylex(void);
+extern FILE* fin;
 extern char global_filename[200];
 struct ASTNode* root;
 __attribute__((visibility("default"))) 
@@ -335,6 +338,47 @@ ASTNode* getAST(){
     return root;
 }
 
+void print_error_context_file(const char* filename, int line_num, int col_num) {
+    FILE* file = fopen(filename, "r");
+    if (!file) {
+        fprintf(stderr, "Cannot open source file for error context\n");
+        return;
+    }
+
+    // 定位到错误行
+    char line[1024];
+    int current_line = 1;
+    while (fgets(line, sizeof(line), file)) {
+        if (current_line == line_num) break;
+        current_line++;
+    }
+
+    if (current_line != line_num) {
+        fclose(file);
+        return;
+    }
+
+    // 生成箭头指示
+    char indicator[256] = {0};
+    int tab_adjust = 0;
+    for (int i=0; i<col_num-1 + tab_adjust; i++) {
+        if (line[i] == '\t') tab_adjust += 3; // 假设 tab 宽度为4
+        strcat(indicator, " ");
+    }
+    strcat(indicator, "\x1b[31m^~~ \x1b[0m");
+
+    fprintf(stderr,"  | \x1b[36m%04d\x1b[0m | %s",line_num,line);
+    fprintf(stderr,"  |        %s\n",indicator);
+
+    fclose(file);
+}
+
 void yyerror(const char* msg ) {
+    if(fin){
         fprintf(stderr, "\033[38;5;196m\033[48;5;232mError\033[0m in \033[36m%s\033[0m at \033[38;5;226m%d:%d\033[0m: \033[38;5;255m%s\033[0m\n", global_filename, yylloc.first_line, yylloc.first_column, msg);
+        print_error_context_file(global_filename, yylloc.first_line, yylloc.first_column);
+    }
+    else{
+        fprintf(stderr, "\033[38;5;196m\033[48;5;232mError\033[0m in \033[36m%s\033[0m at \033[38;5;226m%d:%d\033[0m: \033[38;5;255m%s\033[0m\n", "Console", yylloc.first_line, yylloc.first_column, msg);
+    }
 }

@@ -6,6 +6,7 @@ program Myapp {
     main {
         let c = 2;
         let x = c;
+        let x = 2;
         output(c, x);
     }
 }

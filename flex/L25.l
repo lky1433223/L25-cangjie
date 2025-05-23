@@ -3,7 +3,7 @@
 #include <string.h>
 #include "parser.tab.h"
 #include "AST.h"
-FILE* fin;
+FILE* fin = NULL;
 char global_filename[200];
 void yyerror(char *);
 int yywrap(void);

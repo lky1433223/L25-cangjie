@@ -7,7 +7,7 @@ import std.io.*
 import std.console.*
 import std.convert.*
 
-var global_filename: String = "Console"
+var global_filename: ?String = None
 /**
  * @description: Bison的yyparse函数
  * @return {Int}: 如果分析通过返回0
@@ -19,6 +19,13 @@ foreign func yyparse(): Int
  * @return: Unit
  */
 foreign func reset_yyin(fname: CString): Unit
+
+
+/**
+ * @description: 读取文件，输出代码错误行 
+ * @return :Unit
+ */
+foreign func print_error_context_file(fname:CString, line:Int32, colume:Int32):Unit
 
 /**
  * @description: 读取L25代码，进行词语法分析
@@ -85,9 +92,17 @@ main(): Int64 {
         @When[!debug]
         func printError() {
             let ERROR_TAG = "${Color.ERROR_TAG}Error${Color.ANSI_RESET}"
-            let ERROR_FILE = "${Color.ANSI_CYAN}${global_filename}${Color.ANSI_RESET}"
+            var ERROR_FILE = "${Color.ANSI_CYAN}Console${Color.ANSI_RESET}"
+            if(let Some(filename) <- global_filename){
+                ERROR_FILE = "${Color.ANSI_CYAN}${filename}${Color.ANSI_RESET}"
+            }
             let ERROR_POS = "${Color.ERROR_LOC}${e.first_line}:${e.first_colume}${Color.ANSI_RESET}"
             println("${ERROR_TAG} in ${ERROR_FILE} at ${ERROR_POS}: ${Color.ERROR_MSG}${e}${Color.ANSI_RESET}")
+            //输出源文件对应行
+            if(let Some(filename) <- global_filename){
+                let pfname = unsafe { LibC.mallocCString(filename) }
+                unsafe { print_error_context_file(pfname, Int32(e.first_line), Int32(e.first_colume)) }
+            }
         }
         printError()
     } catch (e: Error) {
