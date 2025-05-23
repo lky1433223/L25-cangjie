@@ -335,5 +335,5 @@ ASTNode* getAST(){
 }
 
 void yyerror(const char* msg ) {
-        printf("Error at:%d:%d: %s\n",yylloc.first_line, yylloc.first_column, msg);
+        fprintf(stderr, "Error at:%d:%d: %s\n",yylloc.first_line, yylloc.first_column, msg);
 }

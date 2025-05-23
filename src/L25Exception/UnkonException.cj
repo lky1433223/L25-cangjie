@@ -1,5 +1,12 @@
+/*
+ * @Author: shiinarikka
+ * @Date: 2025-05-15 23:58:56
+ * @LastEditTime: 2025-05-23 13:57:58
+ * @FilePath: /L25/src/L25Exception/UnkonException.cj
+ * @Description: 一些Enum和C中的宏定义Int类型有相互对照关系，在转换过程中，如果有未定义的类型则会抛出Unknown异常。
+ */
 package L25.L25Exception
-//cangjie Enum/C type 未知报错
+
 open public class Unkonw <: L25Exception{
     public init(){
         super("Unkonw");

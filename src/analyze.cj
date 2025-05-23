@@ -187,14 +187,11 @@ func analyzeAssignStmt(ast:AST){
     let name = ident.name
     if(let Some(ident_id) <- global_table.position(name, Kind.variable)){
         let table: TableSturct = global_table.tables[ident_id]
-        match(table.kind){
-            case Kind.variable => analyzeExpr(ast.children[1]) //先分析expr，将结果存回栈顶。
-                                  global_code.gen(Fct.sto, l:lev - table.level, a:table.adr)
-            case _ => throw UndefinedSymbol(toString(Kind.variable), name)
-        }
+        analyzeExpr(ast.children[1]) //先分析expr，将结果存回栈顶。
+        global_code.gen(Fct.sto, l:lev - table.level, a:table.adr)
     }
     else{
-        throw UndefinedSymbol(toString(Kind.variable), name)
+        throw UnDeclaredIdent(toString(Kind.variable), name)
     }
 
 
