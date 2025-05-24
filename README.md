@@ -30,6 +30,10 @@
 
 示例：
 
+<div style="display: flex; align-items: flex-start; gap: 20px;">
+
+<div>
+
 ```swift
 program TestINOUT{
     main{
@@ -41,7 +45,13 @@ program TestINOUT{
 }
 ```
 
-<img src="images/quickstart/run.png" width="400"></td>
+</div>
+
+<div>
+<img src="images/quickstart/run.png" alt="Example Screenshot" style="max-width: 400px;">
+</div>
+
+</div>
 
 ## 使用[colorL25](https://marketplace.visualstudio.com/items?itemName=ShiinaRikka.colorl25&ssr=false#overview)插件
 
