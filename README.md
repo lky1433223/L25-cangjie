@@ -171,7 +171,7 @@ program TestINOUT{
 
 测试包含：
 - $+ - \times \div$ 基础运算测试
-- $= \, \ne \, \ge \, \gt \, \le \, \lt $ 布尔运算测试
+- $= \, \ne \, \ge \, \gt \, \le \, \lt$ 布尔运算测试
 - `jmp`,  `jpc`跳转测试
 - `DivisionByZero`异常测试
 
