@@ -24,7 +24,7 @@
 
 ⚠️ 当前预编译版本仅支持 **Apple Silicon (M1/M2/M3) 芯片的 macOS 设备**，其他架构需从源码构建
 
-下载release中的[L25-Compiler.zip](/releases)并解压。直接运行```./main```。
+下载[release](https://github.com/lky1433223/L25-cangjie/releases)中的`L25-Compiler.zip`并解压。直接运行:```./main```。
 
 运行时会显示编译过程中的AST和Pcode，最后执行L25程序。
 
