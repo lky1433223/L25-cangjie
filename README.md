@@ -66,6 +66,7 @@ program TestINOUT{
    - 安装[CJPM](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fuser_manual%2Fsource_zh_cn%2FCompile-And-Build%2Fcjpm_usage_OHOS.html)
    - (可选) 安装[IDE插件](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Ftools%2Fsource_zh_cn%2FIDE%2Fuser_manual_community.html)
 2. 安装flex + bison
+   
    本项目使用bison -v3.8.1,如果版本较低可能导致编译失败。需要构建新版本bison。
 
    参考bison[官方文档](https://www.gnu.org/savannah-checkouts/gnu/bison/bison.html):
@@ -73,7 +74,7 @@ program TestINOUT{
    - 执行```configure```进行配置，需要选择路径： ```./configure --prefix=$HOME/mybison/installed```
    - 执行```make install```
    - 编译后的bison可执行文件在```$HOME/mybison/installed/bin```
-   - 需要相应修改Makefi中的`YACC`
+   - 需要相应修改Makefile中的`YACC`
 
 3. 构建项目
    ```bash
@@ -92,7 +93,7 @@ program TestINOUT{
    ```
    单元测试
    ```bash
-   cjpm test
+   cjpm test --parallel=true
    ```
 ⚠️warning: 遍历AST可能导致递归栈溢出，请开启编译优化：`-O2 --fno-chir-function-inlining`
 ## 代码行数统计
@@ -100,7 +101,7 @@ program TestINOUT{
 2. 运行[```./cloc.sh```](cloc.sh)脚本，这会自动使用[```cangjie_lang.txt```](cangjie_lang.txt)配置文件，添加对仓颉和L25语言的代码行数统计
 
 ## 也许你会用到。。。。
-[```./kill.sh```](kill.sh)，如果C语言写法导致了内存泄漏或空指针，仓颉在捕获时会发生异常，并导致程序无法自行停止。你可能需要这个脚本来手动kill程序。
+[```./kill.sh```](kill.sh)，如果C代码中存在内存泄漏或空指针，仓颉在捕获时会发生异常，并导致程序无法自行停止。你可能需要这个脚本来手动kill程序。
 
 
 
@@ -155,23 +156,21 @@ program TestINOUT{
 ```
 
 ## 语法描述
-- 变量名覆盖
-  
-  内部作用域的变量会覆盖外部变量。
-
-  ```swift
-    //TODO:example
-  ```
-- 
 
 
 
 
 
 # 单元测试
+本项目使用仓颉提供的[单元测试](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Flibs%2Fstd%2Funittest%2Funittest_package_overview.html)来实现对不同模块的测试验证。
+
+具体实现见：[单元测试代码](/src/test)
+
 ## 解释器测试
+
 ## 编译器测试
 
+## 完整功能验证
 # 代码结构
 
 # 关于仓颉 

@@ -2,7 +2,7 @@
 
 [package]
   cjc-version = "0.53.18"
-  compile-option = "-O2 --fno-chir-function-inlining"
+  compile-option = "-O2 --fno-chir-function-inlining --diagnostic-format=noColor"
   description = "L25"
   link-option = ""
   name = "L25"
@@ -10,7 +10,9 @@
   src-dir = ""
   target-dir = ""
   version = "0.0.1"
-  package-configuration = {}
+  [package.package-configuration]
 
-[ffi.c] 
-  cstruct.path = "."
+[ffi]
+  [ffi.c]
+    [ffi.c.cstruct]
+      path = "."

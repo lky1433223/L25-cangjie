@@ -2,6 +2,7 @@ package L25.vm
 import std.console.*
 import std.convert.*
 import std.collection.*
+import L25.L25Exception.DivisionByZero
 
 let stacksize = 1024
 public func interpret(code : Code){
@@ -49,7 +50,7 @@ public func interpret(code : Code){
                                         
                                 case Opr.div => t = t - 1
                                                 if (s[t + 1] == 0) {
-                                                    throw Exception("Division by zero in Opr.div")
+                                                    throw DivisionByZero()
                                                 }
                                                 s[t] = s[t] / s[t + 1]  // 栈顶为 a / b（注意操作数顺序）
 
