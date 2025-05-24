@@ -29,6 +29,10 @@
 运行时会显示编译过程中的AST和Pcode，最后执行L25程序。
 
 示例：
+
+<div style="display: flex; align-items: flex-start; gap: 20px;">
+
+<div>
 ```swift
 program TestINOUT{
     main{
@@ -39,8 +43,14 @@ program TestINOUT{
     }
 }
 ```
+</div>
 
-![Example](images/quickstart/run.png)
+<div>
+<img src="images/quickstart/run.png" alt="Example Screenshot" style="max-width: 400px;">
+</div>
+
+</div>
+
 
 ## 使用[colorL25](https://marketplace.visualstudio.com/items?itemName=ShiinaRikka.colorl25&ssr=false#overview)插件
 
