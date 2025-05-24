@@ -30,9 +30,9 @@
 
 示例：
 
-<div style="display: flex; align-items: flex-start; gap: 20px;">
-
-<div>
+| Swift Code | Screenshot |
+|------------|------------|
+| 
 ```swift
 program TestINOUT{
     main{
@@ -43,14 +43,8 @@ program TestINOUT{
     }
 }
 ```
-</div>
-
-<div>
-<img src="images/quickstart/run.png" alt="Example Screenshot" style="max-width: 400px;">
-</div>
-
-</div>
-
+ | 
+![Example](images/quickstart/run.png) |
 
 ## 使用[colorL25](https://marketplace.visualstudio.com/items?itemName=ShiinaRikka.colorl25&ssr=false#overview)插件
 
