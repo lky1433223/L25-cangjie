@@ -30,9 +30,6 @@
 
 示例：
 
-| Swift Code | Screenshot |
-|------------|------------|
-| 
 ```swift
 program TestINOUT{
     main{
@@ -43,8 +40,8 @@ program TestINOUT{
     }
 }
 ```
- | 
-![Example](images/quickstart/run.png) |
+
+<img src="images/quickstart/run.png" width="400"></td>
 
 ## 使用[colorL25](https://marketplace.visualstudio.com/items?itemName=ShiinaRikka.colorl25&ssr=false#overview)插件
 
