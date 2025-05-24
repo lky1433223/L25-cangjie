@@ -22,7 +22,9 @@
 # Quick Start 🤗
 ## 直接运行
 
-TODO:release
+⚠️ 当前预编译版本仅支持 **Apple Silicon (M1/M2/M3) 芯片的 macOS 设备**，其他架构需从源码构建
+
+下载release中的[L25-Compiler.zip](/releases)并解压。直接运行```./main```。
 
 运行时会显示编译过程中的AST和Pcode，最后执行L25程序。
 
@@ -39,6 +41,7 @@ program TestINOUT{
 ```
 
 ![Example](images/quickstart/run.png)
+
 ## 使用[colorL25](https://marketplace.visualstudio.com/items?itemName=ShiinaRikka.colorl25&ssr=false#overview)插件
 
 1. 在VScode中，`Ctrl + Shift + P` (`Command + Shift + P`for mac) 打开命令面板
@@ -86,7 +89,10 @@ program TestINOUT{
 2. 运行[```./cloc.sh```](cloc.sh)脚本，这会自动使用[```cangjie_lang.txt```](cangjie_lang.txt)配置文件，添加对仓颉和L25语言的代码行数统计
 
 ## 也许你会用到。。。。
-[```./kill.sh```](kill.sh)，如果C语言写法导致了内存泄漏或空指针，仓颉在捕获时会发生异常，并导致程序无法自行停止。~~ 你可能需要这个脚本来手动kill程序。~~
+[```./kill.sh```](kill.sh)，如果C语言写法导致了内存泄漏或空指针，仓颉在捕获时会发生异常，并导致程序无法自行停止。你可能需要这个脚本来手动kill程序。
+
+
+
 # L25 语言
 
 ## EBNF描述
@@ -149,12 +155,13 @@ program TestINOUT{
 
 
 
-# 代码结构
+
 
 # 单元测试
 ## 解释器测试
 ## 编译器测试
 
+# 代码结构
 
 # 关于仓颉 
 <img src="images/cangjie.png" alt="仓颉"  height="50" style="vertical-align: middle; display: inline-block; margin: 0 2px;" /> 
@@ -169,8 +176,14 @@ program TestINOUT{
 
 
 # Task List
+## 待修复的bug
+
+- 非叶子节点的line  colume绑定错误
+  
 ## 待实现的功能
+
 - 跨平台release（等待仓颉支持mac交叉编译）
+  
 ## 待实现的语法
 
 - 常量定义
