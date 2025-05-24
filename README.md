@@ -164,13 +164,22 @@ program TestINOUT{
 # 单元测试
 本项目使用仓颉提供的[单元测试](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Flibs%2Fstd%2Funittest%2Funittest_package_overview.html)来实现对不同模块的测试验证。
 
-具体实现见：[单元测试代码](/src/test)
+[单元测试代码](/src/test/)|[L25测试用例](/test_code/)
 
 ## 解释器测试
+解释器测试对[Pcode解释器](src/vm/interpret.cj)进行测试，保证虚拟机执行过程正确。[解释器测试代码](/src/test/interpret_test.cj)
+
+测试包含：
+- $+ - \times \div$ 基础运算测试
+- $= \, \ne \, \ge \, \gt \, \le \, \lt $ 布尔运算测试
+- `jmp`,  `jpc`跳转测试
+- `DivisionByZero`异常测试
 
 ## 编译器测试
+编译器测试使用[**编译测试代码**](src/test/compile_test.cj)和[**编译错误测试代码**](src/test/compile_error.cj)对[**L25正确测试用例**](/test_code/correct_test/)和[**L25错误测试用例**](/test_code/error_test/)进行测试，确保**运行正确**和**正确汇报编译错误**。
 
 ## 完整功能验证
+完整功能验证涉及输入输出和复杂功能，人工测试所有[复杂功能代码](test_code/complex_test)。
 # 代码结构
 
 # 关于仓颉 

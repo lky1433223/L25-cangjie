@@ -1,3 +1,10 @@
+/*
+ * @Author: shiinarikka
+ * @Date: 2025-05-14 17:09:00
+ * @LastEditTime: 2025-05-24 19:34:34
+ * @FilePath: /L25/src/vm/interpret.cj
+ * @Description: Pcode运行解释器  | 是一个栈式虚拟机，所有运算操作取栈顶两个数值，并将返回值存于栈顶
+ */
 package L25.vm
 import std.console.*
 import std.convert.*
