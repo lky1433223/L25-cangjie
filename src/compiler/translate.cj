@@ -263,9 +263,16 @@ func printASTRoot(root:AST){
     }
 }
 
+
+foreign func getAST(): CPointer<CASTNode>
+
+foreign func free_AST(root: CPointer<CASTNode>): Unit
+
+foreign func reset_yylloc(): Unit
+
 public func translateAST(): AST
 {
-    
+    unsafe{reset_yylloc()} //重置yylloc计数
     let CASTproot:CPointer<CASTNode> = unsafe{getAST()} //获取C语言语法树指针
     
     if(CASTproot.isNull()) //判断指针是否为空。这里如果访问RE会导致程序无法结束。

@@ -80,6 +80,13 @@ int yywrap(void)
   return 1;
 }
 
+void reset_yylloc(){
+  yylloc.first_line = 1;
+  yylloc.first_column = 0;
+  yylloc.last_line = 1;
+  yylloc.last_column = 0;
+}
+
 void reset_yyin(char* fname)
 {
   strcpy(global_filename, fname);
