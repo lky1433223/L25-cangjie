@@ -1,7 +1,7 @@
 /*
  * @Author: shiinarikka
  * @Date: 2025-05-14 17:09:00
- * @LastEditTime: 2025-05-25 17:18:01
+ * @LastEditTime: 2025-05-25 23:43:39
  * @FilePath: /L25/src/vm/interpret.cj
  * @Description: Pcode运行解释器  | 是一个栈式虚拟机，所有运算操作取栈顶两个数值，并将返回值存于栈顶
  */
@@ -11,6 +11,7 @@ import std.convert.*
 import std.collection.*
 import L25.L25Exception.DivisionByZero
 
+
 let stacksize = 1024
 public func interpret(code : Code){
     var p = 0; /* 指令指针 */
@@ -19,6 +20,21 @@ public func interpret(code : Code){
     var i = Instruction(Fct.jmp, _l:0, _a:0)/* 存放当前指令 */
     var s = Array<Int>(stacksize,item:0) /* 栈 */
     var res = ArrayList<Int>()
+    @When[debug]
+    func debug_print(){
+        
+        for(i in 0..=t){
+            print("${s[i].toString().padRight(2)}")
+            print(" ")
+        }
+        println()
+        println("p:${p.toString().padRight(2)}| b:${b},t:${t}")
+        
+    }
+    @When[!debug]
+    func debug_print(){
+        //DO Nothing
+    }
     /* 通过过程基址求上l层过程的基址 */
     func base(l:Int, b:Int):Int{
         var b1:Int = b
@@ -34,7 +50,6 @@ public func interpret(code : Code){
     s[2] = 0
     s[3] = 0
     do{
-        // println("pointer:${p}")
         i = code.getCode(p)
         p += 1
         match(i.f){
@@ -119,7 +134,7 @@ public func interpret(code : Code){
                             s[t + 3] = p;	/* 将当前指令指针入栈，即保存返回地址 */
                             b = t + 1;	/* 改变基地址指针值为新过程的基地址 */
                             p = i.a;	/* 跳转 */
-            case Fct.ini => t = t + i.a
+            case Fct.ini => t = t + i.a 
             case Fct.jmp => p = i.a
             case Fct.jpc => if(s[t] == 0){
                                 p = i.a
@@ -127,6 +142,7 @@ public func interpret(code : Code){
                             t = t - 1
             case Fct.pop => t = t - 1
         }
+        debug_print()
     }while(p!=0)
     return res
 }
