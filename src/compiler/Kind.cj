@@ -1,4 +1,4 @@
-package L25.table
+package L25.compiler
 public enum Kind{
     constant | // 常量
 	variable | // 变量

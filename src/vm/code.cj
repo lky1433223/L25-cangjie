@@ -17,6 +17,9 @@ public class Code{
         }
         return codes[point]
     }
+    public func clear(){
+        codes.clear()
+    }
     //返回当前最新的code的id
     public func Position():Int{
         return codes.size - 1

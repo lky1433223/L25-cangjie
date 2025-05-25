@@ -1,7 +1,7 @@
 /*
  * @Author: shiinarikka
  * @Date: 2025-05-14 17:09:00
- * @LastEditTime: 2025-05-24 19:34:34
+ * @LastEditTime: 2025-05-25 17:18:01
  * @FilePath: /L25/src/vm/interpret.cj
  * @Description: Pcode运行解释器  | 是一个栈式虚拟机，所有运算操作取栈顶两个数值，并将返回值存于栈顶
  */
@@ -29,7 +29,6 @@ public func interpret(code : Code){
         }
         return b1;
     }
-    println("start L25")
     s[0] = 0
     s[1] = 0
     s[2] = 0

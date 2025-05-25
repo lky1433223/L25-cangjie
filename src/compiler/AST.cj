@@ -1,5 +1,5 @@
 //仓颉的AST类型
-package L25
+package L25.compiler
 import std.collection.*
 
 open public class AST{

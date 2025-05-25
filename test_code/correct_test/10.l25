@@ -1,0 +1,54 @@
+// 测试bool运算
+program Example {
+    main {
+        let a = 10;
+        let b = -10;
+        let c = 100;
+        let d = 200;
+        //1
+        if(b * b == c){
+            output(1);
+        }else{
+            output(-1);
+        };
+        //1
+        if(b * b < d){
+            output(1);
+        }else{
+            output(-1);
+        };
+        //-1
+        if(b * b > d){
+            output(1);
+        }else{
+            output(-1);
+        };
+        //1
+        if(c + c >= d){
+            output(1);
+        }else{
+            output(-1);
+        };
+        //1
+        if(c + c <= d){
+            output(1);
+        }else{
+            output(-1);
+        };
+
+        //-1
+        if(c * c <= d*a){
+            output(1);
+        }else{
+            output(-1);
+        };
+
+        //1
+        if(c + c >= b * b){
+            output(1);
+        }else{
+            output(-1);
+        };
+        
+    }
+}

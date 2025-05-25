@@ -1,7 +1,8 @@
+//测试While语句
 program TestWhile{
     main{
-        let a = 4;
-        while(a == 4){
+        let a = 1;
+        while(a != 4){
             output(a);
             a = a + 1;
         };

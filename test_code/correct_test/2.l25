@@ -1,8 +1,8 @@
-program TestINOUT{
+//测试输出函数
+program TestOUT{
     main{
-        let a;
-        let b;
-        input(a,b);
+        let a = 998244353;
+        let b = 998244353;
         output(a+b);
     }
 }

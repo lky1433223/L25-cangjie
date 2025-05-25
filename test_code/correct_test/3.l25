@@ -1,3 +1,4 @@
+//测试IF语句
 program TestIF{
     main{
         let a = 4;

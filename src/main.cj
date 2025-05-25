@@ -2,6 +2,7 @@ package L25
 
 import L25.vm.*
 import L25.L25Exception.*
+import L25.compiler.*
 import L25.utils.Color
 import std.io.*
 import std.console.*

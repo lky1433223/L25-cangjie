@@ -1,5 +1,5 @@
 //这里标记节点的symbol
-package L25
+package L25.compiler
 import L25.L25Exception.UnkonwSymbol
 import L25.utils.Color
 enum Symbol{

@@ -1,14 +1,15 @@
-// This is a comment
+// 测试运算
 program Example {
-    func add(a, b) {
-        let c = a + b;
-        return c;
-    }
     main {
-        let x = 1;
-        let y;
-        input(y);
-        let res = add(x, y);
-        output(res);
+        let a = 10;
+        let b = -5;
+        let c = 8;
+        let d = 88;
+        let res1 = a * b - c; //-58
+        let res2 = a + b * c; //-30
+        let res3 = d / c + a * b; //-39
+        let res4 = (d + 12) * (-1 * a / b); //200
+        let res5 = (((res2 * res2 + 100) - 500) * 10 + 5000) / c; //1250
+        output(res1, res2, res3, res4, res5);
     }
 }

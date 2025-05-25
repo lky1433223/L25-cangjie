@@ -1,14 +1,12 @@
+//测试函数定义和调用
 program TestFuncDefParam{
-    func testfunc(a, b, c){
-        let aaa = 1;
-        return aaa;
+    func testfunc(a){
+        let aaa = a+1;
+        return aaa+1;
     }
     main{
-        let a = 4;
-        while(a == 4){
-            output(a);
-            a = a + 1;
-        };
-        output(a);
+        let a = 2025;
+        let res = testfunc(a);
+        output(a, res);
     }
 }

@@ -101,7 +101,9 @@ program TestINOUT{
 2. 运行[```./cloc.sh```](cloc.sh)脚本，这会自动使用[```cangjie_lang.txt```](cangjie_lang.txt)配置文件，添加对仓颉和L25语言的代码行数统计
 
 ## 也许你会用到。。。。
-[```./kill.sh```](kill.sh)，如果C代码中存在内存泄漏或空指针，仓颉在捕获时会发生异常，并导致程序无法自行停止。你可能需要这个脚本来手动kill程序。
+[```./kill.sh```](kill.sh)，如果C代码中存在内存泄漏或空指针，仓颉在捕获时会发生异常，并导致程序无法自行停止。
+
+你可能需要这个脚本来手动kill程序。
 
 
 
@@ -176,7 +178,9 @@ program TestINOUT{
 - `DivisionByZero`异常测试
 
 ## 编译器测试
-编译器测试使用[**编译测试代码**](src/test/compile_test.cj)和[**编译错误测试代码**](src/test/compile_error.cj)对[**L25正确测试用例**](/test_code/correct_test/)和[**L25错误测试用例**](/test_code/error_test/)进行测试，确保**运行正确**和**正确汇报编译错误**。
+编译器测试使用[**编译测试代码**](src/test/compile_test.cj)和[**编译错误测试代码**](src/test/compile_error.cj)对[**L25正确测试用例**](/test_code/correct_test/)和[**L25错误测试用例**](/test_code/error_test/)进行测试。
+
+确保**运行正确**和**正确汇报编译错误**。
 
 ## 完整功能验证
 完整功能验证涉及输入输出和复杂功能，人工测试所有[复杂功能代码](test_code/complex_test)。

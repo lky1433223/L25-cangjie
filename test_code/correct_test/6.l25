@@ -1,10 +1,11 @@
+//测试参数列表
 program TestFuncDefParam{
-    func testfunc(b){
-        let a = b;
-        return a;
+    func testfunc(a, b, c){
+        let res = a + b - c;
+        return res;
     }
     main{
-        let a = testfunc(3);
+        let a = testfunc(10, 2, 3);
         output(a);
     }
 }

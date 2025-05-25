@@ -1,3 +1,4 @@
+//测试while嵌套作用域
 program TestScope{
     func add(a, b){
         let res = a + b;

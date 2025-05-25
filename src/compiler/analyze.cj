@@ -1,8 +1,7 @@
 //这里实现AST遍历分析，并且生成代码
-package L25
+package L25.compiler
 
 import L25.vm.*
-import L25.table.*
 import L25.L25Exception.*
 import std.collection.ArrayList
 
@@ -15,7 +14,13 @@ var cnt_var = 0 //数据分配个数（相对地址）
 var cnt_param = 0 //变量分配个数 
 
 //分析AST树，返回pcode
-func analyzeAST(ast: AST) {
+public func analyzeAST(ast: AST) {
+    global_code.clear()
+    global_table.clear()
+    lev = 0
+    scop = 0
+    cnt_var = 0
+    cnt_param = 0
     analyzeProgram(ast)
     return global_code
 }

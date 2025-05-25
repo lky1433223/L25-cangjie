@@ -1,5 +1,5 @@
 //这里主要负责实现C类型Ast到Cangjie类型Ast的转译，这个中间层可以保证后续操作的安全
-package L25
+package L25.compiler
 import L25.L25Exception.*
 import std.collection.*
 var global_deep = 0
@@ -263,7 +263,7 @@ func printASTRoot(root:AST){
     }
 }
 
-func translateAST(): AST
+public func translateAST(): AST
 {
     
     let CASTproot:CPointer<CASTNode> = unsafe{getAST()} //获取C语言语法树指针

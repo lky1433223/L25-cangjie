@@ -1,4 +1,4 @@
-//测试
+//测试变量定义和赋值
 program Myapp {
     main {
         let x = 1;

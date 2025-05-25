@@ -1,5 +1,5 @@
 //CAST 对应 C语言的AST node
-package L25
+package L25.compiler
 
 let MAX_IDNET_LEN = 100
 
