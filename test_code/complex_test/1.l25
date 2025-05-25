@@ -1,0 +1,16 @@
+program DFS{
+    func jie(n){
+        let res = 0;
+        if(n == 1){
+            res = 1;
+        }else{
+            output(n);
+            res = n * jie(n-1);
+        };
+        return res;
+    }
+    main {
+        let a = 3;
+        output(jie(3));
+    }
+}
