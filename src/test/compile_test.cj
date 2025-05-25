@@ -1,7 +1,7 @@
 /*
  * @Author: shiinarikka
  * @Date: 2025-05-24 01:04:07
- * @LastEditTime: 2025-05-25 19:25:27
+ * @LastEditTime: 2025-05-26 00:17:02
  * @FilePath: /L25/src/test/compile_test.cj
  * @Description: 编译运行单元测试。编译运行测试用的L25代码，对比预期结果。
  */
@@ -51,7 +51,9 @@ class CompileTests{
         (7, [12]),
         (8, [4,4,4,5,5,5,5]),
         (9, [-58, -30, -39, 200, 1250]),
-        (10,[1,1,-1,1,1,-1,1])
+        (10,[1,1,-1,1,1,-1,1]),
+        (11, [2025,2026]),
+        (12, [120])
     ]]
     func test1(test_item:(Int, Array<Int>)){
         let filename = "${file_path}/${test_item[0]}.l25"

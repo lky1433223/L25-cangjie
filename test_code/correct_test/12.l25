@@ -1,0 +1,15 @@
+//实现递归阶乘，可以测试函数的递归调用
+program DFS{
+    func jie(n){
+        let res = 0;
+        if(n == 1){
+            res = 1;
+        }else{
+            res = n * jie(n-1);
+        };
+        return res;
+    }
+    main {
+        output(jie(5));
+    }
+}
