@@ -91,7 +91,13 @@ program TestINOUT{
    ```bash
    cjpm run -g
    ```
-   单元测试
+   测试运行会额外显示一些调试信息：
+
+   - 在翻译过程中显示每个ASTNode的信息。
+   - 在编译过程中，每次新的定义都会打印当前符号表。
+   - 在运行过程中，每个指令都打印指令地址，基址，和栈。
+  
+   单元测试，详细的单元测试内容请见[单元测试](#单元测试)
    ```bash
    cjpm test --parallel=true
    ```
@@ -157,8 +163,6 @@ program TestINOUT{
 <digit> = "0" | "1" | ... | "9"
 ```
 
-## 语法描述
-
 
 
 
@@ -178,9 +182,18 @@ program TestINOUT{
 - `DivisionByZero`异常测试
 
 ## 编译器测试
-编译器测试使用[**编译测试代码**](src/test/compile_test.cj)和[**编译错误测试代码**](src/test/compile_error.cj)对[**L25正确测试用例**](/test_code/correct_test/)和[**L25错误测试用例**](/test_code/error_test/)进行测试。
+编译器测试使用[**编译测试代码**](src/test/compile_test.cj)对[**L25正确测试用例**](/test_code/correct_test/)进行测试。
 
-确保**运行正确**和**正确汇报编译错误**。
+确保**编译和运行正确**。
+
+每个测试用例说明如下：
+
+## 编译器报错测试
+编译器测试使用[**编译错误测试代码**](src/test/compile_error.cj)对[**L25错误测试用例**](/test_code/error_test/)进行测试。
+
+确保**正确汇报编译错误**。
+
+每个测试用例说明如下：
 
 ## 完整功能验证
 完整功能验证涉及输入输出和复杂功能，人工测试所有[复杂功能代码](test_code/complex_test)。
@@ -209,6 +222,7 @@ program TestINOUT{
   
 ## 待实现的语法
 
+- used before init 报error
 - 常量定义
 - 实现多种变量类型
 - 指针类型

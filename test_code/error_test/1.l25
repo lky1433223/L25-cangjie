@@ -1,0 +1,13 @@
+//报错测试：函数参数中变量重命名
+program Myapp {
+    func add(a, a){
+        let a = 1;
+        return a;
+    }
+    main {
+        let c = 2;
+        let x = c;
+        let x = 2;
+        output(c, x);
+    }
+}
