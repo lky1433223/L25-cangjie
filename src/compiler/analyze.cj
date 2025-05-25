@@ -119,6 +119,9 @@ func analyzeFuncDef(ast: AST) {
                 param_adr++
             }
         }
+
+        //回填符号表中的参数个数
+        global_table.tables[tid0].param = cnt_param
     }
 
     //分析 stmt
@@ -127,7 +130,6 @@ func analyzeFuncDef(ast: AST) {
     var cid_ini = global_code.Position()
     analyzeStmtList(stmt_list)
     global_table.tables[tid0].size = cnt_var //回填符号表中的变量个数
-    global_table.tables[tid0].param = cnt_param //回填符号表中的参数个数
     global_code.codes[cid_ini].a = cnt_var //回填代码中的申请栈空间
 
     //进行返回值处理，回填到预留的地址
@@ -416,6 +418,7 @@ func analyzeFunCall(ast: AST) {
 
         //函数调用结束后，要把栈中的参数弹出
         for (_ in 0..global_table.tables[ident_id].param) {
+            
             global_code.gen(Fct.pop)
         }
     } else {
