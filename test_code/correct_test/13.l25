@@ -1,0 +1,15 @@
+program testfuncs{
+    func add(a, b){
+        let res = a + b;
+        return res;
+    }
+    func sub(a, b){
+        let res = a - b;
+        return res;
+    }
+    main{
+        let a = 5;
+        let b = 6;
+        output(add(a, b), sub(a, b));
+    }
+}

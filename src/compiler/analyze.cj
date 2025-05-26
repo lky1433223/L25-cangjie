@@ -95,7 +95,7 @@ func analyzeFuncDef(ast: AST) {
     }
     var tid0 = global_table.position()
     lev++
-    scop = 1 // 作用域为1
+    scop ++  // 作用域为1
     var stmt_list = ast.children[1]
     var ret = ast.children[2]
     if (ast.children.size == 4) {
@@ -142,6 +142,7 @@ func analyzeFuncDef(ast: AST) {
     global_table.remove(scop)
     //恢复lev
     lev--
+    scop--
 }
 
 func analyzeIdent(ast: AST): String {
