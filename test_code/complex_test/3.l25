@@ -1,0 +1,18 @@
+program GCD {
+    func gcd(a, b) {
+        let res;
+        if (b == 0) {
+            res = a;
+        } else {
+            let mod = a - b * (a / b); // a % b
+            res = gcd(b, mod);
+        };
+        return res;
+    }
+    main {
+        let x;
+        let y;
+        input(x, y);
+        output(gcd(x, y));
+    }
+}
