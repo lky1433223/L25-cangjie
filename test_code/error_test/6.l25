@@ -1,0 +1,8 @@
+//报错测试：函数未定义
+program Myapp {
+    main {
+        let c = 2;
+        let x = c;
+        let y = add(1);
+    }
+}

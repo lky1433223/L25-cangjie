@@ -1,4 +1,4 @@
-//报错测试：传参少
+//报错测试：传参多
 program Myapp {
     func add(a, b){
         let c = 1;
@@ -11,6 +11,6 @@ program Myapp {
     main {
         let c = 2;
         let x = c;
-        let y = add(1);
+        let y = add(1,2,3);
     }
 }

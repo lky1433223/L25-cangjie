@@ -1,0 +1,7 @@
+//报错测试：变量未定义
+program Myapp {
+    main {
+        let c = 2;
+        let x = a;
+    }
+}
