@@ -81,6 +81,7 @@ program TestINOUT{
 3. 构建项目
 
    ```bash
+   #（如果是其他平台架构，需要相应修改Makefile）
    make
    ```
 
