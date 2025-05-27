@@ -4,6 +4,8 @@
 
 ![License](https://img.shields.io/github/license/lky1433223/L25-cangjie)
 ![Issues](https://img.shields.io/github/issues/lky1433223/L25-cangjie)
+![Downloads](https://img.shields.io/github/downloads/lky1433223/L25-cangjie/total)
+![commits](https://img.shields.io/github/commit-activity/t/lky1433223/L25-cangjie)
 ![Stars](https://img.shields.io/github/stars/lky1433223/L25-cangjie)
 
 本编译器使用[flex](https://github.com/westes/flex)，[bison](https://www.gnu.org/savannah-checkouts/gnu/bison/bison.html)和[仓颉](#关于仓颉)实现[L25 语言](#l25-语言)的编译执行，功能如下:
@@ -407,6 +409,107 @@ program Example{
 ## 完整功能验证
 
 完整功能验证涉及输入输出和复杂功能，人工测试所有[复杂功能代码](test_code/complex_test)。
+### 递归实现阶乘
+```swift
+program DFS{
+    func jie(n){
+        let res = 0;
+        if(n == 1){
+            res = 1;
+        }else{
+            res = n * jie(n-1);
+        };
+        return res;
+    }
+    main {
+        let a;
+        input(a);
+        output(jie(a));
+    }
+}
+```
+### 计算斐波那契数列
+```swift
+program Fib{
+    func fibs(i) {
+        let res = 1;
+        if (i > 2) {
+            res = fibs(i - 1) + fibs(i - 2);
+        };
+        return res;
+    }
+    main {
+        let a;
+        input(a);
+        let i = 1;
+        while (i < a) {
+            output(fibs(i));
+            i = i + 1;
+        };
+    }
+}
+```
+
+### 计算最大公约数
+```swfit
+program GCD {
+    func gcd(a, b) {
+        let res;
+        if (b == 0) {
+            res = a;
+        } else {
+            let mod = a - b * (a / b); // a % b
+            res = gcd(b, mod);
+        };
+        return res;
+    }
+    main {
+        let x;
+        let y;
+        input(x, y);
+        output(gcd(x, y));
+    }
+}
+```
+### 进行猜数游戏
+```swift
+program Guess{
+    func mod(a, b){
+        let res = a - b * (a / b);
+        return res;
+    }
+    func random(seed){
+        let res = seed;
+        let a = mod(seed * seed, 6759658);
+        let c = mod(8675 * seed, 47655);
+        let m = mod(875976 * 786458, seed);
+        let cnt = 0;
+        while (cnt < 1000) {
+            res = mod(a * res + c, m); // a, c, m 为常数
+            cnt = cnt + 1;
+        };
+        return res;
+    }
+    main{
+        let seed = 0;
+        let max = 1000;
+        input(seed); //输入一个随机数种子
+        let num = mod(random(seed), max);
+        output(num);
+        let in = 0;
+        input(in);
+        while(in != num){
+            if(in > num){
+                output(1);
+            }else{
+                output(0);
+            };
+            input(in);
+        };
+        output(in, num);
+    }
+}
+```
 
 # 代码结构
 
