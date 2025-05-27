@@ -1,7 +1,7 @@
 /*
  * @Author: shiinarikka
  * @Date: 2025-05-23 14:03:13
- * @LastEditTime: 2025-05-23 23:37:14
+ * @LastEditTime: 2025-05-27 15:24:59
  * @FilePath: /L25/src/L25Exception/CompileError.cj
  * @Description: 包含所有编译报错
  */
@@ -77,5 +77,25 @@ public open class Redefination <: CompileError {
     }
     public open override func getClassName(): String {
         "Redefination"
+    }
+}
+
+
+public open class MissingArgument <: CompileError{
+    public init() {
+        super("MissingArgument");
+    }
+    public init(message: String) {
+        super(message)
+    }
+    public init(fun:String, exp: Int, get:Int) {
+        super("MissingArgument for func ${fun}, expect ${exp} but get ${get}")
+    }
+    public init(fun:String, exp: Int, get:Int, first_line:Int, first_colume:Int, last_line:Int, last_colume:Int) {
+        super("MissingArgument for func ${fun}, expect ${exp} but get ${get}", first_line, first_colume, last_line, last_colume)
+    }
+
+    public open override func getClassName(): String {
+        "MissingArgument"
     }
 }

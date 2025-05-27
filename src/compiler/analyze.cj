@@ -404,6 +404,7 @@ func analyzeFunCall(ast: AST) {
     if (ast.symbol != Symbol.func_call) {
         throw WrongSymbolException(toString(ast.symbol), toString(Symbol.func_call))
     }
+    var call_arg_cnt = 0  //记录调用时传的参数
     //函数调用过程，先预留一个返回值的栈顶，然后压入参数，最后调用函数
     global_code.gen(Fct.lit, l: 0, a: 0) //栈顶压入一个0，留一个返回值
     if (ast.children.size == 2) { //有参数列表，处理参数
@@ -412,11 +413,14 @@ func analyzeFunCall(ast: AST) {
                 analyzeExpr(arg) //计算每一个参数，存入栈顶
             }
         }
+        call_arg_cnt = ast.children[1].children.size //arglist的参数个数
     }
     let name = analyzeIdent(ast.children[0])
     if (let Some(ident_id) <- global_table.position(name, Kind.function)) {
+        if(call_arg_cnt != global_table.tables[ident_id].param){ //如果传递的参数和预期参数不符
+            throw MissingArgument(name, global_table.tables[ident_id].param, call_arg_cnt, ast.first_line, ast.first_colume, ast.last_line, ast.last_colume)
+        }
         global_code.gen(Fct.cal, l: lev - global_table.tables[ident_id].level, a: global_table.tables[ident_id].adr) //生成调用指令
-
         //函数调用结束后，要把栈中的参数弹出
         for (_ in 0..global_table.tables[ident_id].param) {
             
