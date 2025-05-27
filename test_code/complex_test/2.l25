@@ -1,5 +1,5 @@
 //斐波纳契数列
-program test4 {
+program Fib{
     func fibs(i) {
         let res = 1;
         if (i > 2) {

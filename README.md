@@ -104,7 +104,7 @@ program TestINOUT{
 ⚠️warning: 遍历AST可能导致递归栈溢出，请开启编译优化：`-O2 --fno-chir-function-inlining`
 ## 代码行数统计
 1. 安装[cloc](https://github.com/AlDanial/cloc)代码行数统计工具
-2. 运行[```./cloc.sh```](cloc.sh)脚本，这会自动使用[```cangjie_lang.txt```](cangjie_lang.txt)配置文件，添加对仓颉和L25语言的代码行数统计
+2. 运行[```./cloc.sh```](cloc.sh)脚本，这会自动使用[```cangjie_lang.txt```](cangjie_lang.txt)配置文件，添加对**仓颉**和**L25语言**的代码行数统计
 
 ## 也许你会用到。。。。
 [```./kill.sh```](kill.sh)，如果C代码中存在内存泄漏或空指针，仓颉在捕获时会发生异常，并导致程序无法自行停止。
@@ -163,9 +163,150 @@ program TestINOUT{
 <digit> = "0" | "1" | ... | "9"
 ```
 
+## 开发指南
+### 初识L25
+L25是为方便教学设计的，利于快速实现基本编译器功能的语言，能实现基本四则运算，布尔运算，函数定义，分支跳转，循环等语言基础功能。
+### 运行第一个L25程序
+首先，创建`1.l25`文件。并输入以下L25代码：
+```swift
+program AplusB{
+   main{
+      let a;
+      let b;
+      input(a, b);
+      output(a + b);
+   }
+}
+```
+运行编译器，并输入文件路径[`path/to/your/1.l25`](test_code/example/1.l25)，你会看到输出的编译过程。随后输入两个数字，你会得到以下输出:
+```
+输入一个数字：
+9
+输入一个数字：
+9
+18 
+```
+
+### 变量声明
+L25目前仅支持Int类型变量，所有Int类型默认为Int64类型。
+支持声明时初始化或声明后再赋值。
+```swift
+program Example{
+   main{
+      let a;
+      let b = 5;
+      a = 1;
+      output(a, b);
+   }
+}
+```
+- 允许在内层作用域声明变量，重名的变量会对外层作用域的变量进行覆盖。
+```swift
+program Example{
+   main{
+      let a = 1;
+      if(1 == 1){
+         let a = 4;
+         output(a);
+      };
+      output(a);
+   }
+}
+```
+输出
+```
+4 
+1
+```
+### 表达式
+L25表达式支持四则运算和括号。可以用于赋值、布尔表达式和参数传递。
+```swift
+program Example{
+   main{
+      if(1 + 2 * 3 == 3 + 2 * 2){
+         output(7);
+      };
+      output(1 + 2 * 2 + 3 * (4 + 5));
+   }
+}
+```
+输出
+```
+7
+32
+```
+### 分支和循环
+L25支持if-else表达式和while循环。
+⚠️warning: if-else while语句结束时，需要添加`;`
+```swift
+program Example{
+   main{
+      if(1 + 1 == 2){
+         output(2);
+      }else{
+         output(0);
+      };
+      let a = 1;
+      while(a <= 5){
+         output(a);
+         a = a + 1;
+      };
+   }
+}
+```
+
+### 函数定义和使用
+L25可以在main函数之前定义函数，并且在程序中作为表达式的一项来使用。
+函数中必须有最少一条语句，并且必须在函数末尾`return`
+
+```swift
+program Example{
+   func add(a, b){
+      let res = a + b;
+      return res;
+   }
+   main{
+      output(add(1,2));
+   }
+}
+```
 
 
+## 编译报错
+本编译器基于Bison提供语法报错功能，以及一些语义报错功能。
+### 语法报错
+Bison可以对不符合语法的情况进行报错，下面是几个样例：
+- 缺少语句
+```swift
+program AplusB{
+   func add(a, b){
+      return a + b;
+   }
+   main{
+      output(add(1,2));
+   }
+}
+```
+![](images/dev/error1.png)
 
+- 缺少分号
+```swift
+program Example{
+   main{
+      if(1 == 2){
+         let a = 1;
+      }
+   }
+}
+```
+![](images/dev/error2.png)
+
+### 语义报错
+在语义分析阶段，对几个常见错误进行了报错。该部分报错在[单元测试/编译器报错测试](#编译器报错测试)中有更详细的说明。
+
+- 变量/函数重定义
+- 变量/函数未定义
+- 函数调用参数不匹配
 
 # 单元测试
 本项目使用仓颉提供的[单元测试](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Flibs%2Fstd%2Funittest%2Funittest_package_overview.html)来实现对不同模块的测试验证。
