@@ -417,8 +417,10 @@ func analyzeFunCall(ast: AST) {
     }
     let name = analyzeIdent(ast.children[0])
     if (let Some(ident_id) <- global_table.position(name, Kind.function)) {
-        if(call_arg_cnt != global_table.tables[ident_id].param){ //如果传递的参数和预期参数不符
+        if(call_arg_cnt < global_table.tables[ident_id].param){ //如果传递的参数和预期参数不符
             throw MissingArgument(name, global_table.tables[ident_id].param, call_arg_cnt, ast.first_line, ast.first_colume, ast.last_line, ast.last_colume)
+        }else if(call_arg_cnt > global_table.tables[ident_id].param){ //如果传递的参数和预期参数不符
+            throw ExtraArgument(name, global_table.tables[ident_id].param, call_arg_cnt, ast.first_line, ast.first_colume, ast.last_line, ast.last_colume)
         }
         global_code.gen(Fct.cal, l: lev - global_table.tables[ident_id].level, a: global_table.tables[ident_id].adr) //生成调用指令
         //函数调用结束后，要把栈中的参数弹出

@@ -1,7 +1,7 @@
 /*
  * @Author: shiinarikka
  * @Date: 2025-05-23 14:03:13
- * @LastEditTime: 2025-05-27 15:24:59
+ * @LastEditTime: 2025-05-27 16:33:15
  * @FilePath: /L25/src/L25Exception/CompileError.cj
  * @Description: 包含所有编译报错
  */
@@ -89,13 +89,33 @@ public open class MissingArgument <: CompileError{
         super(message)
     }
     public init(fun:String, exp: Int, get:Int) {
-        super("MissingArgument for func ${fun}, expect ${exp} but get ${get}")
+        super("Missing argument for func ${fun}, expect ${exp} but get ${get}")
     }
     public init(fun:String, exp: Int, get:Int, first_line:Int, first_colume:Int, last_line:Int, last_colume:Int) {
-        super("MissingArgument for func ${fun}, expect ${exp} but get ${get}", first_line, first_colume, last_line, last_colume)
+        super("Missing argument for func ${fun}, expect ${exp} but get ${get}", first_line, first_colume, last_line, last_colume)
     }
 
     public open override func getClassName(): String {
         "MissingArgument"
+    }
+}
+
+
+public open class ExtraArgument <: CompileError{
+    public init() {
+        super("ExtraArgument");
+    }
+    public init(message: String) {
+        super(message)
+    }
+    public init(fun:String, exp: Int, get:Int) {
+        super("Extra argument for func ${fun}, expect ${exp} but get ${get}")
+    }
+    public init(fun:String, exp: Int, get:Int, first_line:Int, first_colume:Int, last_line:Int, last_colume:Int) {
+        super("Extra argument for func ${fun}, expect ${exp} but get ${get}", first_line, first_colume, last_line, last_colume)
+    }
+
+    public open override func getClassName(): String {
+        "ExtraArgument"
     }
 }
