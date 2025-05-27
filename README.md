@@ -512,6 +512,47 @@ program Guess{
 ```
 
 # 代码结构
+```
+.
+├── bison/                
+│   └──L25.y           # Bison语法规则文件
+│
+├── flex/                
+│   └──L25.l           # flex词法规则文件
+│
+├── c/                 # C语言核心组件
+│   ├── AST.[c/h]      # 抽象语法树定义
+│   ├── NODE.h         # AST节点类型宏定义
+│   └── OPT.h          # 操作符类型宏定义
+│   
+├── scr/               # 仓颉部分核心代码
+│   ├── main.cj             # 程序主函数
+│   ├── compiler/           # 编译部分核心代码
+│   │    ├── translate.cj   # 从CAST翻译成AST
+│   │    ├── analyze.cj     # 进行语义分析和Pcode生成
+│   │    ├── AST.cj         # 定义AST结构
+│   │    ├── CAST.cj        # 定义CAST结构，对应C代码的AST
+│   │    ├── table.cj       # 定义符号表
+│   │    ├── symbol.cj      # Enum类型，定义节点类型，对应C代码的NODE
+│   │    └── opt.cj         # Enum类型，定义操作符，对应C代码的OPT
+│   │    
+│   ├── vm/            # Pcode虚拟机模块
+│   │    ├── interpret.cj   # 虚拟机执行代码
+│   │    ├── cpde.cj        # 定义Code类，存储和进行指令相关操作
+│   │    ├── fct.cj         # Enum类型，定义指令
+│   │    └── opr.cj         # Enum类型，定义算术运算
+│   │    
+│   ├── L25Exception/  # 定义L25Exception以及派生异常类
+│   ├── test/          # 单元测试用例
+│   └── utils/         # 其他工具
+│        └── color.cj       # 定义控制台输出颜色
+│
+├── colorl25/      # VSCode语法高亮插件
+│
+├── test_code      # 测试样例
+│
+└── images/        # 文档图片资源
+```
 
 # 关于仓颉
 

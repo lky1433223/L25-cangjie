@@ -2,6 +2,19 @@ package L25.vm
 import std.collection.*
 import L25.L25Exception.OutOfRange
 import L25.utils.Color
+
+
+/* 虚拟机代码结构 */
+public class Instruction{
+    let f: Fct
+    let l: Int
+    public var a: Int
+    init(_f:Fct, _l!:Int=0, _a!:Int=0) {
+        f = _f
+        l = _l
+        a = _a
+    }
+}
 //存储可执行的代码，并且包含代码生成文件
 public class Code{
     public var codes : ArrayList<Instruction>
